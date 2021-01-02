@@ -42,9 +42,10 @@
 <body>
 <?php include_once('nav_bar.php') ?>
 
-    <div class="comanda">
+    
+<div class="comanda">
         <a href="comanda.php"><i class="fas fa-shopping-cart"></i></a>
-    </div>
+</div>
 
     <section class="container">
         <br>
