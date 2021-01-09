@@ -4,14 +4,23 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Controll de Administradores</title>
+    <title>Control de Administradores</title>
     <link rel="shorcut icon" type="img/png" href="img/favicon.png">
     <link rel="stylesheet" type="text/css" href="admin_controll.css">
+    <style>
+        .title {
+            text-align: center;
+            color:#D7627C; 
+            text-shadow: 1.5px 1px 2px #000;
+        } 
+    </style>
 </head>
 <body>
     <?php require_once('admin_navbar.php')?>
     <br>
-    
+    <br>
+        <h3 class="title">Contro de Administradores</h3>
+        <br>
     <div class="col text-center">
         <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
       <a href="crearadmin.php" class="btn btn-default btn btn-info btn-lg">Crear Administrador</a>
@@ -20,11 +29,7 @@
 
     <section class="container">
     <?php 
-         $conn = mysqli_connect("localhost","root","root","H_tostada");
-         $conn->set_charset("utf8");
-         if($conn -> connect_erro){
-             die("La Conexion Fallo: ".$conn-> connect_error);
-         }
+         require_once('../z_connect.php');
 
         echo "
         <div class='table-responsive'>

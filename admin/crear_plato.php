@@ -64,7 +64,6 @@ if(isset($_GET['edit'])){
       $ext = $_POST['detalle'];
    //};
 
-
 if(isset($_POST['update']) and $_SERVER['REQUEST_METHOD'] == "POST"){
   
   $new_target = "/Applications/MAMP/htdocs/PHP-Python/DataBites_app/admin/img_menu/".basename($_FILES['imagen']['name']);

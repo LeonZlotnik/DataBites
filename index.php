@@ -1,19 +1,21 @@
 
 <?php
 
+    $table = $_GET['m'];
+
     if(isset($_POST['crear'])){
         $usuario = $_POST['usuario'];
-        $cookie = $_POST['cookie'];
+        $table= $_GET['m'];
 
-        $conn = mysqli_connect("localhost","root","root","H_tostada") or die("error en conexion ".mysqli_connect_error());
-        mysqli_set_charset($conn, "utf8");
+        require_once('z_connect.php');
 
-        $sql = "INSERT INTO usuarios (usuario, cookie) VALUES ('$usuario', '$cookie');";
+        $sql = "INSERT INTO usuarios (usuario, mesa) VALUES ('$usuario', '$table');";
         $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
 
         if($result){
             session_start();
             $_SESSION['usuario'] = $usuario;
+            $_SESSION['m'] = $table;
             header('Location:intro.php');
           }else{
             header('Location:validation.php');
@@ -55,11 +57,21 @@
             display: none;
             visibility: hidden;
         }
+        #login{
+            position: absolute; bottom: 30px;
+        }
+        .title {
+            text-align: center;
+            color:#D7627C; 
+            text-shadow: 1.5px 1px 2px #000;
+        }
     </style>
 </head>
 <body>
 <?php include_once('session.php') ?>
   <div class="container">
+  <br>
+  <a href="index.php?m=1"><h2 class="text-center title">Bienvenido</h2></a>
     <br>
     <div class="card mb-3">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
@@ -78,7 +90,7 @@
         <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <p class="card-text"><small class="text-muted">Consulte a su mesero para más información</small></p>
         </div>
     </div>
 
@@ -102,7 +114,7 @@
         <div class="modal-body">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo quos officia eligendi veniam. Dolorem aspernatur quas laboriosam modi possimus corrupti!</p>
             <input type="text" name="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introcude tu nombre de usuario">
-            <input type="text" name="cookie" class="hidden" id="hidden" aria-describedby="emailHelp" placeholder="Introcude tu nombre de usuario">
+            <!--<input type="text" name="cookie" class="hidden" id="hidden" aria-describedby="emailHelp" placeholder="Introcude tu nombre de usuario">-->
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
@@ -113,6 +125,12 @@
     </div>
     </div>
   </div>
+  <section class="container" id="login">
+    <a href="clientes.php?m=<?php echo $table?>" class="btn btn-success btn-lg btn-block">
+    Cliente Frecuente
+    </a>  
+  </section>
+  
 </body>
 
 </html>

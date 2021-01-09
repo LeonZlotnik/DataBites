@@ -25,7 +25,7 @@
 
     <div class="container">
         <br>
-        <h2 class="h2 title">Dashboard</h2>
+        <h3 class="title">Dashboard</h3>
         <br>
             <div class="btn-group center" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-info">Negocio</button>

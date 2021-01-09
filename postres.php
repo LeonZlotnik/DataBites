@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postres</title>
+    <title>Entradas</title>
     <style>
         .comanda{
             position:fixed; bottom:40px; right:20px;
@@ -42,22 +42,25 @@
 <body>
 <?php include_once('nav_bar.php') ?>
 
-    <div class="comanda">
-        <a href="comanda.php"><i class="fas fa-shopping-cart"></i></a>
+    
+<div class="comanda">
+        <a href="comanda.php"><i class="fas fa-utensils"></i></a>
     </div>
 
     <section class="container">
         <br>
-        <h2 class="h2 title">Postres</h2>
+        <h2 class="title">Postres</h2>
         <br>
        
 
         <?php
             $db = mysqli_connect("localhost","root","root","H_tostada");
+
             $db->set_charset("utf8");
             if($db->connect_error){
                 die("La Conexion Fallo: ".$db->connect_error);
             }
+
             $sql = "SELECT * FROM platillos WHERE categoria = 'postres' ORDER BY 'estado' ASC, 'platillo' DESC";
             $result = mysqli_query($db, $sql);
             while ($row = mysqli_fetch_array($result)){
@@ -68,23 +71,17 @@
                     <img class="card-img-top" <?php echo "src='admin/img_menu/".$row['imagen']."'";?> alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['platillo']?></h5>
+                        <div class="btn btn-light">
+                            Likes <span class="badge badge-light"><?php echo $row['likes']?></span>
+                        </div>
+                        <br>
+                        <br>
                         <p class="card-text"><?php echo $row['descripcion']?></p>
                         <div class="input-group-text" id="btnGroupAddon">$ <?php echo $row['precio']?> MXN</div>
                         <br>
                         <div class="cantidad">
-                            <a href="detalles.php" class="btn btn-outline-info">Agregar</a>
-                            <a href="detalles.php" class="btn btn-outline-info position">Detalles</a>
+                            <?php echo "<a href='detalles.php?ID={$row['id_platillo']}&plato={$row['platillo']}' class='btn btn-outline-info'>Detalles</a>" ?>
                         </div>
-                        <br>
-                        <select class="custom-select" id="inputGroupSelect01">
-                                <option selected>...</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                        </select>   
                     </div>
                 <?php
             }
@@ -92,3 +89,4 @@
     </section>
 </body>
 </html>
+

@@ -1,5 +1,7 @@
 <?php
    session_start();
+   $USR = $_SESSION['usuario'];
+   $MSA = $_SESSION['m'];
 ?>
 
 
@@ -9,6 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shorcut icon" type="img/png" href="img/favicon.png">
     <title>Detalles</title>
     <style>
         .comanda{
@@ -41,7 +44,7 @@
 <?php include_once('nav_bar.php') ?>
 
     <div class="comanda">
-        <a href="comanda.php"><i class="fas fa-shopping-cart"></i></a>
+        <a href="comanda.php"><i class="fas fa-utensils"></i></a>
     </div>
 
 <?php
@@ -62,19 +65,17 @@ $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_array($result);
 
     /*if(isset($_POST['sum'])){
-        $postid = $_POST['platillos_id'];
-        $result = mysql_query("SELECT * FROM platillos WHERE id_platillo = $ID");
-        $line = mysql_fetch_array($result);
-        $n = $line['likes'];
-        
-        mysql_query("UPDATE platillos SET likes = $n+1 WHERE id_platillo = $ID");
-        mysql_query("INSERT INTO likes(usuario_id,platillos_id) VALUES (2,$postid)");
-        exit();
-        }
-    */
 
-}else{
-    echo "Error";
+        $n = $_POST['likes'];
+        $likes = mysql_query("UPDATE platillos SET likes = $n+1 WHERE id_platillo = $ID");
+        $result_likes($db, $likes) or die(("error en query $likes".mysqli_error()));
+        
+        if($result_likes){
+            echo "Sucecc";
+        }else{
+            echo "Error";
+        }
+    }*/
 }
 
 if(isset($_POST['add_to_cart'])){
@@ -92,9 +93,10 @@ if(isset($_POST['add_to_cart'])){
     $specs = $_POST["specs"];
     $status = $_POST["status"];
     $size = $_POST["size"];
+    $table = $_POST["mesa"];
     
   
-  $sql = "INSERT INTO comandas_iniciales (usuario, platillo, costo, cantidad, specs, status, size) VALUES ('$username','$product','$price','$amount','$specs','$status','$size')";
+  $sql = "INSERT INTO comandas_iniciales (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
   
   $res = mysqli_query($db, $sql); //or die ("error en query $sql".mysqli_error());
   
@@ -117,22 +119,24 @@ if(isset($_POST['add_to_cart'])){
 ?>
     <div class="container">
         <br>
-        <h2 class="h2 title">Detalles</h2>
+        <h2 class="title">Detalles</h2>
         <br>
             <div class="card-deck">
                 <div class="card mb-3">
                     <img class="card-img-top" <?php echo "src='admin/img_menu/".$row['imagen']."'";?> alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['platillo'];?></h5>
-                        <input type="submit" name="sum" value="Like" class="btn btn-info">
-                        <br>
+                        <form action="" method="POST">
+                            <button type="submit" name="sum" value="Like" class="btn btn-info"><i class="fas fa-thumbs-up"></i></button>
+                        </form>
+                        
                         <br>
                         <div id="accordion">
                        
                             <div class="card">
                                 <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <button class="btn btn-link" name="sum" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Detalles del plato
                                     </button>
                                 </h5>
@@ -192,7 +196,8 @@ if(isset($_POST['add_to_cart'])){
                                                 <option value="10">10</option>
                                             </select>
                                             <input type="hidden" name="platillo" min="0" max="10" value="<?php echo $row['platillo']?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="usuario" value="<?php echo $_SESSION['usuario'] ?>" class="form-control" id="inputCity" placeholder="0">
+                                            <input type="hidden" name="usuario" value="<?php echo $USR ?>" class="form-control" id="inputCity" placeholder="0">
+                                            <input type="hidden" name="mesa" value="<?php echo $MSA ?>" class="form-control" id="inputCity" placeholder="0">
                                             <input type="hidden" name="costo" min="0" max="10" value="<?php echo $row['precio']?>" class="form-control" id="inputCity" placeholder="0">
                                             <input type="hidden" name="status" min="0" max="10" value="Comanda" class="form-control" id="inputCity" placeholder="0">
                                             </div>  

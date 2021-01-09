@@ -46,7 +46,7 @@ require_once('z_connect.php');
 <body>
 <?php require_once('nav_bar.php')?>
 <br>
-<h2 class="text-center h1 title">Acceso de Administradores</h2>
+<h2 class="text-center title">Acceso de Administradores</h2>
 <br>
 <section class="container">
 <?php echo $msg ?>

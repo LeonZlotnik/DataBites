@@ -27,34 +27,45 @@
 
 <div class="container">
     <br>
-    <h3 class="text-center h1 title">Panel de Control</h3>
-    <h6 class="text-center h5 sesion">Admin: <?php echo $_SESSION['admin'];?></h6>
+    <h2 class="text-center title">Panel de Control</h2>
+    <h6 class="text-center sesion">Admin: <?php echo $_SESSION['admin'];?></h6>
     <br>
 <div class="card">
   <div class="card-header">
-  <i class="fas fa-database"></i>
+  <i class="fas fa-users-cog"></i>
   </div>
   <div class="card-body">
-    <h5 class="card-title">Control de Administradores</h5>
-    <p class="card-text">Encuentre toda la información de los usuarios que se han registrado a su tienda. Podrá visualizar sus datos y eliminar los registros de compradores que considere una amenaza.</p>
+    <h5 class="card-title">Gestión de Administradores</h5>
+    <p class="card-text">Mantenga el control de su negocio y de quienes lo operan para una mejor gestión.</p>
     <a href="contol_admin.php" class="btn btn-info">Revisar</a>
   </div>
 </div>
 <br>
 <div class="card">
   <div class="card-header">
-  <i class="fas fa-boxes"></i>
+  <i class="fas fa-street-view"></i>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Control de Clientes</h5>
+    <p class="card-text">Procure una buena relación con sus clientes más allegados y mejore el contacto con ellos.</p>
+    <a href="control_clientes.php" class="btn btn-info">Revisar</a>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class="card-header">
+  <i class="fas fa-utensils"></i>
   </div>
   <div class="card-body">
     <h5 class="card-title">Gestión de Menu</h5>
-    <p class="card-text">Crear, editar y borrar los productos a su conveniencia, con el fin de facilitarle su gestión de ventas. Procure ser lo más especifico en las descripciones, imagenes mayores a 30 KB posiblemente no cargarán.</p>
+    <p class="card-text">Crear, editar y borrar los productos a su conveniencia, con el fin de facilitarle la gestión del menu. Procure ser lo más especifico en las descripciones, imagenes mayores a 30 KB posiblemente no cargarán.</p>
     <a href="menudb.php" class="btn btn-info">Revisar</a>
   </div>
 </div>
 <br>
 <div class="card">
   <div class="card-header">
-  <i class="fas fa-database"></i>
+  <i class="fas fa-warehouse"></i>
   </div>
   <div class="card-body">
     <h5 class="card-title">Gestión de Inventario</h5>
@@ -65,44 +76,44 @@
 <br>
 <div class="card">
   <div class="card-header">
-  <i class="fas fa-comment-dollar"></i>
+  <i class="fas fa-concierge-bell"></i>
   </div>
   <div class="card-body">
     <h5 class="card-title">Gestión de Comandas</h5>
-    <p class="card-text">Con la finalidad de actualizar los precios de forma inmediata el menejador de precios le permitirá gestionar mejor los cambios. Recuerde eliminar la base que ha subido al terminar el ejercicio.</p>
+    <p class="card-text">Optimice tiempos en su operación y revise las comandas que los comensales van generando. Con un click podrá controlar lo que entra a cocina.</p>
     <a href="gestion_comandas.php" class="btn btn-info">Revisar</a>
   </div>
 </div>
 <br>
 <div class="card">
   <div class="card-header">
-  <i class="fas fa-user-lock"></i>
+  <i class="fas fa-bullhorn"></i>
   </div>
   <div class="card-body">
     <h5 class="card-title">Centro de Anucios</h5>
-    <p class="card-text">Para tener un mejor manejo del panel de control, aquí puede dar de alta a nuevos administradores o eliminar a usuarios que ya no vayan a partisipar en dicha gestión.</p>
+    <p class="card-text">Aproveche al máximo la atención que le brindan sus consumidores para informarles de promos.</p>
     <a href="centro_ads.php" class="btn btn-info">Revisar</a>
   </div>
   </div>
   <br>
   <div class="card">
   <div class="card-header">
-  <i class="fas fa-user-lock"></i>
+  <i class="fas fa-funnel-dollar"></i>
   </div>
   <div class="card-body">
-    <h5 class="card-title">Ventas</h5>
-    <p class="card-text">Vea el número de comandas cerradas, a manera que saber cuanto esta generando por cliente. </p>
-    <a href="centro_ads.php" class="btn btn-info">Revisar</a>
+    <h5 class="card-title">Gestión de Ventas</h5>
+    <p class="card-text">Vea el número de comandas cerradas, a manera que saber cuanto esta generando por cliente. Corriga la cuenta de los comensales en caso de que haya algun mal entendido.</p>
+    <a href="gestion_ventas.php" class="btn btn-info">Revisar</a>
   </div>
   </div>
   <br>
   <div class="card">
   <div class="card-header">
-  <i class="fas fa-tags"></i>
+  <i class="fas fa-chart-pie"></i>
   </div>
   <div class="card-body">
     <h5 class="card-title">Visualización de Data</h5>
-    <p class="card-text">Mantenga el registro de todas las ventas generadas, visualize los usuarios que más compras le han realizado y exporte la información a su excel.</p>
+    <p class="card-text">Aumente su conocimiento del día a día del restaurante con información en tiempo real sobre la operacion y las oportunidades que existen para incrementar margenes.</p>
     <a href="dashboards.php" class="btn btn-info">Revisar</a>
   </div>
 </div>

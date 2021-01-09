@@ -8,10 +8,20 @@
     <title>Gestión de Productos</title>
     <link rel="shorcut icon" type="img/png" href="img/favicon.png">
     <link rel="stylesheet" type="text/css" href="admin_controll.css">
+    <style>
+        .title {
+            text-align: center;
+            color:#D7627C; 
+            text-shadow: 1.5px 1px 2px #000;
+        } 
+    </style>
 </head>
 <body>
     <?php require_once('admin_navbar.php')?>
     <br>
+    <br>
+        <h3 class="title">Gestión de Menu</h3>
+        <br>
      <div class="col text-center">
             <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
         <?php if($change == true){?>

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    
 <head><meta charset="gb18030">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gestión de Productos</title>
+    <title>Control de Clientes</title>
     <link rel="shorcut icon" type="img/png" href="img/favicon.png">
     <link rel="stylesheet" type="text/css" href="admin_controll.css">
     <style>
@@ -20,17 +19,7 @@
     <?php require_once('admin_navbar.php')?>
     <br>
     <br>
-        <h3 class="title">Gestión de Inventario</h3>
-        <br>
-     <div class="col text-center">
-            <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
-        <?php if($change == true){?>
-            <a class="btn btn-warning btn-lg" href="#">Concluir</a>
-        <p><?php echo $sql;?></p>
-        <?php }else{?>
-            <a href="crear_producto.php" class="btn btn-default btn btn-info btn-lg">Introducir Producto</a>
-        <?php }?> 
-    </div>
+        <h3 class="title">Contro de Clientes</h3>
     <br>
     <form class="container">
         <div class="form-group mx-sm-3 mb-2">
@@ -38,34 +27,31 @@
         </div>
     </form>
     <br>
-  
+    <div class="col text-center">
+        <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
+        <a href="" class="btn btn-default btn btn-success btn-lg">Exportar</a>
+    </div>
+    <br>
+
     <section class="container">
     <?php 
-         $conn = mysqli_connect("localhost","root","root","H_tostada");
-         $conn->set_charset("utf8");
-         if($conn -> connect_erro){
-             die("La Conexion Fallo: ".$conn-> connect_error);
-         }
+         require_once('../z_connect.php');
 
         echo "
         <div class='table-responsive'>
         <table class='table table-hover'>
                     <thead>
                         <tr>
-                            <th scope='col'>SKU</th>
-                            <th scope='col'>Producto</th>
-                            <th scope='col'>Marca</th>
-                            <th scope='col'>Cantidad</th>
-                            <th scope='col'>Gramos/Litros</th>
-                            <th scope='col'>Precio</th>
-                            <th scope='col'>Consumo Promedio</th>
+                            <th scope='col'>#</th>
+                            <th scope='col'>Mail</th>
+                            <th scope='col'>Contraseña</th>
+                            <th scope='col'>Cumpleaños</th>
                             <th scope='col'>Registro</th>
                             <th scope='col'>Eliminar</th>
-                            <th scope='col'>Editar</th>
                         </tr>
                     </thead>";
 
-                    $sql = "SELECT * FROM inventarios ORDER BY sku ASC";
+                    $sql = "SELECT * FROM clientes";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
                     if($result-> num_rows > 0) {
@@ -73,16 +59,12 @@
                         while($row = mysqli_fetch_assoc($result)){
                             echo "
                             <tbody>
-                            <td>".$row["sku"]."</td>
-                            <td class='producto'>".$row["producto"]."</td>
-                            <td>".$row["marca"]."</td>
-                            <td>".$row["unidad_c"]."</td>
-                            <td>".$row["medida"]."</td>
-                            <td>$".$row["precio"]." MXN</td>
-                            <td>".$row["promedio_c"]."</td>
+                            <th scope='row'>".$row["id_cliente"]."</th>
+                            <td class='mail'>".$row["cliente"]."</td>
+                            <td>".$row["pw"]."</td>
+                            <td>".$row["cumple"]."</td>
                             <td>".$row["registro"]."</td>
-                            <td><a href='productsdb.php?delete=".$row["sku"]."'><i class='fas fa-trash-alt'></i></a></td>
-                            <td><a href='crearproducto.php?edit=".$row["sku"]."'><i class='fas fa-edit'></i></a></td>";
+                            <td><a href='control_admin.php?delete=".$row["id_admin"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }
                     echo "
                         </tbody>
@@ -91,26 +73,26 @@
                 }
                 else {
                     echo "<div class='alert alert-warning' role='alert'>
-                    No hay informacion por el momento.
+                    No hay información por el momento.
                           </div>";
                 }
 
                 if(isset($_GET['delete'])){
                     $id = $_GET['delete'];
-                    $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
+                    $conn->query("DELETE FROM administradores WHERE id_administrador = '$id'");
                 }
     
-                //$connect-> close();
+                $connect-> close();
     
     ?>
-   
+    </section>
     </section>
     <script type='text/javascript'>
             let search_input = document.getElementById('search')
             
             search_input.addEventListener('keyup',function(e){
                 let search_item = e.target.value.toLowerCase();
-                let td_item = document.querySelectorAll("table tbody .producto");
+                let td_item = document.querySelectorAll("table tbody .mail");
                 console.log(td_item);
                 
                 td_item.forEach(function(item){
@@ -124,3 +106,4 @@
     </script>
 </body>
 </html>
+

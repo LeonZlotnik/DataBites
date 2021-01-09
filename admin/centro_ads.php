@@ -44,7 +44,7 @@
 
     <div class="container">
         <br>
-        <h2 class="h2 title">Control de Anuncios</h2>
+        <h3 class="title">Control de Anuncios</h3>
         <br>
         <div class="col text-center">
             <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
@@ -54,13 +54,9 @@
         <br>
 
             <?php
-            $db = mysqli_connect("localhost","root","root","H_tostada");
-            $db->set_charset("utf8");
-            if($db->connect_error){
-                die("La Conexion Fallo: ".$db->connect_error);
-            }
+            require_once('../z_connect.php');
             $sql = "SELECT * FROM anuncios ORDER BY 'numero' ASC";
-            $result = mysqli_query($db, $sql);
+            $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_array($result)){
           ?>
 

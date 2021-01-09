@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shorcut icon" type="img/png" href="img/favicon.png">
     <title>Menu principal</title>
     <style>
         .slider-h{
@@ -163,15 +164,14 @@
 </head>
 <body>
     <?php include_once('nav_bar.php') ?>
-    <?php include_once('notificacion.php')?>
     <br>
 
     <div class="comanda">
-        <a href="comanda.php"><i class="fas fa-shopping-cart"></i></a>
+        <a href="comanda.php"><i class="fas fa-utensils"></i></a>
     </div>
 
 
-        <h2 class="h2 title">Menu Principal</h2>
+        <h2 class="title">Menu Principal</h2>
     <br>
 
     <div class="container" id="slider-cut">

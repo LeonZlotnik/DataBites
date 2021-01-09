@@ -1,5 +1,27 @@
 <?php
     session_start();
+
+    if(isset($_POST['crear'])){
+        require_once('z_connect.php');
+
+        $mail = $_POST['cliente'];
+        $pw = $_POST['pw'];
+        $birth = $_POST['cumple'];
+
+        $sql = "INSERT INTO clientes (cliente, pw, cumple) VALUES ('$mail', '$pw', '$birth')";
+        $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
+
+        if($result){
+            $success = "<br><div class='alert alert-success' role='alert'>
+            ¡Felicidades! Ahora es parte de nuestros clientes consentidos.
+            </div><br>";
+          }else{
+            echo "<script type='text/javascript'>alert('Se ha generado un error');</script>";
+          };
+          
+          mysqli_free_result($result);
+          mysqli_close($conn);
+    };
 ?>
 
 <!DOCTYPE html>
@@ -39,25 +61,33 @@
 <body>
 <?php include_once('nav_bar.php') ?>
 
-    <div class="comanda">
-        <a href="comanda.php"><i class="fas fa-shopping-cart"></i></a>
+<div class="comanda">
+        <a href="comanda.php"><i class="fas fa-utensils"></i></a>
     </div>
 
     <div class="container">
         <br>
-        <h3 class="h2 title">Preferencias</h3>
+        <h3 class="title">Preferencias</h3>
         <br>
         <div class="alert alert-primary" role="alert">
         <?php 
             echo $_SESSION['usuario'];
         ?>
         </div>
+        <div class="alert alert-info" role="alert">
+        <?php 
+            echo "Mesa: ".$_SESSION['m'];
+        ?>
+        </div>
+        <div class="container">
+                        <?php echo $success ?>
+        </div>
         <div id="accordion">
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
                                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Unir Cuenta
+                                Cliente Frecuente
                                 </button>
                             </h5>
                             </div>
@@ -67,14 +97,20 @@
                                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
                                 <br>
                                 <br>
-                                <label for="exampleFormControlInput1">Usuario</label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                                <br>
-                                        <button type="button" class="btn btn-primary btn-lg btn-block">Agregar</button>
-                                <br>
-                                <span class="badge badge-pill badge-secondary">Secondary</span>
-                                <span class="badge badge-pill badge-secondary">Secondary</span>
-                                <span class="badge badge-pill badge-secondary">Secondary</span>
+                                <form action="" method="POST">
+                                    <label for="exampleFormControlInput1">Mail</label>
+                                    <input type="email" name="cliente" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                                    <br>
+                                    <label for="exampleFormControlInput1">Cumpleaños</label>
+                                    <input type="date" name="cumple" class="form-control" id="exampleFormControlInput1" placeholder="fecha de nacimiento">
+                                    <br>
+                                
+                                    <label for="exampleFormControlInput1">Contraseña</label>
+                                    <input type="password" name="pw" class="form-control" id="exampleFormControlInput1" placeholder="contraseña">
+                                    <br>
+                                    <button type="submit" name="crear" class="btn btn-primary btn-lg btn-block">Agregar</button>
+                                </form>
+       
                             </div>
                            
                             </div>
@@ -130,6 +166,7 @@
                         </div>
                         </div>
                         </div>
+                    
     </div>
 </body>
 </html>

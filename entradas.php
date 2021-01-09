@@ -44,12 +44,12 @@
 
     
 <div class="comanda">
-        <a href="comanda.php"><i class="fas fa-shopping-cart"></i></a>
-</div>
+        <a href="comanda.php"><i class="fas fa-utensils"></i></a>
+    </div>
 
     <section class="container">
         <br>
-        <h2 class="h2 title">Entradas</h2>
+        <h2 class="title">Entradas</h2>
         <br>
        
 

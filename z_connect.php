@@ -1,4 +1,7 @@
 <?php
 $conn = mysqli_connect("localhost","root","root","H_tostada") or die("error en conexion ".mysqli_connect_error());
-mysqli_set_charset($conn, "utf8");
+    $conn->set_charset("utf8");
+         if($conn -> connect_erro){
+             die("La Conexion Fallo: ".$conn-> connect_error);
+         }
 ?>
