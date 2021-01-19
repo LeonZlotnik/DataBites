@@ -64,7 +64,7 @@
                 <a href="#" class="btn btn-success btn-lg btn-block">Pagar</a>
             </div>
             <div class="card-footer text-muted">
-                2 days ago
+                El mesero le asisitirá.
             </div>
             <br>
             <div class="card text-center">
@@ -76,7 +76,7 @@
                 <a href="#" class="btn btn-success btn-lg btn-block">Pagar</a>
             </div>
             <div class="card-footer text-muted">
-                2 days ago
+                El mesero le asisitirá.
             </div>
             <br>
             <div class="card text-center">
@@ -88,7 +88,7 @@
                 <a href="#" class="btn btn-success btn-lg btn-block">Pagar</a>
             </div>
             <div class="card-footer text-muted">
-                2 days ago
+                Ingrese su número aquí.
             </div>
             
         </div>

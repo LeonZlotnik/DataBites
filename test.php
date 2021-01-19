@@ -49,22 +49,18 @@
 
 <?php
 
-$db = mysqli_connect("localhost","root","root","H_tostada");
-$db->set_charset("utf8");
-    if($db->connect_error){
-        die("La Conexion Fallo: ".$db->connect_error);
-    }
+require_once("z_connect.php");
 
 if(isset($_GET['ID'])){
 
-    $ID = mysqli_real_escape_string($db, $_GET['ID']);
-    $N = mysqli_real_escape_string($db, $_GET['platillo']);
+    $ID = mysqli_real_escape_string($conn, $_GET['ID']);
 
 $sql = "SELECT * FROM platillos WHERE id_platillo = $ID";
-$result = mysqli_query($db, $sql);
+$result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 
     /*if(isset($_POST['sum'])){
+
         $n = $_POST['likes'];
         $likes = mysql_query("UPDATE platillos SET likes = $n+1 WHERE id_platillo = $ID");
         $result_likes($db, $likes) or die(("error en query $likes".mysqli_error()));
@@ -77,13 +73,17 @@ $row = mysqli_fetch_array($result);
     }*/
 }
 
+if(isset($_GET['plato'])){
+
+    $N = mysqli_real_escape_string($conn, $_GET['plato']);
+
+    $info = "SELECT ingrediente, valor FROM guarnicones WHERE platillo = '$N'";
+    $res = mysqli_query($conn, $info);
+    $line = mysqli_fetch_array($res);
+
 if(isset($_POST['add_to_cart'])){
 
-    $db = mysqli_connect("localhost","root","root","H_tostada");
-    $db->set_charset("utf8");
-    if($db->connect_error){
-        die("La Conexion Fallo: ".$db->connect_error);
-    }
+    require_once("z_connect.php");
 
     $username = $_POST["usuario"];
     $product = $_POST["platillo"];
@@ -97,7 +97,7 @@ if(isset($_POST['add_to_cart'])){
   
   $sql = "INSERT INTO comandas_iniciales (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
   
-  $res = mysqli_query($db, $sql); //or die ("error en query $sql".mysqli_error());
+  $res = mysqli_query($conn, $sql); //or die ("error en query $sql".mysqli_error());
   
   if($res){
     $success = "<div class='alert alert-success' role='alert'>
@@ -110,10 +110,13 @@ if(isset($_POST['add_to_cart'])){
   };
   
   mysqli_free_result($res);
-  mysqli_close($db);
-  
+  mysqli_close($conn);
   
   }
+ 
+ if(isset($_POST['plus'])) {
+
+ }
 
 ?>
     <div class="container">
@@ -122,7 +125,7 @@ if(isset($_POST['add_to_cart'])){
         <br>
             <div class="card-deck">
                 <div class="card mb-3">
-                    <img class="card-img-top" <?php echo "src='admin/img_menu/".$row['imagen']."'";?> alt="Card image cap">
+                    <img class="card-img-top"<?php echo "src='admin/img_menu/".$row['imagen']."'";?> alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['platillo'];?></h5>
                         <form action="" method="POST">
@@ -194,11 +197,89 @@ if(isset($_POST['add_to_cart'])){
                                                 <option value="9">9</option>
                                                 <option value="10">10</option>
                                             </select>
+                                            <br>
+                                            <p class="h5">Guarniciones:</p>
+                                            <select class="custom-select" name="size" id="inputGroupSelect01">
+                                                <option selected>...</option>
+                                                
+                                                <option value="<?php echo $line['ingrediente']?>"><?php echo $line['ingrediente']?></option>
+                                                
+                                                </select>
+                                            <br>
+                                            
                                             <input type="hidden" name="platillo" min="0" max="10" value="<?php echo $row['platillo']?>" class="form-control" id="inputCity" placeholder="0">
                                             <input type="hidden" name="usuario" value="<?php echo $USR ?>" class="form-control" id="inputCity" placeholder="0">
                                             <input type="hidden" name="mesa" value="<?php echo $MSA ?>" class="form-control" id="inputCity" placeholder="0">
                                             <input type="hidden" name="costo" min="0" max="10" value="<?php echo $row['precio']?>" class="form-control" id="inputCity" placeholder="0">
                                             <input type="hidden" name="status" min="0" max="10" value="Comanda" class="form-control" id="inputCity" placeholder="0">
+                                            </div>  
+                                            
+                                            <button type="submit" name="add_to_cart" class="btn btn-outline-info">Agregar</button>      
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <?php
+                        
+                        
+
+                        } ?>
+                        <div id="accordion">
+        
+                            <div class="card">
+                                <div class="card-header" id="heading3">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                    Adicionales
+                                    </button>
+                                </h5>
+                                </div>
+                                <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion">
+                                <div class="card-body">
+                                    <form action="" method="POST">
+                        
+                                        <div class="card-body">
+                                            <p class="h5">Guarniciones:</p>
+                                            <select class="custom-select" name="size" id="inputGroupSelect01">
+                                                <option selected>...</option>
+                                                <option value="<?php echo $line['ingrediente']?>"><?php echo $line['ingrediente']?></option>
+                                            </select>
+                                            <br>
+                                            <br>
+                                            <p class="h5">Extras:</p>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Tocino</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label" for="inlineCheckbox2">+$15</label>
+                                            </div>
+                                            <br>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Cebolla</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label" for="inlineCheckbox2">+$15</label>
+                                            </div>
+                                            <br>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Mango</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label" for="inlineCheckbox2">+$15</label>
+                                            </div>
+                                           
+                        
+                                        
+                                            <!--<input type="hidden" name="platillo" min="0" max="10" value="<?php echo $row['platillo']?>" class="form-control" id="inputCity" placeholder="0">
+                                            <input type="hidden" name="usuario" value="<?php echo $USR ?>" class="form-control" id="inputCity" placeholder="0">
+                                            <input type="hidden" name="mesa" value="<?php echo $MSA ?>" class="form-control" id="inputCity" placeholder="0">
+                                            <input type="hidden" name="costo" min="0" max="10" value="<?php echo $row['precio']?>" class="form-control" id="inputCity" placeholder="0">
+                                            <input type="hidden" name="status" min="0" max="10" value="Comanda" class="form-control" id="inputCity" placeholder="0">-->
                                             </div>  
                                             
                                             <button type="submit" name="add_to_cart" class="btn btn-outline-info">Agregar</button>      

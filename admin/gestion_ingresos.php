@@ -28,8 +28,8 @@
     </form>
     <br>
     <div class="col text-center">
-        <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
-        <a href="gestion_ingresos.php" class="btn btn-default btn btn-info btn-lg">Finales</a>
+        <a class="btn btn-info btn-lg" href="gestion_ventas.php">Atras</a>
+        <a href="" class="btn btn-default btn btn-success btn-lg">Exportar</a>
     </div>
     <br>
 
@@ -47,14 +47,17 @@
                             <th scope='col'>Plato</th>
                             <th scope='col'>Costo</th>
                             <th scope='col'>Cantidad</th>
+                            <th scope='col'>Subtotal</th>
+                            <th scope='col'>IVA</th>
+                            <th scope='col'>Fee</th>
+                            <th scope='col'>Ingreso</th>
                             <th scope='col'>Especificaciones</th>
                             <th scope='col'>Tamaño</th>
                             <th scope='col'>Registro</th>
-                            <th scope='col'>Eliminar</th>
                         </tr>
                     </thead>";
 
-                    $sql = "SELECT * FROM comandas_finales";
+                    $sql = "SELECT *, (costo*cantidad) AS subtotal, ((costo*cantidad)*0.16) AS iva, ((costo*cantidad)*0.02) AS fee, ((costo*cantidad)/1.18) AS total FROM comandas_finales";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
                     if($result-> num_rows > 0) {
@@ -67,10 +70,13 @@
                             <td>".$row["platillo"]."</td>
                             <td>$".$row["costo"]."</td>
                             <td>".$row["cantidad"]."</td>
+                            <td>$".$row["subtotal"]."</td>
+                            <td>$".$row["iva"]."</td>
+                            <td>$".$row["fee"]."</td>
+                            <td>$".$row["total"]."</td>
                             <td>".$row["specs"]."</td>
                             <td>".$row["size"]."</td>
-                            <td>".$row["registro"]."</td>
-                            <td><a href='gestion_ventas.php?delete=".$row["platillo"]."'><i class='fas fa-trash-alt'></i></a></td>";
+                            <td>".$row["registro"]."</td>";
                 }
                     echo "
                         </tbody>
@@ -81,11 +87,6 @@
                     echo "<div class='alert alert-warning' role='alert'>
                     No hay información por el momento.
                           </div>";
-                }
-
-                if(isset($_GET['delete'])){
-                    $id = $_GET['delete'];
-                    $conn->query("DELETE FROM administradores WHERE id_administrador = '$id'");
                 }
     
                 $connect-> close();
@@ -112,4 +113,3 @@
     </script>
 </body>
 </html>
-

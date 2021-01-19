@@ -44,7 +44,7 @@ require_once('z_connect.php');
     </style>
 </head>
 <body>
-<?php require_once('nav_bar.php')?>
+<?php include_once('navbar_slim.php') ?>
 <br>
 <h2 class="text-center title">Acceso de Administradores</h2>
 <br>

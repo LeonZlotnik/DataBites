@@ -113,7 +113,7 @@ if(isset($_POST['ordenar'])){
                             <th scope='col'>Plato</th>
                             <th scope='col'>Precio</th>
                             <th scope='col'>Cantidad</th>
-                            <th scope='col'>Total</th>
+                            <th scope='col'>Subtotal</th>
                             <th scope='col'>Especificación</th>
                             <th scope='col'>Porción</th>
                             <th scope='col'>Tiempo</th>
@@ -164,7 +164,7 @@ if(isset($_POST['ordenar'])){
     </section>
 
     <section class="container">
-    <span id="total" class="btn btn-light h4">Total: $<?php echo $total ?></span>
+    <!--<span id="total" class="btn btn-light h4">Total: $<?php //echo $total ?></span>-->
    <form action="" method="POST">
         <button type="submit" name="ordenar" class='btn btn-info btn-lg btn-block'>Ordenar</button>
    </form>

@@ -140,7 +140,8 @@
                 }
 
                 foreach($result as $value){
-                    $total += $value["total"];
+                    $subtotal += $value["total"];
+                    $total = $subtotal*1.18;
                 };
     
     ?>

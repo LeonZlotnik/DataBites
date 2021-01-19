@@ -63,7 +63,7 @@ $table = $_GET['m'];
     </style>
 </head>
 <body>
-
+<?php include_once('navbar_slim.php') ?>
 <br>
 <h2 class="text-center title">Cliente Frecuente</h2>
 <br>
@@ -84,7 +84,7 @@ $table = $_GET['m'];
 
 </section>
 <section class="container" id="login">
-    <a href="index.php" class="btn btn-info btn-lg btn-block">
+    <a href="index.php?m=<?php echo $table?>" class="btn btn-info btn-lg btn-block">
     Atras
     </a>  
   </section>

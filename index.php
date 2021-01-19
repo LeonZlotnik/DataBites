@@ -34,11 +34,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introducción</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <!--Captación de cookies-->
+
+     <!--Captación de cookies-->
     <script>
         function clicked(){
             var usuario = escape(document.myForm.usuario.value + ";");
@@ -69,6 +66,7 @@
 </head>
 <body>
 <?php include_once('session.php') ?>
+<?php include_once('navbar_slim.php') ?>
   <div class="container">
   <br>
   <a href="index.php?m=1"><h2 class="text-center title">Bienvenido</h2></a>
@@ -77,27 +75,33 @@
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                <img class="d-block w-100" src="..." alt="First slide">
+                <img class="d-block w-100" src="img/instucion_1.png" width="30%" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                <img class="d-block w-100" src="..." alt="Second slide">
+                <img class="d-block w-100" src="img/instucion_2.png" width="30%" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                <img class="d-block w-100" src="..." alt="Third slide">
+                <img class="d-block w-100" src="img/instucion_3.png" width="30%" alt="Third slide">
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <h5 class="card-title">Medidas para tu seguridad.</h5>
+            <p class="card-text">A manera de cuidar su salud y respetar la sana distancia, le pedimos de la forma más atenta hacer uso de este nuevo metodo para ordenar y pagar.</p>
             <p class="card-text"><small class="text-muted">Consulte a su mesero para más información</small></p>
         </div>
     </div>
 
         <!-- Button trigger modal -->
+    <div class="container">
     <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
     Iniciar
     </button>
+    <a href="clientes.php?m=<?php echo $table?>" class="btn btn-success btn-lg btn-block">
+                Cliente Frecuente
+    </a>  
+    </div>
+    
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -106,30 +110,28 @@
         <div class="modal-header">
         <!-- Comienza form -->
             <form action="" name="myForm" method="POST">
-            <h5 class="modal-title" id="exampleModalLabel">Inicia tu sesión</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+            <h5 class="modal-title" id="exampleModalLabel">Inicio de sesión</h5>
+
+            
         </div>
         <div class="modal-body">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo quos officia eligendi veniam. Dolorem aspernatur quas laboriosam modi possimus corrupti!</p>
-            <input type="text" name="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introcude tu nombre de usuario">
+            <p>Use el apartado para crear un usuraio, este se utilizará únicamente para identificar su orden. No será necesario que brinde información personal en ningun momento.</p>
+            <p><i>Le recomendamos usar su RFC sin homoclave, en caso de que el nombre que ingrese ya exista.</i></p>
+            <input type="text" name="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introduzca un nombre de usuario">
             <!--<input type="text" name="cookie" class="hidden" id="hidden" aria-describedby="emailHelp" placeholder="Introcude tu nombre de usuario">-->
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
             <input type="submit" name="crear" onclick="clicked()" value="Crear" class="btn btn-info"></input>
+            <br>
+           
         </div>
         </div>
         </form>
     </div>
     </div>
   </div>
-  <section class="container" id="login">
-    <a href="clientes.php?m=<?php echo $table?>" class="btn btn-success btn-lg btn-block">
-    Cliente Frecuente
-    </a>  
-  </section>
+ 
   
 </body>
 

@@ -217,7 +217,7 @@
 
                     require_once('../z_connect.php');
                 //------------------------------------------------------------------------------------------------------------
-                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
+                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '2' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
                     if($result-> num_rows > 0) {
@@ -266,7 +266,7 @@
                     
                     require_once('../z_connect.php');    
 
-                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='1' AND DATE(registro) = CURDATE()";
+                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='2' AND DATE(registro) = CURDATE()";
                     $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
                     
                     if($res){
@@ -277,7 +277,7 @@
                         echo "Error";
                     };
                 //------------------------------------------------------------------------------------------------------------
-                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='1'";
+                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='2'";
                     $paste = mysqli_query($conn, $copy) or die ("error en query $mysql".mysqli_error());
 
                     if($paste){

@@ -71,7 +71,7 @@
         <br>
         <div class="alert alert-primary" role="alert">
         <?php 
-            echo $_SESSION['usuario'];
+            echo "Usuario: ".$_SESSION['usuario'];
         ?>
         </div>
         <div class="alert alert-info" role="alert">
