@@ -29,7 +29,7 @@
     <br>
     <div class="col text-center">
         <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
-        <a href="" class="btn btn-default btn btn-success btn-lg">Exportar</a>
+        <a href="xport_clientes.php" class="btn btn-default btn btn-success btn-lg">Exportar</a>
     </div>
     <br>
 
@@ -61,10 +61,10 @@
                             <tbody>
                             <th scope='row'>".$row["id_cliente"]."</th>
                             <td class='mail'>".$row["cliente"]."</td>
-                            <td>".$row["pw"]."</td>
+                            <td>XXXXXX</td>
                             <td>".$row["cumple"]."</td>
                             <td>".$row["registro"]."</td>
-                            <td><a href='control_admin.php?delete=".$row["id_admin"]."'><i class='fas fa-trash-alt'></i></a></td>";
+                            <td><a href='control_clientes.php?delete=".$row["id_cliente"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }
                     echo "
                         </tbody>
@@ -79,7 +79,7 @@
 
                 if(isset($_GET['delete'])){
                     $id = $_GET['delete'];
-                    $conn->query("DELETE FROM administradores WHERE id_administrador = '$id'");
+                    $conn->query("DELETE FROM clientes WHERE id_cliente = '$id'");
                 }
     
                 $connect-> close();

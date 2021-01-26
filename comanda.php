@@ -121,6 +121,12 @@ if(isset($_POST['ordenar'])){
                         </tr>
                     </thead>";
 
+                    if(isset($_GET['delete'])){
+                        $platillo = $_GET['delete'];
+                        $conn->query("DELETE FROM comandas_iniciales WHERE platillo = '$platillo'");
+                        header('Location:comanda.php');
+                    };
+
                     $sql = "SELECT DISTINCT*,(costo*cantidad) AS total FROM comandas_iniciales WHERE usuario = '$USR' AND status = 'Comanda' AND DATE(registro) = CURDATE()";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
@@ -138,7 +144,7 @@ if(isset($_POST['ordenar'])){
                             <td>".$row["size"]."</td>
                             <td>".$row["registro"]."</td>
                             <td id='hidden'>".$row["status"]."</td>
-                            <td><a href='comandas.php?delete=".$row["platillo"]."'><i class='fas fa-trash-alt'></i></a></td>";
+                            <td><a href='comanda.php?delete=".$row["platillo"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }
                     echo "
                         </tbody>
@@ -153,11 +159,6 @@ if(isset($_POST['ordenar'])){
 
                 foreach($result as $value){
                     $total += $value["total"];
-                };
-
-                if(isset($_GET['delete'])){
-                    $id = $_GET['delete'];
-                    $conn->query("DELETE FROM comandas_iniciales WHERE platillo = '$id'");
                 };
     
     ?>

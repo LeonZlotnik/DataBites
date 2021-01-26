@@ -29,13 +29,15 @@
     <br>
     <div class="col text-center">
         <a class="btn btn-info btn-lg" href="gestion_ventas.php">Atras</a>
-        <a href="" class="btn btn-default btn btn-success btn-lg">Exportar</a>
+        <a href="xport_ventas.php" class="btn btn-default btn btn-success btn-lg">Exportar</a>
     </div>
     <br>
 
     <section class="container">
     <?php 
          require_once('../z_connect.php');
+                    
+            mysqli_free_result($mysql);
 
         echo "
         <div class='table-responsive'>

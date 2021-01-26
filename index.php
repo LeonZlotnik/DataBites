@@ -1,138 +1,138 @@
 
 <?php
 
-    $table = $_GET['m'];
+$table = $_GET['m'];
 
-    if(isset($_POST['crear'])){
-        $usuario = $_POST['usuario'];
-        $table= $_GET['m'];
+if(isset($_POST['crear'])){
+    $usuario = $_POST['usuario'];
+    $table= $_GET['m'];
 
-        require_once('z_connect.php');
+    require_once('z_connect.php');
 
-        $sql = "INSERT INTO usuarios (usuario, mesa) VALUES ('$usuario', '$table');";
-        $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
+    $sql = "INSERT INTO usuarios (usuario, mesa) VALUES ('$usuario', '$table');";
+    $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
 
-        if($result){
-            session_start();
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['m'] = $table;
-            header('Location:intro.php');
-          }else{
-            header('Location:validation.php');
-          };
-          
-          mysqli_free_result($result);
-          mysqli_close($conn); 
+    if($result){
+        session_start();
+        $_SESSION['usuario'] = $usuario;
+        $_SESSION['m'] = $table;
+        header('Location:intro.php');
+      }else{
+        header('Location:validation.php');
+      };
+      
+      mysqli_free_result($result);
+      mysqli_close($conn); 
 
-    }
+}
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introducción</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introducción</title>
 
-     <!--Captación de cookies-->
-    <script>
-        function clicked(){
-            var usuario = escape(document.myForm.usuario.value + ";");
-            console.log(usuario);
-            document.cookie = "name = " + usuario;
+ <!--Captación de cookies-->
+<script>
+    function clicked(){
+        var usuario = escape(document.myForm.usuario.value + ";");
+        console.log(usuario);
+        document.cookie = "name = " + usuario;
 
-            var allcookies = unescape(document.cookie);
-            console.log(allcookies);
+        var allcookies = unescape(document.cookie);
+        console.log(allcookies);
 
-            var cookie = document.getElementById('hidden').value;
-            cookie.innerHTML = allcookies;
-        };
-    </script>
-    <style>
-        .hidden{
-            display: none;
-            visibility: hidden;
-        }
-        #login{
-            position: absolute; bottom: 30px;
-        }
-        .title {
-            text-align: center;
-            color:#D7627C; 
-            text-shadow: 1.5px 1px 2px #000;
-        }
-    </style>
+        var cookie = document.getElementById('hidden').value;
+        cookie.innerHTML = allcookies;
+    };
+</script>
+<style>
+    .hidden{
+        display: none;
+        visibility: hidden;
+    }
+    #login{
+        position: absolute; bottom: 30px;
+    }
+    .title {
+        text-align: center;
+        color:#D7627C; 
+        text-shadow: 1.5px 1px 2px #000;
+    }
+</style>
 </head>
 <body>
 <?php include_once('session.php') ?>
 <?php include_once('navbar_slim.php') ?>
-  <div class="container">
-  <br>
-  <a href="index.php?m=1"><h2 class="text-center title">Bienvenido</h2></a>
-    <br>
-    <div class="card mb-3">
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                <img class="d-block w-100" src="img/instucion_1.png" width="30%" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                <img class="d-block w-100" src="img/instucion_2.png" width="30%" alt="Second slide">
-                </div>
-                <div class="carousel-item">
-                <img class="d-block w-100" src="img/instucion_3.png" width="30%" alt="Third slide">
-                </div>
+<div class="container">
+<br>
+<a href="index.php?m=1"><h2 class="text-center title">Bienvenido</h2></a>
+<br>
+<div class="card mb-3">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+            <img class="d-block w-100" src="img/instucion_1.png" width="30%" alt="First slide">
+            </div>
+            <div class="carousel-item">
+            <img class="d-block w-100" src="img/instucion_2.png" width="30%" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+            <img class="d-block w-100" src="img/instucion_3.png" width="30%" alt="Third slide">
             </div>
         </div>
-        <div class="card-body">
-            <h5 class="card-title">Medidas para tu seguridad.</h5>
-            <p class="card-text">A manera de cuidar su salud y respetar la sana distancia, le pedimos de la forma más atenta hacer uso de este nuevo metodo para ordenar y pagar.</p>
-            <p class="card-text"><small class="text-muted">Consulte a su mesero para más información</small></p>
-        </div>
     </div>
+    <div class="card-body">
+        <h5 class="card-title">Medidas para tu seguridad.</h5>
+        <p class="card-text">A manera de cuidar su salud y respetar la sana distancia, le pedimos de la forma más atenta hacer uso de este nuevo metodo para ordenar y pagar.</p>
+        <p class="card-text"><small class="text-muted">Consulte a su mesero para más información</small></p>
+    </div>
+</div>
 
-        <!-- Button trigger modal -->
-    <div class="container">
-    <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
-    Iniciar
-    </button>
-    <a href="clientes.php?m=<?php echo $table?>" class="btn btn-success btn-lg btn-block">
-                Cliente Frecuente
-    </a>  
-    </div>
-    
+    <!-- Button trigger modal -->
+<div class="container">
+<button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+Iniciar
+</button>
+<a href="clientes.php?m=<?php echo $table?>" class="btn btn-success btn-lg btn-block">
+            Cliente Frecuente
+</a>  
+</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-        <!-- Comienza form -->
-            <form action="" name="myForm" method="POST">
-            <h5 class="modal-title" id="exampleModalLabel">Inicio de sesión</h5>
 
-            
-        </div>
-        <div class="modal-body">
-            <p>Use el apartado para crear un usuraio, este se utilizará únicamente para identificar su orden. No será necesario que brinde información personal en ningun momento.</p>
-            <p><i>Le recomendamos usar su RFC sin homoclave, en caso de que el nombre que ingrese ya exista.</i></p>
-            <input type="text" name="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introduzca un nombre de usuario">
-            <!--<input type="text" name="cookie" class="hidden" id="hidden" aria-describedby="emailHelp" placeholder="Introcude tu nombre de usuario">-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
-            <input type="submit" name="crear" onclick="clicked()" value="Crear" class="btn btn-info"></input>
-            <br>
-           
-        </div>
-        </div>
-        </form>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <!-- Comienza form -->
+        <form action="" name="myForm" method="POST">
+        <h5 class="modal-title" id="exampleModalLabel">Inicio de sesión</h5>
+
+        
+    </div>
+    <div class="modal-body">
+        <p>Use el apartado para crear un usuraio, este se utilizará únicamente para identificar su orden. No será necesario que brinde información personal en ningun momento.</p>
+        <p><i>Le recomendamos usar su RFC sin homoclave, en caso de que el nombre que ingrese ya exista.</i></p>
+        <input type="text" name="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introduzca un nombre de usuario">
+        <!--<input type="text" name="cookie" class="hidden" id="hidden" aria-describedby="emailHelp" placeholder="Introcude tu nombre de usuario">-->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
+        <input type="submit" name="crear" onclick="clicked()" value="Crear" class="btn btn-info"></input>
+        <br>
+       
     </div>
     </div>
-  </div>
- 
-  
+    </form>
+</div>
+</div>
+</div>
+
+
 </body>
 
 </html>

@@ -132,11 +132,11 @@ if(isset($_POST['update']) and $_SERVER['REQUEST_METHOD'] == "POST"){
       <label for="inputEmail4">Categoría:</label>
       <select id="inputState" class="form-control" name="categoria">
         <option value="<?php echo $category;?>"><?php echo $category;?></option>
-        <option value="Bebidas">Bebidas</option>
-        <option value="Entradas">Entradas</option>
-        <option value="Platillos">Platillos</option>
-        <option value="Especialidades">Especialidades</option>
-        <option value="Postres">Postres</option>
+        <option value="bebidas">Bebidas</option>
+        <option value="entradas">Entradas</option>
+        <option value="platos">Platillos</option>
+        <option value="especialidades">Especialidades</option>
+        <option value="postres">Postres</option>
       </select>
     </div>
     <div class="form-group col-md-6">

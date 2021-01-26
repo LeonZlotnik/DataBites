@@ -54,6 +54,11 @@
                         </tr>
                     </thead>";
 
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM comandas_finales WHERE platillo = '$id'");
+                    }
+
                     $sql = "SELECT * FROM comandas_finales";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
@@ -70,7 +75,7 @@
                             <td>".$row["specs"]."</td>
                             <td>".$row["size"]."</td>
                             <td>".$row["registro"]."</td>
-                            <td><a href='gestion_ventas.php?delete=".$row["platillo"]."'><i class='fas fa-trash-alt'></i></a></td>";
+                            <td><a href='gestion_ventas.php?delete=".$row["platillo"]."&ext=".$row["registro"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }
                     echo "
                         </tbody>
@@ -81,11 +86,6 @@
                     echo "<div class='alert alert-warning' role='alert'>
                     No hay información por el momento.
                           </div>";
-                }
-
-                if(isset($_GET['delete'])){
-                    $id = $_GET['delete'];
-                    $conn->query("DELETE FROM administradores WHERE id_administrador = '$id'");
                 }
     
                 $connect-> close();

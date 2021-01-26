@@ -67,6 +67,11 @@
                         </tr>
                     </thead>";
 
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
+                    }
+
                     $sql = "SELECT * FROM platillos ORDER BY id_platillo ASC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
@@ -85,8 +90,8 @@
                             <td>".$row["descripcion"]."</td>
                             <td>".$row["detalle"]."</td>
                             <td>".$row["registro"]."</td>
-                            <td><a href='productsdb.php?delete=".$row["id_platillo"]."'><i class='fas fa-trash-alt'></i></a></td>
-                            <td><a href='crearproducto.php?edit=".$row["id_platillo"]."'><i class='fas fa-edit'></i></a></td>";
+                            <td><a href='menudb.php?delete=".$row["id_platillo"]."'><i class='fas fa-trash-alt'></i></a></td>
+                            <td><a href='crear_plato.php?edit=".$row["id_platillo"]."'><i class='fas fa-edit'></i></a></td>";
                 }
                     echo "
                         </tbody>
@@ -99,11 +104,6 @@
                           </div>";
                 }
 
-                if(isset($_GET['delete'])){
-                    $id = $_GET['delete'];
-                    $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
-                }
-    
                 //$connect-> close();
     
     ?>

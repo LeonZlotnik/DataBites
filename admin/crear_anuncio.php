@@ -5,14 +5,16 @@
 $target = "/Applications/MAMP/htdocs/PHP-Python/DataBites_app/admin/anuncios/".basename($_FILES['imagen']['name']);
 
 $name = $_POST['anuncio'];
+$url = $_POST['link'];
 $image = $_FILES['imagen']['name'];
 $number = $_POST['numero'];
+$status = $_POST['status'];
   
 $conn = mysqli_connect("localhost","root","root","H_tostada") or die("error en conexion ".mysqli_connect_error());
         mysqli_set_charset($conn, "utf8");
 
 
-  $sql = "INSERT INTO anuncios (anuncio, imagen, numero) VALUES ('$name','$image','$number');";
+  $sql = "INSERT INTO anuncios (anuncio, link, imagen, numero, status) VALUES ('$name','$url','$image','$number','$status');";
   $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
 
   if(move_uploaded_file($_FILES['imagen']['tmp_name'], $target)){
@@ -65,6 +67,10 @@ $conn = mysqli_connect("localhost","root","root","H_tostada") or die("error en c
       <label for="inputPassword4">Nombre de Anuncio:</label>
       <input type="text" name="anuncio"  class="form-control" id="inputPassword4" placeholder="Inrtoduce apellido">
     </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">URL Destino:</label>
+      <input type="text" name="link"  class="form-control" id="inputPassword4" placeholder="Inrtoduce URL">
+    </div>
   </div>
   <div class="form-group col-md-2">
       <label for="inputZip">Imagen:</label>
@@ -74,11 +80,12 @@ $conn = mysqli_connect("localhost","root","root","H_tostada") or die("error en c
   <label for="inputPassword4">Posición:</label>
   <select name="numero" class="custom-select" id="inputGroupSelect01">
             <option selected>--</option>
-            <option value="1st">Primero</option>
-            <option value="2nd">Segundo</option>
-            <option value="3rd">Tercero</option>
+            <option value="First slide">Primero</option>
+            <option value="Second slide">Segundo</option>
+            <option value="Third slide">Tercero</option>
         </select>
   </div>
+  <input type="hidden" name="status" value="Detenido" class="form-control">
   <br>
   
   <a href="centro_ads.php" class="btn btn-info">Regresar</a>

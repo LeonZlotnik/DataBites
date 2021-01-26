@@ -174,20 +174,43 @@
         <h2 class="title">Menu Principal</h2>
     <br>
 
-    <div class="container" id="slider-cut">
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100 slider-h" src="img/Logo_black.png" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100 slider-h" src="img/Logo_black.png" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100 slider-h" src="img/Logo_black.png" alt="Third slide">
-    </div>
-  </div>
-</div>
+    <?php
+            require_once('z_connect.php');
+        ?>
+
+    <div class="container-fluid" id="slider-cut">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+
+        <?php 
+        $sql = "SELECT * FROM anuncios WHERE status = 'Activo' AND numero = 'First slide'";
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_array($result)){
+        ?>
+                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z">
+        <?php };?>
+                    </div>
+                <div class="carousel-item">
+        <?php 
+        $sql = "SELECT * FROM anuncios WHERE status = 'Activo' AND numero = 'Second slide'";
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_array($result)){
+        ?>
+                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z">
+        <?php };?>
+                </div>
+                <div class="carousel-item">
+        <?php 
+        $sql = "SELECT * FROM anuncios WHERE status = 'Activo' AND numero = 'Third slide'";
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_array($result)){
+        ?>
+                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z">
+        <?php };?>
+                </div>
+            </div>
+        </div>
     </div>
     <br>
     <div class="contain">

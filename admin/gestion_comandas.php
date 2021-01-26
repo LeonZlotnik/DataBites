@@ -94,20 +94,24 @@
                     $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM comandas_generadas WHERE platillo = '$id'");
+                    }
                     if($result-> num_rows > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                 
                     ?>
                                     <tbody>
                                             <td><?php echo $row['usuario'] ?></td>
-                                            <td class='producto'><?php echo $row['platillos'] ?></td>
+                                            <td class='producto'><?php echo $row['platillo'] ?></td>
                                             <td><?php echo $row['specs'] ?></td>
                                             <td>$<?php echo $row['costo'] ?>MXN</td>
                                             <td><?php echo $row['cantidad'] ?></td>
                                             <td><?php echo $row['size'] ?></td>
-                                            <td><?php echo $row['registo'] ?></td>
+                                            <td><?php echo $row['registro'] ?></td>
                                             <td id='hidden'><?php echo $row['status'] ?></td>
-                                            <td><a href='productsdb.php?delete="<?php echo $row['id_platillo'] ?>"' ><i class='fas fa-trash-alt'></i></a></td>
+                                            <td><a href='gestion_comandas.php?delete="<?php echo $row['platillo'] ?>"' ><i class='fas fa-trash-alt'></i></a></td>
                             
                                     </tbody>
                       
@@ -123,10 +127,7 @@
                                 $total1 += $value["total"];
                             };
 
-                            if(isset($_GET['delete'])){
-                                $id = $_GET['delete'];
-                                $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
-                            }
+                            
                 ?>
                   </table>
                     </div>
@@ -219,21 +220,24 @@
                 //------------------------------------------------------------------------------------------------------------
                     $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '2' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
-
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM comandas_generadas WHERE platillo = '$id'");
+                    }
                     if($result-> num_rows > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                 
                     ?>
                                     <tbody>
                                             <td><?php echo $row['usuario'] ?></td>
-                                            <td class='producto'><?php echo $row['platillos'] ?></td>
+                                            <td class='producto'><?php echo $row['platillo'] ?></td>
                                             <td><?php echo $row['specs'] ?></td>
                                             <td>$<?php echo $row['costo'] ?>MXN</td>
                                             <td><?php echo $row['cantidad'] ?></td>
                                             <td><?php echo $row['size'] ?></td>
                                             <td><?php echo $row['registo'] ?></td>
                                             <td id='hidden'><?php echo $row['status'] ?></td>
-                                            <td><a href='productsdb.php?delete="<?php echo $row['id_platillo'] ?>"' ><i class='fas fa-trash-alt'></i></a></td>
+                                            <td><a href='gestion_comandas.php?delete="<?php echo $row['platillo'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
                             
                                     </tbody>
                       
@@ -248,11 +252,7 @@
                             foreach($result as $value){
                                 $total1 += $value["total"];
                             };
-
-                            if(isset($_GET['delete'])){
-                                $id = $_GET['delete'];
-                                $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
-                            }
+                          
                 ?>
                   </table>
                     </div>
@@ -344,7 +344,10 @@
                 //------------------PHP primera parte: Rendering ------------------------------------------------------------------------------------------
                     $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
-
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
+                    }
                     if($result-> num_rows > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                 
@@ -374,10 +377,6 @@
                                 $total1 += $value["total"];
                             };
 
-                            if(isset($_GET['delete'])){
-                                $id = $_GET['delete'];
-                                $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
-                            }
                 ?>
                   </table>
                     </div>
@@ -469,7 +468,10 @@
                 //------------------PHP primera parte: Rendering ------------------------------------------------------------------------------------------
                     $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
-
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
+                    }
                     if($result-> num_rows > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                 
@@ -499,10 +501,6 @@
                                 $total1 += $value["total"];
                             };
 
-                            if(isset($_GET['delete'])){
-                                $id = $_GET['delete'];
-                                $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
-                            }
                 ?>
                   </table>
                     </div>
@@ -594,7 +592,10 @@
                 //------------------PHP primera parte: Rendering ------------------------------------------------------------------------------------------
                     $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
-
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
+                    }
                     if($result-> num_rows > 0) {
                         while($row = mysqli_fetch_assoc($result)){
                 
@@ -624,10 +625,6 @@
                                 $total1 += $value["total"];
                             };
 
-                            if(isset($_GET['delete'])){
-                                $id = $_GET['delete'];
-                                $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
-                            }
                 ?>
                   </table>
                     </div>

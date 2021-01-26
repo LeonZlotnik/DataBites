@@ -45,6 +45,11 @@
                         </tr>
                     </thead>";
 
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM administradores WHERE id_admin = '$id'");
+                    }
+
                     $sql = "SELECT * FROM administradores";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
@@ -58,7 +63,7 @@
                             <td>".$row["password"]."</td>
                             <td>".$row["acceso"]."</td>
                             <td>".$row["registro"]."</td>
-                            <td><a href='control_admin.php?delete=".$row["id_admin"]."'><i class='fas fa-trash-alt'></i></a></td>";
+                            <td><a href='contol_admin.php?delete=".$row["id_admin"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }
                     echo "
                         </tbody>
@@ -71,11 +76,6 @@
                           </div>";
                 }
 
-                if(isset($_GET['delete'])){
-                    $id = $_GET['delete'];
-                    $conn->query("DELETE FROM administradores WHERE id_administrador = '$id'");
-                }
-    
                 $connect-> close();
     
     ?>

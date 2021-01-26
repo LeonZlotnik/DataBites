@@ -65,6 +65,11 @@
                         </tr>
                     </thead>";
 
+                    if(isset($_GET['delete'])){
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM inventarios WHERE sku= '$id'");
+                    }
+
                     $sql = "SELECT * FROM inventarios ORDER BY sku ASC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
@@ -81,8 +86,8 @@
                             <td>$".$row["precio"]." MXN</td>
                             <td>".$row["promedio_c"]."</td>
                             <td>".$row["registro"]."</td>
-                            <td><a href='productsdb.php?delete=".$row["sku"]."'><i class='fas fa-trash-alt'></i></a></td>
-                            <td><a href='crearproducto.php?edit=".$row["sku"]."'><i class='fas fa-edit'></i></a></td>";
+                            <td><a href='inventariodb.php?delete=".$row["sku"]."'><i class='fas fa-trash-alt'></i></a></td>
+                            <td><a href='crear_producto.php?edit=".$row["sku"]."'><i class='fas fa-edit'></i></a></td>";
                 }
                     echo "
                         </tbody>
@@ -94,13 +99,8 @@
                     No hay informacion por el momento.
                           </div>";
                 }
-
-                if(isset($_GET['delete'])){
-                    $id = $_GET['delete'];
-                    $conn->query("DELETE FROM platillos WHERE id_platillo = '$id'");
-                }
     
-                //$connect-> close();
+                $connect-> close();
     
     ?>
    

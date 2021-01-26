@@ -1,302 +1,34 @@
+<?php include_once('navbar_slim.php');?>
+
 <?php
-   session_start();
-   $USR = $_SESSION['usuario'];
-   $MSA = $_SESSION['m'];
+            require_once('z_connect.php');
+            
+            $sql = "SELECT * FROM anuncios WHERE status = 'Activo'";
+            $result = mysqli_query($conn, $sql);
+            while ($row = mysqli_fetch_array($result)){
 ?>
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shorcut icon" type="img/png" href="img/favicon.png">
-    <title>Detalles</title>
-    <style>
-        .comanda{
-            position:fixed; bottom:40px; right:20px;
-            transform: translateX(-50%);
-            background: linear-gradient(to top, #4ae7ff, #CFEEF9 );
-            width: 50px;
-            height: 50px;
-            line-height: 55px;
-            font-size: 22px;
-            text-align: center;
-            color: #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 5;
-        }
-    
-        .comanda a{
-            color: white;
-            position: relative; top: 1px;
-        }
-
-        .title {
-            text-align: center;
-        }
-        
-    </style>
-</head>
-<body>
-<?php include_once('nav_bar.php') ?>
-
-    <div class="comanda">
-        <a href="comanda.php"><i class="fas fa-utensils"></i></a>
+<div class="container">
+<img class="card-img-top" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Card image cap">
+<h5 class="card-title"><?php echo $row['anuncio']?></h5>
+<br>
+<div class="container" id="slider-cut">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="A">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="B">
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
 <?php
-
-require_once("z_connect.php");
-
-if(isset($_GET['ID'])){
-
-    $ID = mysqli_real_escape_string($conn, $_GET['ID']);
-
-$sql = "SELECT * FROM platillos WHERE id_platillo = $ID";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_array($result);
-
-    /*if(isset($_POST['sum'])){
-
-        $n = $_POST['likes'];
-        $likes = mysql_query("UPDATE platillos SET likes = $n+1 WHERE id_platillo = $ID");
-        $result_likes($db, $likes) or die(("error en query $likes".mysqli_error()));
-        
-        if($result_likes){
-            echo "Sucecc";
-        }else{
-            echo "Error";
-        }
-    }*/
 }
-
-if(isset($_GET['plato'])){
-
-    $N = mysqli_real_escape_string($conn, $_GET['plato']);
-
-    $info = "SELECT ingrediente, valor FROM guarnicones WHERE platillo = '$N'";
-    $res = mysqli_query($conn, $info);
-    $line = mysqli_fetch_array($res);
-
-if(isset($_POST['add_to_cart'])){
-
-    require_once("z_connect.php");
-
-    $username = $_POST["usuario"];
-    $product = $_POST["platillo"];
-    $price = $_POST["costo"];
-    $amount = $_POST["cantidad"];
-    $specs = $_POST["specs"];
-    $status = $_POST["status"];
-    $size = $_POST["size"];
-    $table = $_POST["mesa"];
-    
-  
-  $sql = "INSERT INTO comandas_iniciales (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
-  
-  $res = mysqli_query($conn, $sql); //or die ("error en query $sql".mysqli_error());
-  
-  if($res){
-    $success = "<div class='alert alert-success' role='alert'>
-          El producto fue agregado exitosamente!
-          </div>";
-  }else{
-    $error = "<div class='alert alert-danger' role='alert'>
-    Verifique su nombre de ususario, revise en Preferencias.
-    </div>";
-  };
-  
-  mysqli_free_result($res);
-  mysqli_close($conn);
-  
-  }
- 
- if(isset($_POST['plus'])) {
-
- }
-
 ?>
-    <div class="container">
-        <br>
-        <h2 class="title">Detalles</h2>
-        <br>
-            <div class="card-deck">
-                <div class="card mb-3">
-                    <img class="card-img-top"<?php echo "src='admin/img_menu/".$row['imagen']."'";?> alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['platillo'];?></h5>
-                        <form action="" method="POST">
-                            <button type="submit" name="sum" value="Like" class="btn btn-info"><i class="fas fa-thumbs-up"></i></button>
-                        </form>
-                        
-                        <br>
-                        <div id="accordion">
-                       
-                            <div class="card">
-                                <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" name="sum" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Detalles del plato
-                                    </button>
-                                </h5>
-                                </div>
-
-                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
-                                    <?php echo $row['detalle'];?>
-                                </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="input-group-text" id="btnGroupAddon">$ <?php echo $row['precio']?> MXN</div>
-                    
-                        <br>
-                        <div id="accordion">
-        
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Ordenar
-                                    </button>
-                                </h5>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    <form action="" method="POST">
-                        
-                                        <div class="card-body">
-                                            <p class="h5">Porciones:</p>
-                                            <select class="custom-select" name="size" id="inputGroupSelect01">
-                                                <option selected>...</option>
-                                                <option value="grande">Grande</option>
-                                                <option value="mediano">Mediano</option>
-                                            </select>
-                                            <br>
-                                            <br>
-                                            <div class="form-group">
-                                            <p class="h5">Especificaciones:</p>
-                                                <textarea class="form-control" name="specs" id="exampleFormControlTextarea1" rows="3" placeholder="Personalise su orden."></textarea>
-                                            </div>
-                                        
-                                            <p class="h5">Cantidad:</p>
-                                            <select class="custom-select" name="cantidad" id="inputGroupSelect01">
-                                                <option selected value="null">...</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                            <br>
-                                            <p class="h5">Guarniciones:</p>
-                                            <select class="custom-select" name="size" id="inputGroupSelect01">
-                                                <option selected>...</option>
-                                                
-                                                <option value="<?php echo $line['ingrediente']?>"><?php echo $line['ingrediente']?></option>
-                                                
-                                                </select>
-                                            <br>
-                                            
-                                            <input type="hidden" name="platillo" min="0" max="10" value="<?php echo $row['platillo']?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="usuario" value="<?php echo $USR ?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="mesa" value="<?php echo $MSA ?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="costo" min="0" max="10" value="<?php echo $row['precio']?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="status" min="0" max="10" value="Comanda" class="form-control" id="inputCity" placeholder="0">
-                                            </div>  
-                                            
-                                            <button type="submit" name="add_to_cart" class="btn btn-outline-info">Agregar</button>      
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <?php
-                        
-                        
-
-                        } ?>
-                        <div id="accordion">
-        
-                            <div class="card">
-                                <div class="card-header" id="heading3">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                    Adicionales
-                                    </button>
-                                </h5>
-                                </div>
-                                <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion">
-                                <div class="card-body">
-                                    <form action="" method="POST">
-                        
-                                        <div class="card-body">
-                                            <p class="h5">Guarniciones:</p>
-                                            <select class="custom-select" name="size" id="inputGroupSelect01">
-                                                <option selected>...</option>
-                                                <option value="<?php echo $line['ingrediente']?>"><?php echo $line['ingrediente']?></option>
-                                            </select>
-                                            <br>
-                                            <br>
-                                            <p class="h5">Extras:</p>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                <label class="form-check-label" for="inlineCheckbox1">Tocino</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <label class="form-check-label" for="inlineCheckbox2">+$15</label>
-                                            </div>
-                                            <br>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                <label class="form-check-label" for="inlineCheckbox1">Cebolla</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <label class="form-check-label" for="inlineCheckbox2">+$15</label>
-                                            </div>
-                                            <br>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                <label class="form-check-label" for="inlineCheckbox1">Mango</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <label class="form-check-label" for="inlineCheckbox2">+$15</label>
-                                            </div>
-                                           
-                        
-                                        
-                                            <!--<input type="hidden" name="platillo" min="0" max="10" value="<?php echo $row['platillo']?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="usuario" value="<?php echo $USR ?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="mesa" value="<?php echo $MSA ?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="costo" min="0" max="10" value="<?php echo $row['precio']?>" class="form-control" id="inputCity" placeholder="0">
-                                            <input type="hidden" name="status" min="0" max="10" value="Comanda" class="form-control" id="inputCity" placeholder="0">-->
-                                            </div>  
-                                            
-                                            <button type="submit" name="add_to_cart" class="btn btn-outline-info">Agregar</button>      
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-
-
-                        </div>
-                        <div class="container">
-                            <?php echo $success ?>
-                            <?php echo $error ?>
-                        </div>
-    </div>
-
-</body>
-</html>

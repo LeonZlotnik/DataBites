@@ -37,6 +37,10 @@
         .position{
             position: relative; left: 10%;
         }
+        .margin{
+            margin-left: 2%;
+            margin-right:2%;
+        }
     </style>
 </head>
 <body>
@@ -54,6 +58,7 @@
         <br>
 
             <?php
+
             require_once('../z_connect.php');
             $sql = "SELECT * FROM anuncios ORDER BY 'numero' ASC";
             $result = mysqli_query($conn, $sql);
@@ -65,15 +70,33 @@
                     <img class="card-img-top" <?php echo "src='anuncios/".$row['imagen']."'";?> alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['anuncio']?></h5>
+                        <p><i>Status: <?php echo $row['status']?></i></p>
+                        <br>
                         <div class="cantidad">
-                            <a href="#" class="btn btn-outline-info">Publicar</a>
-                            <a href="#" class="btn btn-outline-danger position">Eliminar</a>
+                            <a href="centro_ads.php?start=<?php echo $row['id_anuncio']?>" class="btn btn-outline-success">Publicar</a>
+                            <a href="centro_ads.php?pause=<?php echo $row['id_anuncio']?>" class="btn btn-outline-warning margin">Detener</a>
+                            <a href="centro_ads.php?delete=<?php echo $row['id_anuncio']?>" class="btn btn-outline-danger">Eliminar</a>
                         </div>
                     </div>
                 </div>
             </div>
+           
             <?php
+            
                 }
+                if(isset($_GET['start'])){
+                    $id = $_GET['start'];
+                    $conn->query("UPDATE anuncios SET status ='Activo' WHERE id_anuncio = '$id'");
+                }
+                if(isset($_GET['pause'])){
+                    $id = $_GET['pause'];
+                    $conn->query("UPDATE anuncios SET status ='Detenido' WHERE id_anuncio = '$id'");
+                }
+                if(isset($_GET['delete'])){
+                    $id = $_GET['delete'];
+                    $conn->query("DELETE FROM anuncios WHERE id_anuncio = '$id'");
+                }
+                mysqli_close($conn); 
             ?>
     </div>       
 </body>
