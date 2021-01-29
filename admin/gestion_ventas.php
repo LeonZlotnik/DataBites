@@ -88,8 +88,6 @@
                           </div>";
                 }
     
-                $connect-> close();
-    
     ?>
     </section>
     </section>
@@ -110,6 +108,7 @@
                 });
             });
     </script>
+    <?php  $connect-> close();?>
 </body>
 </html>
 

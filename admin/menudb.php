@@ -28,7 +28,8 @@
             <a class="btn btn-warning btn-lg" href="#">Concluir</a>
         <p><?php echo $sql;?></p>
         <?php }else{?>
-            <a href="crear_plato.php" class="btn btn-default btn btn-info btn-lg">Crear Producto</a>
+            <a href="crear_plato.php" class="btn btn-default btn btn-info btn-lg">Crear Plato</a>
+            <a href="crearguarnicion.php" class="btn btn-default btn btn-info btn-lg">Crear Guarnición</a>
         <?php }?> 
     </div>
     <br>
@@ -41,11 +42,7 @@
   
     <section class="container">
     <?php 
-         $conn = mysqli_connect("localhost","root","root","H_tostada");
-         $conn->set_charset("utf8");
-         if($conn -> connect_erro){
-             die("La Conexion Fallo: ".$conn-> connect_error);
-         }
+         require_once('../z_connect.php');
 
         echo "
         <div class='table-responsive'>
@@ -126,5 +123,6 @@
                 });
             });
     </script>
+    <?php  $connect-> close();?>
 </body>
 </html>

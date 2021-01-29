@@ -61,7 +61,7 @@
                 die("La Conexion Fallo: ".$db->connect_error);
             }
 
-            $sql = "SELECT * FROM platillos WHERE categoria = 'especialidades' ORDER BY 'estado' ASC, 'platillo' DESC";
+            $sql = "SELECT * FROM platillos WHERE categoria = 'especialidades' AND estado = 'existente' ORDER BY 'platillo' DESC";
             $result = mysqli_query($db, $sql);
             while ($row = mysqli_fetch_array($result)){
         ?>

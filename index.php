@@ -35,20 +35,6 @@ if(isset($_POST['crear'])){
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introducción</title>
 
- <!--Captación de cookies-->
-<script>
-    function clicked(){
-        var usuario = escape(document.myForm.usuario.value + ";");
-        console.log(usuario);
-        document.cookie = "name = " + usuario;
-
-        var allcookies = unescape(document.cookie);
-        console.log(allcookies);
-
-        var cookie = document.getElementById('hidden').value;
-        cookie.innerHTML = allcookies;
-    };
-</script>
 <style>
     .hidden{
         display: none;
@@ -117,12 +103,12 @@ Iniciar
     <div class="modal-body">
         <p>Use el apartado para crear un usuraio, este se utilizará únicamente para identificar su orden. No será necesario que brinde información personal en ningun momento.</p>
         <p><i>Le recomendamos usar su RFC sin homoclave, en caso de que el nombre que ingrese ya exista.</i></p>
-        <input type="text" name="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introduzca un nombre de usuario">
+        <input type="text" name="usuario" class="form-control" id="usuario" aria-describedby="emailHelp" placeholder="Introduzca un nombre de usuario" required>
         <!--<input type="text" name="cookie" class="hidden" id="hidden" aria-describedby="emailHelp" placeholder="Introcude tu nombre de usuario">-->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
-        <input type="submit" name="crear" onclick="clicked()" value="Crear" class="btn btn-info"></input>
+        <input type="submit" id="submit" name="crear" value="Crear" class="btn btn-info"></input>
         <br>
        
     </div>
@@ -136,3 +122,15 @@ Iniciar
 </body>
 
 </html>
+<script>
+/*document.getElementById("submit").addEventListener("click", function(event){
+    user = document.getElementById("usuario")
+    if(user == null){
+        event.preventDefault()
+        console.log('Error')
+    }else{
+        console.log('OK')
+    }
+    
+});*/
+</script>

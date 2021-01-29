@@ -82,8 +82,6 @@
                     $conn->query("DELETE FROM clientes WHERE id_cliente = '$id'");
                 }
     
-                $connect-> close();
-    
     ?>
     </section>
     </section>
@@ -104,6 +102,7 @@
                 });
             });
     </script>
+    <?php  $connect-> close();?>
 </body>
 </html>
 

@@ -188,7 +188,7 @@
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_array($result)){
         ?>
-                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z">
+                    <a href="<?php echo $row['link'] ?>"><img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z"></a>
         <?php };?>
                     </div>
                 <div class="carousel-item">
@@ -197,7 +197,7 @@
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_array($result)){
         ?>
-                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z">
+                    <a href="<?php echo $row['link'] ?>"><img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z"></a>
         <?php };?>
                 </div>
                 <div class="carousel-item">
@@ -206,7 +206,7 @@
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_array($result)){
         ?>
-                    <img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z">
+                    <a href="<?php echo $row['link'] ?>"><img class="d-block w-100 slider-h" <?php echo "src='admin/anuncios/".$row['imagen']."'";?> alt="Z"></a>
         <?php };?>
                 </div>
             </div>

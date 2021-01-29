@@ -90,9 +90,6 @@
                     No hay información por el momento.
                           </div>";
                 }
-    
-                $connect-> close();
-    
     ?>
     </section>
     </section>
@@ -113,5 +110,6 @@
                 });
             });
     </script>
+    <?php  $connect-> close();?>
 </body>
 </html>

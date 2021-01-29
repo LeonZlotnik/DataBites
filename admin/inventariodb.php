@@ -41,11 +41,7 @@
   
     <section class="container">
     <?php 
-         $conn = mysqli_connect("localhost","root","root","H_tostada");
-         $conn->set_charset("utf8");
-         if($conn -> connect_erro){
-             die("La Conexion Fallo: ".$conn-> connect_error);
-         }
+         require '../z_connect.php';
 
         echo "
         <div class='table-responsive'>
@@ -56,9 +52,9 @@
                             <th scope='col'>Producto</th>
                             <th scope='col'>Marca</th>
                             <th scope='col'>Cantidad</th>
-                            <th scope='col'>Gramos/Litros</th>
-                            <th scope='col'>Precio</th>
-                            <th scope='col'>Consumo Promedio</th>
+                            <th scope='col'>Unidades</th>
+                            <th scope='col'>Precio de Venta</th>
+                            <th scope='col'>Costo de Producto</th>
                             <th scope='col'>Registro</th>
                             <th scope='col'>Eliminar</th>
                             <th scope='col'>Editar</th>
@@ -84,7 +80,7 @@
                             <td>".$row["unidad_c"]."</td>
                             <td>".$row["medida"]."</td>
                             <td>$".$row["precio"]." MXN</td>
-                            <td>".$row["promedio_c"]."</td>
+                            <td>$".$row["costo"]." MXN</td>
                             <td>".$row["registro"]."</td>
                             <td><a href='inventariodb.php?delete=".$row["sku"]."'><i class='fas fa-trash-alt'></i></a></td>
                             <td><a href='crear_producto.php?edit=".$row["sku"]."'><i class='fas fa-edit'></i></a></td>";
@@ -98,15 +94,13 @@
                     echo "<div class='alert alert-warning' role='alert'>
                     No hay informacion por el momento.
                           </div>";
-                }
-    
-                $connect-> close();
+                }        
     
     ?>
    
     </section>
     <script type='text/javascript'>
-            let search_input = document.getElementById('search')
+             let search_input = document.getElementById('search')
             
             search_input.addEventListener('keyup',function(e){
                 let search_item = e.target.value.toLowerCase();
@@ -122,5 +116,6 @@
                 });
             });
     </script>
+    <?php  $connect-> close();?>
 </body>
 </html>

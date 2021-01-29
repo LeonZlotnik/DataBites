@@ -60,6 +60,20 @@
             <?php
 
             require_once('../z_connect.php');
+
+            if(isset($_GET['start'])){
+                $id = $_GET['start'];
+                $conn->query("UPDATE anuncios SET status ='Activo' WHERE id_anuncio = '$id'");
+            }
+            if(isset($_GET['pause'])){
+                $id = $_GET['pause'];
+                $conn->query("UPDATE anuncios SET status ='Detenido' WHERE id_anuncio = '$id'");
+            }
+            if(isset($_GET['delete'])){
+                $id = $_GET['delete'];
+                $conn->query("DELETE FROM anuncios WHERE id_anuncio = '$id'");
+            }
+            
             $sql = "SELECT * FROM anuncios ORDER BY 'numero' ASC";
             $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_array($result)){
@@ -84,18 +98,7 @@
             <?php
             
                 }
-                if(isset($_GET['start'])){
-                    $id = $_GET['start'];
-                    $conn->query("UPDATE anuncios SET status ='Activo' WHERE id_anuncio = '$id'");
-                }
-                if(isset($_GET['pause'])){
-                    $id = $_GET['pause'];
-                    $conn->query("UPDATE anuncios SET status ='Detenido' WHERE id_anuncio = '$id'");
-                }
-                if(isset($_GET['delete'])){
-                    $id = $_GET['delete'];
-                    $conn->query("DELETE FROM anuncios WHERE id_anuncio = '$id'");
-                }
+                
                 mysqli_close($conn); 
             ?>
     </div>       
