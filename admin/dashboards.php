@@ -3,7 +3,7 @@ require_once('../z_connect.php');
 
 //Grafica Uno
 
-$sql_one = "SELECT Date(registro ) as fecha, Sum(Costo*cantidad )as total From comandas_finales Group by 1 Order by 1" ;
+$sql_one = "SELECT Date(registro) as fecha, Sum(Costo*cantidad )as total From comandas_finales Group by 1 Order by 1" ;
 $result = mysqli_query($conn, $sql_one) or die ("error en query $sql_one".mysqli_error());
 $valoresY = array();
 $valoresX= array();

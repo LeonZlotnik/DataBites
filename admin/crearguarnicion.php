@@ -86,7 +86,7 @@ if(isset($_GET['edit'])){
 <body>
 <?php require_once('admin_navbar.php')?>
 <br>
-<h2 class="text-center title">Nombre de Guarnición:</h2>
+<h2 class="text-center title">Nombre de Guarnición</h2>
 <br>
 <section class="container">
 <form method="POST" enctype="multipart/form-data">

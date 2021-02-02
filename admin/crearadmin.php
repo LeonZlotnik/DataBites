@@ -45,16 +45,16 @@
     
     <div class="form-group col-md-6">
       <label for="inputPassword4">Usuario:</label>
-      <input type="text" name="usuario"  class="form-control" id="inputPassword4" placeholder="Inrtoduce apellido">
+      <input type="text" name="usuario"  class="form-control" id="inputPassword4" placeholder="Inrtoduce apellido" required>
     </div>
   </div>
   <div class="form-row">
     <label for="inputAddress2">Contraseña:</label>
-    <input type="password" name="password"  class="form-control" id="inputAddress2" placeholder="Inrtoduce contrase単a">
+    <input type="password" name="password"  class="form-control" id="inputAddress2" placeholder="Inrtoduce contrase単a" required>
   </div>
   <br>
   <div class="form-row">
-  <select name="acceso" class="custom-select" id="inputGroupSelect01">
+  <select name="acceso" class="custom-select" id="inputGroupSelect01" required>
             <option value="null">--</option>
             <option value="gerente">Gerencia</option>
             <option value="piso">Personal</option>

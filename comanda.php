@@ -122,8 +122,8 @@ if(isset($_POST['ordenar'])){
                     </thead>";
 
                     if(isset($_GET['delete'])){
-                        $platillo = $_GET['delete'];
-                        $conn->query("DELETE FROM comandas_iniciales WHERE platillo = '$platillo'");
+                        $id = $_GET['delete'];
+                        $conn->query("DELETE FROM comandas_iniciales WHERE id_comanda = '$id'");
                         header('Location:comanda.php');
                     };
 
@@ -144,7 +144,7 @@ if(isset($_POST['ordenar'])){
                             <td>".$row["size"]."</td>
                             <td>".$row["registro"]."</td>
                             <td id='hidden'>".$row["status"]."</td>
-                            <td><a href='comanda.php?delete=".$row["platillo"]."'><i class='fas fa-trash-alt'></i></a></td>";
+                            <td><a href='comanda.php?delete=".$row["id_comanda"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }
                     echo "
                         </tbody>

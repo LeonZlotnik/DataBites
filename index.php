@@ -72,7 +72,7 @@ if(isset($_POST['crear'])){
         </div>
     </div>
     <div class="card-body">
-        <h5 class="card-title">Medidas para tu seguridad.</h5>
+        <h5 class="card-title">Medidas para su seguridad.</h5>
         <p class="card-text">A manera de cuidar su salud y respetar la sana distancia, le pedimos de la forma más atenta hacer uso de este nuevo metodo para ordenar y pagar.</p>
         <p class="card-text"><small class="text-muted">Consulte a su mesero para más información</small></p>
     </div>

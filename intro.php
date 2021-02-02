@@ -98,9 +98,17 @@
             position: relative; top: 1px;
         }
 
+        .mobile-screen{
+            display: block;
+        }
+
         @media only screen and (min-width: 500px){
             .slider-h{
             height: 40vh;
+        }
+
+        .mobile-screen{
+            display: none;
         }
 
         .contain{
@@ -166,19 +174,19 @@
     <?php include_once('nav_bar.php') ?>
     <br>
 
-    <div class="comanda">
+    <div class="comanda mobile-screen">
         <a href="comanda.php"><i class="fas fa-utensils"></i></a>
     </div>
 
 
-        <h2 class="title">Menu Principal</h2>
+        <h2 class="title mobile-screen">Menu Principal</h2>
     <br>
 
     <?php
             require_once('z_connect.php');
         ?>
 
-    <div class="container-fluid" id="slider-cut">
+    <div class="container-fluid mobile-screen" id="slider-cut">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -213,7 +221,7 @@
         </div>
     </div>
     <br>
-    <div class="contain">
+    <div class="contain mobile-screen">
         <div class="box">
             <div class="imgBox">
                 <img src="img/restaurante.jpeg" alt="">

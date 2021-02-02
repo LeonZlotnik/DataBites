@@ -1,7 +1,7 @@
 <?php
 //Creación de Producto
 require '../z_connect.php';
-if (isset($_POST['create'])) {
+if (isset($_POST['create'])){
 
   $target = "/Applications/MAMP/htdocs/PHP-Python/DataBites_app/admin/img_menu/".$_FILES['imagen']['name'];
 
@@ -22,7 +22,7 @@ if (isset($_POST['create'])) {
   $result = mysqli_query($conn, $sql) or die ("error en query $sql" . mysqli_error());
 
 
-  if (move_uploaded_file($_FILES['imagen']['tmp_name'], $target)) {
+  if (move_uploaded_file($_FILES['imagen']['tmp_name'], $target)){
     echo "Success";
   } else {
     echo "<script>console.log('Error de carga')</script>";
@@ -129,6 +129,12 @@ if (isset($_GET['edit'])) {
     #error{
       display: none;
     }
+
+    .title {
+            text-align: center;
+            color:#D7627C; 
+            text-shadow: 1.5px 1px 2px #000;
+        } 
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -141,7 +147,7 @@ if (isset($_GET['edit'])) {
 <body>
     <?php require_once('admin_navbar.php') ?>
     <br>
-    <h2 class="text-center">Crear Plato</h2>
+    <h2 class="text-center title">Crear Plato</h2>
     <br>
     <section class="container">
         <form method="POST" id="form" enctype="multipart/form-data">
@@ -149,13 +155,13 @@ if (isset($_GET['edit'])) {
             <!--Sección Formulario-->
             <div class="form-row">
                 <label for="inputAddress2">Nombre del Plato:</label>
-                <input type="text" class="form-control" id="inputAddress2" name="platillo" value="<?php echo $dish ?>" placeholder="Introduce nombre">
+                <input type="text" class="form-control" id="inputAddress2" name="platillo" value="<?php echo $dish ?>" placeholder="Introduce nombre" required>
             </div>
             <br>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Categoría:</label>
-                    <select id="inputState" class="form-control" name="categoria">
+                    <select id="inputState" class="form-control" name="categoria" required>
                         <option><?php echo $category; ?></option>
                         <option value="bebidas">Bebidas</option>
                         <option value="entradas">Entradas</option>
@@ -166,7 +172,7 @@ if (isset($_GET['edit'])) {
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Estado:</label>
-                    <select id="inputState" class="form-control" name="estado">
+                    <select id="inputState" class="form-control" name="estado" required>
                         <option><?php echo $status; ?></option>
                         <option value="Existente">Existente</option>
                         <option value="Agotado">Agotado</option>
@@ -177,11 +183,11 @@ if (isset($_GET['edit'])) {
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputCity">Precio Venta:</label>
-                    <input type="number" step="0.01" min="0" max="100000" class="form-control" name="precio" value="<?php echo $price; ?>" id="precio" placeholder="$00.00">
+                    <input type="number" step="0.01" min="0" max="100000" class="form-control" name="precio" value="<?php echo $price; ?>" id="precio" placeholder="$00.00" required>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Costo:</label>
-                    <input type="number" step="0.01" min="0" max="100000" class="form-control" name="costo" value="<?php echo $cost; ?>" id="costo" placeholder="$00.00">
+                    <input type="number" step="0.01" min="0" max="100000" class="form-control" name="costo" value="<?php echo $cost; ?>" id="costo" placeholder="$00.00" required>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Imagen:</label>
@@ -203,7 +209,7 @@ if (isset($_GET['edit'])) {
 
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Descripción</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" name="descripcion"
+                <textarea required class="form-control" id="exampleFormControlTextarea1" name="descripcion"
                     rows="3"><?php echo $desc; ?></textarea>
             </div>
             <div class="form-group">
@@ -271,7 +277,7 @@ if (isset($_GET['edit'])) {
                     <label id="<?php echo $extra["producto"];?>" for="extra<?php echo++$j;?>">
                         <?php echo  "$".$extra["precio"] . " " . $extra["producto"]; ?></label>
                     <input type="checkbox" id="extra<?php echo$j;?>" style="" name="extras[]"
-                        value="<?php echo $extra["sku"];?>">
+                        value="<?php echo $extra["id_inventario"];?>">
                   </div>
                 </div>
                 <?php
@@ -285,7 +291,6 @@ if (isset($_GET['edit'])) {
             <!--Cambio Variable GET-->
             <?php if ($update == true) { ?>
             <input class="btn btn-warning" type="submit" name="update" value="Editar" id="gridCheck">
-            <p><?php echo $mysql; ?></p>
             <?php } else { ?>
             <input class="btn btn-info" type="submit" name="create" value="Crear" id="gridCheck">
             <?php } ?>

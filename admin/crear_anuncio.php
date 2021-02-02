@@ -65,20 +65,20 @@ $conn = mysqli_connect("localhost","root","root","H_tostada") or die("error en c
     
     <div class="form-group col-md-6">
       <label for="inputPassword4">Nombre de Anuncio:</label>
-      <input type="text" name="anuncio"  class="form-control" id="inputPassword4" placeholder="Inrtoduce apellido">
+      <input type="text" name="anuncio"  class="form-control" id="inputPassword4" placeholder="Inrtoduce apellido" required>
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">URL Destino:</label>
-      <input type="text" name="link"  class="form-control" id="inputPassword4" placeholder="Inrtoduce URL">
+      <input type="text" name="link"  class="form-control" id="inputPassword4" placeholder="Inrtoduce URL" required>
     </div>
   </div>
   <div class="form-group col-md-2">
       <label for="inputZip">Imagen:</label>
-      <input type="file" class="form-control" name="imagen" value="<?php echo $images;?>" id="inputZip">
+      <input type="file" class="form-control" name="imagen" value="<?php echo $images;?>" id="inputZip" required>
     </div>
   <div class="form-row">
   <label for="inputPassword4">Posición:</label>
-  <select name="numero" class="custom-select" id="inputGroupSelect01">
+  <select name="numero" class="custom-select" id="inputGroupSelect01" required>
             <option selected>--</option>
             <option value="First slide">Primero</option>
             <option value="Second slide">Segundo</option>

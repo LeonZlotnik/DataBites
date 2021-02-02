@@ -84,7 +84,6 @@ if(isset($_GET['edit'])){
 
 };
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,10 +94,17 @@ if(isset($_GET['edit'])){
     <link rel="shorcut icon" type="img/png" href="img/favicon.png">
     <link rel="stylesheet" type="text/css" href="admin_controll.css">
 </head>
+<style>
+.title {
+            text-align: center;
+            color:#D7627C; 
+            text-shadow: 1.5px 1px 2px #000;
+        } 
+</style>
 <body>
 <?php require_once('admin_navbar.php')?>
 <br>
-<h2 class="text-center">Nuevo Producto</h2>
+<h2 class="text-center title">Nuevo Producto</h2>
 <br>
 <section class="container">
 <form method="POST" enctype="multipart/form-data">

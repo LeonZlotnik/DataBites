@@ -91,27 +91,32 @@
 
                     require_once('../z_connect.php');
                 //------------------PHP primera parte: Rendering ------------------------------------------------------------------------------------------
-                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
-                    $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
+                    $sql_1 = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
+                    $result_1 = $conn-> query($sql_1) or die ("error en query $sql_1".mysqli_error());
 
                     if(isset($_GET['delete'])){
                         $id = $_GET['delete'];
-                        $conn->query("DELETE FROM comandas_generadas WHERE platillo = '$id'");
+                        $conn->query("DELETE FROM comandas_generadas WHERE id_comanda = '$id' AND DATE(registro) = CURDATE()");
                     }
-                    if($result-> num_rows > 0) {
-                        while($row = mysqli_fetch_assoc($result)){
+
+                    if(isset($_GET['drop_1'])){
+                        $id = $_GET['drop_1'];
+                        $conn->query("DELETE FROM comandas_generadas WHERE mesa = '$id' AND DATE(registro) = CURDATE()");
+                    }
+                    if($result_1-> num_rows > 0) {
+                        while($row_1 = mysqli_fetch_assoc($result_1)){
                 
                     ?>
                                     <tbody>
-                                            <td><?php echo $row['usuario'] ?></td>
-                                            <td class='producto'><?php echo $row['platillo'] ?></td>
-                                            <td><?php echo $row['specs'] ?></td>
-                                            <td>$<?php echo $row['costo'] ?>MXN</td>
-                                            <td><?php echo $row['cantidad'] ?></td>
-                                            <td><?php echo $row['size'] ?></td>
-                                            <td><?php echo $row['registro'] ?></td>
-                                            <td id='hidden'><?php echo $row['status'] ?></td>
-                                            <td><a href='gestion_comandas.php?delete="<?php echo $row['platillo'] ?>"' ><i class='fas fa-trash-alt'></i></a></td>
+                                            <td><?php echo $row_1['usuario'] ?></td>
+                                            <td class='producto'><?php echo $row_1['platillo'] ?></td>
+                                            <td><?php echo $row_1['specs'] ?></td>
+                                            <td>$<?php echo $row_1['costo'] ?>MXN</td>
+                                            <td><?php echo $row_1['cantidad'] ?></td>
+                                            <td><?php echo $row_1['size'] ?></td>
+                                            <td><?php echo $row_1['registro'] ?></td>
+                                            <td id='hidden'><?php echo $row_1['status'] ?></td>
+                                            <td><a href='gestion_comandas.php?delete="<?php echo $row_1['id_comanda'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
                             
                                     </tbody>
                       
@@ -123,28 +128,28 @@
                                 No hay informacion por el momento.
                                     </div>";
                             }
-                            foreach($result as $value){
-                                $total1 += $value["total"];
+                            foreach($result_1 as $value){
+                                $total_1 += $value["total"];
                             };
 
                             
                 ?>
                   </table>
                     </div>
-                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total1 ?></span>
+                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total_1 ?></span>
                             <br>
 
                             <?php 
 
                 //----------------------PHP segunda parte: Update Status--------------------------------------------------------------------------------------    
-                    if(isset($_POST['aceptar'])){
+                    if(isset($_POST['aceptar_1'])){
                     
                     require_once('../z_connect.php');    
 
-                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='1' AND DATE(registro) = CURDATE()";
-                    $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
+                    $mysql_1 = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='1' AND DATE(registro) = CURDATE()";
+                    $res_1 = mysqli_query($conn, $mysql_1) or die ("error en query $mysql_1".mysqli_error());
                     
-                    if($res){
+                    if($res_1){
                         //echo "<script> alert('Esta orden se debera de servir en aproximadamente 10 min') </script>";
 
                         header('Location:gestion_comandas.php?orden="Exitosa"');
@@ -152,17 +157,17 @@
                         echo "Error";
                     };
                 //----------------------PHP tercer parte: Copy & Paste DB--------------------------------------------------------------------------------------
-                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='1'";
-                    $paste = mysqli_query($conn, $copy) or die ("error en query $mysql".mysqli_error());
+                    $copy_1 = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='1'";
+                    $paste_1 = mysqli_query($conn, $copy_1) or die ("error en query $copy_1".mysqli_error());
 
-                    if($paste){
+                    if($paste_1){
                         header('Location:gestion_comandas.php?orden="Exitosa"');
 
                     }else{
                         echo "Error";
                     };
                     
-                    mysqli_free_result($mysql);
+                    mysqli_free_result($mysql_1);
                     mysqli_close($conn);
 
                     }
@@ -170,8 +175,8 @@
                     <!--Termina area de editado Mesa 1-->
                                 <div class="cantidad">
                                     <form action="" method="POST">
-                                        <button type="submit" name="aceptar" class="btn btn-outline-info">Aceptar</button>
-                                        <button class="btn btn-outline-danger position">Eliminar</button>
+                                        <button type="submit" name="aceptar_1" class="btn btn-outline-info">Aceptar</button>
+                                        <a href="gestion_comandas.php?drop='1'" class="btn btn-outline-danger position">Eliminar</a>
                                     </form>
                                 </div>
                     </div>
@@ -218,26 +223,30 @@
 
                     require_once('../z_connect.php');
                 //------------------------------------------------------------------------------------------------------------
-                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '2' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
-                    $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
+                    $sql_2 = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '2' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
+                    $result_2 = $conn-> query($sql_2) or die ("error en query $sql_2".mysqli_error());
                     if(isset($_GET['delete'])){
                         $id = $_GET['delete'];
-                        $conn->query("DELETE FROM comandas_generadas WHERE platillo = '$id'");
+                        $conn->query("DELETE FROM comandas_generadas WHERE id_comanda = '$id' AND DATE(registro) = CURDATE()");
                     }
-                    if($result-> num_rows > 0) {
-                        while($row = mysqli_fetch_assoc($result)){
+                    if(isset($_GET['drop'])){
+                        $id = $_GET['drop'];
+                        $conn->query("DELETE FROM comandas_generadas WHERE mesa = '$id' AND DATE(registro) = CURDATE()");
+                    }
+                    if($result_2-> num_rows > 0) {
+                        while($row_2 = mysqli_fetch_assoc($result_2)){
                 
                     ?>
                                     <tbody>
-                                            <td><?php echo $row['usuario'] ?></td>
-                                            <td class='producto'><?php echo $row['platillo'] ?></td>
-                                            <td><?php echo $row['specs'] ?></td>
-                                            <td>$<?php echo $row['costo'] ?>MXN</td>
-                                            <td><?php echo $row['cantidad'] ?></td>
-                                            <td><?php echo $row['size'] ?></td>
-                                            <td><?php echo $row['registo'] ?></td>
-                                            <td id='hidden'><?php echo $row['status'] ?></td>
-                                            <td><a href='gestion_comandas.php?delete="<?php echo $row['platillo'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
+                                            <td><?php echo $row_2['usuario'] ?></td>
+                                            <td class='producto'><?php echo $row_2['platillo'] ?></td>
+                                            <td><?php echo $row_2['specs'] ?></td>
+                                            <td>$<?php echo $row_2['costo'] ?>MXN</td>
+                                            <td><?php echo $row_2['cantidad'] ?></td>
+                                            <td><?php echo $row_2['size'] ?></td>
+                                            <td><?php echo $row_2['registro'] ?></td>
+                                            <td id='hidden'><?php echo $row_2['status'] ?></td>
+                                            <td><a href='gestion_comandas.php?delete="<?php echo $row_2['id_comanda'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
                             
                                     </tbody>
                       
@@ -249,45 +258,44 @@
                                 No hay informacion por el momento.
                                     </div>";
                             }
-                            foreach($result as $value){
-                                $total1 += $value["total"];
+                            foreach($result_2 as $value){
+                                $total_2 += $value["total"];
                             };
                           
                 ?>
                   </table>
                     </div>
-                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total1 ?></span>
+                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total_2 ?></span>
                             <br>
 
                             <?php 
 
                 //------------------------------------------------------------------------------------------------------------    
-                    if(isset($_POST['aceptar'])){
+                    if(isset($_POST['aceptar_2'])){
                     
                     require_once('../z_connect.php');    
 
-                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='2' AND DATE(registro) = CURDATE()";
-                    $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
+                    $mysql_2 = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='2' AND DATE(registro) = CURDATE()";
+                    $res_2 = mysqli_query($conn, $mysql_2) or die ("error en query $mysql_2".mysqli_error());
                     
-                    if($res){
+                    if($res_2){
                         //echo "<script> alert('Esta orden se debera de servir en aproximadamente 10 min') </script>";
-
                         header('Location:gestion_comandas.php?orden="Exitosa"');
                     }else{
                         echo "Error";
                     };
                 //------------------------------------------------------------------------------------------------------------
-                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='2'";
-                    $paste = mysqli_query($conn, $copy) or die ("error en query $mysql".mysqli_error());
+                    $copy_2 = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='2'";
+                    $paste_2 = mysqli_query($conn, $copy_2) or die ("error en query $mysql_2".mysqli_error());
 
-                    if($paste){
+                    if($paste_2){
                         header('Location:gestion_comandas.php?orden="Exitosa"');
 
                     }else{
                         echo "Error";
                     };
                     
-                    mysqli_free_result($mysql);
+                    mysqli_free_result($mysql_2);
                     mysqli_close($conn);
 
                     }
@@ -295,8 +303,8 @@
                     <!--Termina area de editado Mesa 2-->
                                 <div class="cantidad">
                                     <form action="" method="POST">
-                                        <button type="submit" name="aceptar" class="btn btn-outline-info">Aceptar</button>
-                                        <button class="btn btn-outline-danger position">Eliminar</button>
+                                        <button type="submit" name="aceptar_2" class="btn btn-outline-info">Aceptar</button>
+                                        <a href="gestion_comandas.php?drop='2'" class="btn btn-outline-danger position">Eliminar</a>
                                     </form>
                                 </div>
                     </div>
@@ -342,7 +350,7 @@
 
                     require_once('../z_connect.php');
                 //------------------PHP primera parte: Rendering ------------------------------------------------------------------------------------------
-                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
+                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '3' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
                     if(isset($_GET['delete'])){
                         $id = $_GET['delete'];
@@ -390,7 +398,7 @@
                     
                     require_once('../z_connect.php');    
 
-                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='1' AND DATE(registro) = CURDATE()";
+                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='3' AND DATE(registro) = CURDATE()";
                     $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
                     
                     if($res){
@@ -401,7 +409,7 @@
                         echo "Error";
                     };
                 //----------------------PHP tercer parte: Copy & Paste DB--------------------------------------------------------------------------------------
-                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='1'";
+                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='3'";
                     $paste = mysqli_query($conn, $copy) or die ("error en query $mysql".mysqli_error());
 
                     if($paste){
@@ -466,7 +474,7 @@
 
                     require_once('../z_connect.php');
                 //------------------PHP primera parte: Rendering ------------------------------------------------------------------------------------------
-                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
+                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '4' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
                     if(isset($_GET['delete'])){
                         $id = $_GET['delete'];
@@ -514,7 +522,7 @@
                     
                     require_once('../z_connect.php');    
 
-                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='1' AND DATE(registro) = CURDATE()";
+                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='4' AND DATE(registro) = CURDATE()";
                     $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
                     
                     if($res){
@@ -525,7 +533,7 @@
                         echo "Error";
                     };
                 //----------------------PHP tercer parte: Copy & Paste DB--------------------------------------------------------------------------------------
-                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='1'";
+                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='4'";
                     $paste = mysqli_query($conn, $copy) or die ("error en query $mysql".mysqli_error());
 
                     if($paste){
@@ -590,7 +598,7 @@
 
                     require_once('../z_connect.php');
                 //------------------PHP primera parte: Rendering ------------------------------------------------------------------------------------------
-                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '1' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
+                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_generadas WHERE status = 'Cocina' AND mesa = '5' AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
                     if(isset($_GET['delete'])){
                         $id = $_GET['delete'];
@@ -638,7 +646,7 @@
                     
                     require_once('../z_connect.php');    
 
-                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='1' AND DATE(registro) = CURDATE()";
+                    $mysql = "UPDATE comandas_generadas SET status = 'Cuenta' WHERE mesa ='5' AND DATE(registro) = CURDATE()";
                     $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
                     
                     if($res){
@@ -649,7 +657,7 @@
                         echo "Error";
                     };
                 //----------------------PHP tercer parte: Copy & Paste DB--------------------------------------------------------------------------------------
-                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='1'";
+                    $copy = "INSERT INTO comandas_finales SELECT * FROM comandas_generadas WHERE status = 'Cuenta' AND mesa ='5'";
                     $paste = mysqli_query($conn, $copy) or die ("error en query $mysql".mysqli_error());
 
                     if($paste){

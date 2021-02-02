@@ -33,13 +33,10 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="postres.php">Postres</a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="preferencias.php">Preferencias</a>
-      </li>             
+      </li>            
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <a href="admin.php" class="btn btn-outline-info my-2 my-sm-0" type="submit">Admin</a>
+      <a href="preferencias.php" class="btn btn-outline-info my-2 my-sm-0" type="submit">Preferencias</a>
     </form>
   </div>
 </nav>
