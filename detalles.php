@@ -89,7 +89,7 @@ if (isset($_POST['add_to_cart'])) {
   $table = $_POST["mesa"];
 
 
-  $sql = "INSERT INTO comandas_iniciales (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
+  $sql = "INSERT INTO comandas (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
 
   $res = mysqli_query($conn, $sql); //or die ("error en query $sql".mysqli_error());
 

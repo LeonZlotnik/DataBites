@@ -9,7 +9,7 @@
 if(isset($_POST['ordenar'])){
     require_once('z_connect.php');
         
-    $mysql = "UPDATE comandas_iniciales SET status = 'Cocina' WHERE usuario ='$USR' AND DATE(registro) = CURDATE()";
+    $mysql = "UPDATE comandas SET status = 'Cocina' WHERE usuario ='$USR' AND DATE(registro) = CURDATE() AND status = 'Comanda'";
     $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
     
     if($res){
@@ -20,26 +20,6 @@ if(isset($_POST['ordenar'])){
         $error = "<div class='alert alert-danger' role='alert'>
                 Lo sentimos hubo un error, verifique que su session siga activa. 
                 </div>";
-      };
-
-      $copy = "INSERT INTO comandas_generadas SELECT * FROM comandas_iniciales WHERE status = 'Cocina'";
-      $paste = mysqli_query($conn, $copy) or die ("error en query $mysql".mysqli_error());
-
-      if($paste){
-        echo "Success";
-
-      }else{
-        echo "Error";
-      };
-
-      $clear = "DELETE FROM comandas_iniciales WHERE usuario ='$USR' AND status = 'Cocina'";
-      $conf = mysqli_query($conn, $clear) or die ("error en query $clear".mysqli_error());
-
-      if($conf){
-        echo "Success";
-
-      }else{
-        echo "Error";
       };
       
       mysqli_close($conn);
@@ -123,11 +103,11 @@ if(isset($_POST['ordenar'])){
 
                     if(isset($_GET['delete'])){
                         $id = $_GET['delete'];
-                        $conn->query("DELETE FROM comandas_iniciales WHERE id_comanda = '$id'");
+                        $conn->query("UPDATE comandas SET status = 'Comanda_Cancelada' WHERE id_comanda = '$id'");
                         header('Location:comanda.php');
                     };
 
-                    $sql = "SELECT DISTINCT*,(costo*cantidad) AS total FROM comandas_iniciales WHERE usuario = '$USR' AND status = 'Comanda' AND DATE(registro) = CURDATE()";
+                    $sql = "SELECT DISTINCT*,(costo*cantidad) AS total FROM comandas WHERE usuario = '$USR' AND status = 'Comanda' AND DATE(registro) = CURDATE()";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
                     if($result-> num_rows > 0) {

@@ -7,37 +7,6 @@
         header("location:preferencias.php");
     }
 
-/*if(isset($_POST['ordenar'])){
-    require_once('z_connect.php');
-        
-    $mysql = "UPDATE comandas_iniciales SET status = 'Cocina' WHERE usuario ='$USR' AND DATE(registro) = CURDATE()";
-    $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
-    
-    if($res){
-        echo "<script> alert('Gracias por realizar tu orden por este medio, comenzaremos a trabajar en tu comanda enseguida') </script>";
-
-          header('Location:comanda.php?orden="Exitosa"');
-      }else{
-        $error = "<div class='alert alert-danger' role='alert'>
-                Lo sentimos hubo un error, verifique que su session siga activa. 
-                </div>";
-      };
-
-      $copy = "INSERT INTO comandas_generadas SELECT * FROM comandas_iniciales WHERE status = 'Cocina'";
-      $paste = mysqli_query($conn, $copy) or die ("error en query $mysql".mysqli_error());
-
-      if($paste){
-        echo "Success";
-
-      }else{
-        echo "Error";
-      };
-      
-      mysqli_free_result($mysql);
-      mysqli_close($conn);
-    
-}*/
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,7 +80,7 @@
                         </tr>
                     </thead>";
 
-                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas_finales WHERE usuario = '$USR' AND status = 'Cuenta' AND DATE(registro) = CURDATE()" ;
+                    $sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE usuario = '$USR' AND status = 'Cuenta' AND DATE(registro) = CURDATE()" ;
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
                     if($result-> num_rows > 0) {

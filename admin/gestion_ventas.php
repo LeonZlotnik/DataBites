@@ -55,16 +55,11 @@
                     </thead>";
 
                     if(isset($_GET['delete_1'])){
-                        $d1 = $_GET['delete_1'];
-                        $conn->query("DELETE FROM comandas_finales WHERE usuario = '$d1'");
+                        $id = $_GET['delete_1'];
+                        $conn->query("UPDATE comandas SET status = 'Cuenta_Cancelada' WHERE id_comanda = '$id' AND status = 'Cuenta'");
                     }
 
-                    if(isset($_GET['delete_2'])){
-                        $d2 = $_GET['delete_2'];
-                        $conn->query("DELETE FROM comandas_finales WHERE platillo = '$d2'");
-                    }
-
-                    $sql = "SELECT * FROM comandas_finales";
+                    $sql = "SELECT * FROM comandas WHERE status = 'Cuenta'";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
                     if($result-> num_rows > 0) {
@@ -80,7 +75,7 @@
                             <td>".$row["specs"]."</td>
                             <td>".$row["size"]."</td>
                             <td>".$row["registro"]."</td>
-                            <td><a href='gestion_ventas.php?delete_1=".$row["usuario"]."&delete_2=".$row["platillo"]."'><i class='fas fa-trash-alt'></i></a></td>";
+                            <td><a href='gestion_ventas.php?delete_1=".$row["id_comanda"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }
                     echo "
                         </tbody>

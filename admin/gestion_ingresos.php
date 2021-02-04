@@ -52,14 +52,14 @@
                             <th scope='col'>Subtotal</th>
                             <th scope='col'>IVA</th>
                             <th scope='col'>Fee</th>
-                            <th scope='col'>Ingreso</th>
+                            <th scope='col'>Ingreso Final</th>
                             <th scope='col'>Especificaciones</th>
                             <th scope='col'>Tamaño</th>
                             <th scope='col'>Registro</th>
                         </tr>
                     </thead>";
 
-                    $sql = "SELECT *, (costo*cantidad) AS subtotal, ((costo*cantidad)*0.16) AS iva, ((costo*cantidad)*0.02) AS fee, ((costo*cantidad)/1.18) AS total FROM comandas_finales";
+                    $sql = "SELECT *, (costo*cantidad) AS subtotal, ((costo*cantidad)*0.16) AS iva, ((costo*cantidad)*0.02) AS fee, ((costo*cantidad)/1.18) AS total FROM comandas WHERE status = 'Cuenta'";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
                     if($result-> num_rows > 0) {

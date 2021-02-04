@@ -3,7 +3,7 @@ require_once('../z_connect.php');
 
 //Grafica Uno
 
-$sql_one = "SELECT Date(registro) as fecha, Sum(Costo*cantidad )as total From comandas_finales Group by 1 Order by 1" ;
+$sql_one = "SELECT Date(registro) as fecha, Sum(Costo*cantidad)as total From comandas Where status = 'Cuenta' Group by 1 Order by 1" ;
 $result = mysqli_query($conn, $sql_one) or die ("error en query $sql_one".mysqli_error());
 $valoresY = array();
 $valoresX= array();
@@ -18,7 +18,7 @@ $datosY = json_encode($valoresY);
 $datosX = json_encode($valoresX);
 
 //Grafica Dos
-$sql_two = "SELECT mesa, Sum(Costo*cantidad )as total FROM comandas_finales Group by 1 Order by 1" ;
+$sql_two = "SELECT mesa, Sum(Costo*cantidad )as total FROM comandas Where status = 'Cuenta' Group by 1 Order by 1" ;
 $result_two = mysqli_query($conn, $sql_two) or die ("error en query $sql_two".mysqli_error());
 $barValorY = array();
 $barValorX = array();
