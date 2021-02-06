@@ -1,4 +1,10 @@
 <?php
+session_start();
+$USR = $_SESSION['admin'];
+
+if($USR == null){
+    header("location:../admin.php");
+}
     if(isset($_POST['insert'])){
         $user = $_POST['usuario'];
         $pw = $_POST['password'];

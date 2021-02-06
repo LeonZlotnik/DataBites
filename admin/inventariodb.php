@@ -1,3 +1,11 @@
+<?php
+session_start();
+$USR = $_SESSION['admin'];
+
+if($USR == null){
+    header("location:../admin.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     

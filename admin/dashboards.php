@@ -1,9 +1,16 @@
 <?php
+session_start();
+$USR = $_SESSION['admin'];
+
+if($USR == null){
+    header("location:../admin.php");
+}
+
 require_once('../z_connect.php');
 
 //Grafica Uno
 
-$sql_one = "SELECT Date(registro) as fecha, Sum(Costo*cantidad)as total From comandas Where status = 'Cuenta' Group by 1 Order by 1" ;
+$sql_one = "SELECT Date(registro) as fecha, count(usuario)as total From comandas Where status = 'Cuenta' Group by 1 Order by 1" ;
 $result = mysqli_query($conn, $sql_one) or die ("error en query $sql_one".mysqli_error());
 $valoresY = array();
 $valoresX= array();
@@ -31,6 +38,80 @@ while($row= mysqli_fetch_row($result_two)){
 
 $datos_dosY = json_encode($barValorY);
 $datos_dosX = json_encode($barValorX);
+
+//Grafica Tres
+$sql_three = "SELECT categoria, sum(cantidad) FROM platillos INNER JOIN comandas ON platillos.platillo = platillos.platillo group by 1";
+$result_three = mysqli_query($conn, $sql_three) or die ("error en query $sql_two".mysqli_error());
+$catValorY = array();
+$catValorX = array();
+
+while($row= mysqli_fetch_row($result_three)){
+  $catValorY[] = $row[1];
+  $catValorX[]= $row[0];
+  
+}
+
+$datos_tresY = json_encode($catValorY);
+$datos_tresX = json_encode($catValorX);
+
+//Grafica cuatro y cinco
+
+$sql_four = "SELECT Date(registro) as fecha, Sum(Costo*cantidad)as total From comandas Where status = 'Cuenta' Group by 1 Order by 1" ;
+$result = mysqli_query($conn, $sql_four) or die ("error en query $sql_four".mysqli_error());
+$DobleY = array();
+$DobleX= array();
+
+while($data= mysqli_fetch_row($result)){
+  $DobleY[] = $data[1];
+  $DobleX[]= $data[0];
+  
+}
+
+$datos_cuatroY = json_encode($DobleY);
+$datos_cuatroX = json_encode($DobleX);
+
+$sql_fours = "SELECT Date(registro) as fecha, Sum(Costo*cantidad)as total From comandas Where status = 'Cocina_Cancelada' Group by 1 Order by 1" ;
+$result = mysqli_query($conn, $sql_fours) or die ("error en query $sql_fours".mysqli_error());
+$DobleYs = array();
+$DobleXs= array();
+
+while($data= mysqli_fetch_row($result)){
+  $DobleYs[] = $data[1];
+  $DobleXs[]= $data[0];
+  
+}
+
+$datos_cuatroYs = json_encode($DobleYs);
+$datos_cuatroXs = json_encode($DobleXs);
+
+//Grafica Seis
+
+$sql_six_A = "SELECT count(usuario) FROM usuarios";
+$result_six_A = mysqli_query($conn, $sql_six_A) or die ("error en query $result_six_A".mysqli_error());
+
+$sql_six_B = "SELECT count(cliente) FROM clientes";
+$result_six_B = mysqli_query($conn, $sql_six_B) or die ("error en query $sql_six_B".mysqli_error());
+
+$intA = (int)$result_six_A;
+$intB = (int)$result_six_B;
+
+$datos_seisA = json_encode(46);
+$datos_seisB = json_encode($intB);
+
+//Grafica Siete
+$sql_seven = "SELECT mesa, count(usuario)as total FROM comandas Where status = 'Cuenta' Group by 1 Order by 1";
+$result = mysqli_query($conn, $sql_seven) or die ("error en query $sql_seven".mysqli_error());
+$valuesY = array();
+$valuesX= array();
+
+while($val= mysqli_fetch_row($result)){
+  $valuesY[] = $val[1];
+  $valuesX[]= $val[0];
+  
+}
+
+$datos_sieteY = json_encode($valuesY);
+$datos_sieteX = json_encode($valuesX);
 
 ?>
 
@@ -82,7 +163,7 @@ $datos_dosX = json_encode($barValorX);
               <div class="panel panel-body border" >
                   <div class="row">
                     <div class=col-sm-6>
-                      <div id="graficaLineal"></div>
+                      <div id="graficaDoble"></div>
                     </div>
                     <div class=col-sm-6>
                       <div id="graficaBarras"></div>
@@ -99,18 +180,14 @@ $datos_dosX = json_encode($barValorX);
         <div class="row">
           <div class="col-sm-12">
             <div class="panel panel-primary">
-
-                <div class="table-danger">
-                    <h5 class="h2 text-center">Graficas de Actividad</h5>
-                </div>
                 
               <div class="panel panel-body border" >
                   <div class="row">
                     <div class=col-sm-6>
-                      <div id="graficaLineal"></div>
+                      <div id="graficaBarMesa"></div>
                     </div>
                     <div class=col-sm-6>
-                      <div id="graficaBarras"></div>
+                      <div id="graficaLineal"></div>
                     </div>
                   </div>              
               </div>
@@ -119,6 +196,26 @@ $datos_dosX = json_encode($barValorX);
         </div>
        
     </section>
+    <!--Tercera sección-->
+    <section class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="panel panel-primary">
+                
+              <div class="panel panel-body border" >
+                  <div class="row">
+                    <div class=col-sm-6>
+                      <div id="graficaPie"></div>
+                    </div>
+                    <div class=col-sm-6>
+                      <div id="graficaCategorias"></div>
+                    </div>
+                  </div>              
+              </div>
+            </div>
+          </div>
+        </div>
+     </section>
 </body>
 </html>
 
@@ -142,7 +239,7 @@ var trace1 = {
 var data = [trace1];
 
 var layout = {
-  title: 'Ingresos al día',
+  title: 'Usuarios al día',
   font:{
     family: 'Raleway, sans-serif'
   },
@@ -206,5 +303,163 @@ var layout_dos = {
 };
 
 Plotly.newPlot('graficaBarras', data_dos, layout_dos );
+	
+
+//Grafica Tres
+
+datos_tresX = crearGraficaBar('<?php echo $datos_tresX ?>');
+datos_tresY = crearGraficaBar('<?php echo $datos_tresY ?>');
+
+var data_tres = [
+  {
+    x: datos_tresX,
+    y: datos_tresY,
+    type: 'bar',
+    marker: {
+      color: 'rgb(113, 202, 213)',
+    }
+  }
+];
+
+var layout_tres = {
+  title: 'Total Ordenadas Por Categorías',
+  font:{
+    family: 'Raleway, sans-serif'
+  },
+  xaxis: {
+    title: "Categorías",
+    font:{
+    family: 'Raleway, sans-serif'
+    },
+    tickangle: -45
+  },
+  yaxis: {
+    title: "Ordenes",
+    font:{
+    family: 'Raleway, sans-serif'
+    },
+    zeroline: false,
+    gridwidth: 2
+  },
+  bargap :0.05
+};
+
+Plotly.newPlot('graficaCategorias', data_tres, layout_tres);
+
+//Grafica Cuatro & Cinco
+
+datos_cuatroX = crearGrafica('<?php echo $datos_cuatroX ?>');
+datos_cuatroY = crearGrafica('<?php echo $datos_cuatroY ?>');
+
+datos_cuatroXs = crearGrafica('<?php echo $datos_cuatroXs ?>');
+datos_cuatroYs = crearGrafica('<?php echo $datos_cuatroYs ?>');
+
+var Pagadas = {
+  x: datos_cuatroX,
+  y: datos_cuatroY,
+  type: 'scatter',
+  mode: 'lines',
+  name: 'Pagadas',
+  marker: {
+      color: 'rgb(242, 95, 151)', 
+    }
+};
+
+var Canceladas = {
+  x: datos_cuatroXs,
+  y: datos_cuatroYs,
+  type: 'scatter',
+  mode: 'lines+markers',
+  name: 'Canceladas',
+  marker: {
+      color: 'rgb(242, 95, 151)', 
+    }
+};
+
+var data_doble = [Pagadas,Canceladas];
+
+var layout = {
+  title: 'Ingresos al día',
+  font:{
+    family: 'Raleway, sans-serif'
+  },
+  xaxis: {
+    title: "Días",
+    font:{
+    family: 'Raleway, sans-serif'
+    },
+    tickangle: -45
+  },
+  yaxis: {
+    title: "Ingresos",
+    font:{
+    family: 'Raleway, sans-serif'
+    },
+    zeroline: false,
+    gridwidth: 2
+  },
+  bargap :0.05
+};
+
+Plotly.newPlot('graficaDoble', data_doble, layout);
+
+//Grafica Seis
+
+datos_seisA  = crearGraficaPie('<?php echo $datos_seisA ?>');
+datos_seisB  = crearGraficaPie('<?php echo $datos_seisB ?>');
+
+var data_seis = [{
+  values: [datos_seisA , datos_seisB],
+  labels: ['Usuarios', 'Clientes'],
+  type: 'pie'
+}];
+
+var layout_seis = {
+  height: 400,
+  width: 500
+};
+
+Plotly.newPlot('graficaPie', data_seis, layout_seis);
+
+//Grafica Siete
+
+datos_sieteX = crearGraficaBar('<?php echo $datos_sieteX ?>');
+datos_sieteY  = crearGraficaBar('<?php echo $datos_sieteY ?>');
+
+var data_siete = [
+  {
+    x: datos_sieteX,
+    y: datos_sieteY,
+    type: 'bar',
+    marker: {
+      color: 'rgb(113, 202, 213)',
+    }
+  }
+];
+
+var layout_siete = {
+  title: 'Usuarios Por Mesa',
+  font:{
+    family: 'Raleway, sans-serif'
+  },
+  xaxis: {
+    title: "Mesas",
+    font:{
+    family: 'Raleway, sans-serif'
+    },
+    tickangle: -45
+  },
+  yaxis: {
+    title: "Ususarios",
+    font:{
+    family: 'Raleway, sans-serif'
+    },
+    zeroline: false,
+    gridwidth: 2
+  },
+  bargap :0.05
+};
+
+Plotly.newPlot('graficaBarMesa', data_siete, layout_siete );
 	
 </script>

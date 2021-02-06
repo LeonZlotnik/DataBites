@@ -1,4 +1,11 @@
 <?php
+session_start();
+$USR = $_SESSION['admin'];
+
+if($USR == null){
+    header("location:../admin.php");
+}
+
 require '../z_connect.php';
 //Creación de Producto
 if(isset($_POST['create'])){
@@ -145,12 +152,12 @@ if(isset($_GET['edit'])){
   <br>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputCity">Precio de Venta:</label>
-      <input type="number" step="0.01" min="0" max="100000" class="form-control"  name="precio" value="<?php echo $price;?>" id="inputCity" placeholder="$00.00" required>
+      <label for="inputCity">Costo de producto:</label>
+      <input type="number" step="0.01" min="0" max="100000" class="form-control"  name="costo" value="<?php echo $cost;?>" id="inputCity" placeholder="$00.00" required>
     </div>
     <div class="form-group col-md-4">
-    <label for="inputZip">Costo de producto:</label>
-      <input type="number" step="0.01" min="0" max="100000" class="form-control" name="costo" value="<?php echo $cost;?>" id="inputZip" placeholder="$00.00" required>
+    <label for="inputZip">Precio de Venta (Extra):</label>
+      <input type="number" step="0.01" min="0" max="100000" class="form-control" name="precio" value="<?php echo $price;?>" id="inputZip" placeholder="$00.00" required>
     </div>
     <div class="form-group col-md-2 text-center" style="display: grid;">
       <label for="extra">Extra</label>

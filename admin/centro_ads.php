@@ -1,3 +1,12 @@
+<?php
+session_start();
+$USR = $_SESSION['admin'];
+
+if($USR == null){
+    header("location:../admin.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,6 +50,17 @@
             margin-left: 2%;
             margin-right:2%;
         }
+        .width{
+            width: 50%;
+            margin-left: 25%;
+        }
+        @media only screen and (max-width: 400px){
+            .width{
+            width: 100%;
+            margin-left: 0;
+        }
+        }
+
     </style>
 </head>
 <body>
@@ -79,6 +99,8 @@
             while ($row = mysqli_fetch_array($result)){
           ?>
 
+            <section class="width">
+            
            <div class="card-deck">
                 <div class="card mb-3">
                     <img class="card-img-top" <?php echo "src='anuncios/".$row['imagen']."'";?> alt="Card image cap">
@@ -94,7 +116,7 @@
                     </div>
                 </div>
             </div>
-           
+            </section>
             <?php
             
                 }

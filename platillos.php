@@ -54,7 +54,7 @@
        
 
         <?php
-            require 'z_connect.php';
+            require_once('z_connect.php');
 
             $sql = "SELECT * FROM platillos WHERE categoria = 'platos' AND estado = 'existente' ORDER BY 'platillo' DESC";
             $result = mysqli_query($conn, $sql);
@@ -77,6 +77,8 @@
                         <div class="cantidad">
                             <?php echo "<a href='detalles.php?ID={$row['id_platillo']}&plato={$row['platillo']}' class='btn btn-outline-info'>Detalles</a>" ?>
                         </div>
+                    </div>
+                    </div>
                     </div>
                 <?php
             }

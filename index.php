@@ -55,7 +55,7 @@ if(isset($_POST['crear'])){
 <?php include_once('navbar_slim.php') ?>
 <div class="container">
 <br>
-<a href="index.php?m=1"><h2 class="text-center title">Bienvenido</h2></a>
+<a href="index.php?m=3"><h2 class="text-center title">Bienvenido</h2></a>
 <br>
 <div class="card mb-3">
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">

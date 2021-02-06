@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+$USR = $_SESSION['admin'];
+
+if($USR == null){
+    header("location:../admin.php");
+}
+
+
 //Creación de Producto
 require '../z_connect.php';
 if (isset($_POST['create'])){

@@ -54,15 +54,10 @@
        
 
         <?php
-            $db = mysqli_connect("localhost","root","root","H_tostada");
-
-            $db->set_charset("utf8");
-            if($db->connect_error){
-                die("La Conexion Fallo: ".$db->connect_error);
-            }
+            require_once('z_connect.php');
 
             $sql = "SELECT * FROM platillos WHERE categoria = 'postres' AND estado = 'existente' ORDER BY 'platillo' DESC";
-            $result = mysqli_query($db, $sql);
+            $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_array($result)){
         ?>
 
@@ -82,6 +77,8 @@
                         <div class="cantidad">
                             <?php echo "<a href='detalles.php?ID={$row['id_platillo']}&plato={$row['platillo']}' class='btn btn-outline-info'>Detalles</a>" ?>
                         </div>
+                    </div>
+                    </div>
                     </div>
                 <?php
             }

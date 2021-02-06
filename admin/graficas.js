@@ -15,4 +15,9 @@ function crearGraficaBar(json){
   }
     return arr;
 }
+
+function crearGraficaPie(json){
+  var parsed = JSON.parse(json);
+  return parsed;
+}
       

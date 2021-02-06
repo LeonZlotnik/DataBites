@@ -94,7 +94,7 @@
 
                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
+                                Si desea formar parte de los clientes frecuentes llene este formulario. Al llenar el formulario esta aceptando recibir informacion del Newsletter.
                                 <br>
                                 <br>
                                 <form action="" method="POST">
@@ -154,7 +154,7 @@
                             </div>
                             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                             <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry.
+                                Por favor deje sus comentarios si cree que hay algo en lo que podríamos mejorar. 
                                 <br>
                                 <br>
                                 <div class="input-group">

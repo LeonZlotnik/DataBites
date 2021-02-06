@@ -81,14 +81,13 @@ $table = $_GET['m'];
   </div>
   <input type="submit" class="btn btn-primary" name="login" value="Entrar">
 </form>
-
-</section>
-<section class="container" id="login">
-    <a href="index.php?m=<?php echo $table?>" class="btn btn-info btn-lg btn-block">
+<div class="container" id="login">
+<a href="index.php?m=<?php echo $table?>" class="btn btn-info btn-lg btn-block">
     Atras
-    </a>  
-  </section>
-
+    </a> 
+</div>
+ 
+</section>
 <br>
 </body>
 </html>
