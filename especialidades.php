@@ -54,15 +54,16 @@
        
 
         <?php
-            $db = mysqli_connect("localhost","root","root","H_tostada");
+            /*$db = mysqli_connect("localhost","root","root","H_tostada");
 
             $db->set_charset("utf8");
             if($db->connect_error){
                 die("La Conexion Fallo: ".$db->connect_error);
-            }
+            }*/
+            require 'z_connect.php';
 
             $sql = "SELECT * FROM platillos WHERE categoria = 'especialidades' AND estado = 'existente' ORDER BY 'platillo' DESC";
-            $result = mysqli_query($db, $sql);
+            $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_array($result)){
         ?>
 

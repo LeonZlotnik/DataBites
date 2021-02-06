@@ -275,7 +275,7 @@ if (isset($_POST['add_to_cart'])) {
                                               </div>
                                               <div class="col-12">
                                                 <?php
-                                                $mysql = ("SELECT * FROM inventarios WHERE extras = 1 and id_inventario in (" . $row['extras'] . ")");
+                                                $mysql = ("SELECT * FROM inventarios WHERE extras = 1 and sku in (" . $row['extras'] . ")");
                                                 $res = mysqli_query($conn, $mysql) or die ("error en query $mysql" . mysqli_error());
                                                 if ($res->num_rows > 0) {
                                                   $j = 0;

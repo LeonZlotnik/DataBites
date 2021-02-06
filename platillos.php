@@ -56,7 +56,7 @@
         <?php
             require 'z_connect.php';
 
-            $sql = "SELECT * FROM platillos WHERE categoria = 'platos' AND estado = 'existente' ORDER BY 'platillo' DESC";
+            $sql = "SELECT * FROM platillos WHERE categoria = 'platillos' AND estado = 'existente' ORDER BY 'platillo' DESC";
             $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_array($result)){
         ?>
