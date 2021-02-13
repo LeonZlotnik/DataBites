@@ -107,7 +107,8 @@ if($USR == null){
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['anuncio']?></h5>
                         <p><i>Status: <?php echo $row['status']?></i></p>
-                        <br>
+                        <p>Posición: <?php echo $row['numero']?></p>
+                    
                         <div class="cantidad">
                             <a href="centro_ads.php?start=<?php echo $row['id_anuncio']?>" class="btn btn-outline-success">Publicar</a>
                             <a href="centro_ads.php?pause=<?php echo $row['id_anuncio']?>" class="btn btn-outline-warning margin">Detener</a>

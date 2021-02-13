@@ -91,6 +91,8 @@ if($USR == null){
                                             <th scope='col'>Precio</th>
                                             <th scope='col'>Cantidad</th>
                                             <th scope='col'>Tamaño</th>
+                                            <th scope='col'>Guarnición</th>
+                                            <th scope='col'>Extras</th>
                                             <th scope='col'>Orden Tomada</th>
                                             <th scope='col'>Eliminar</th>
                                         </tr>
@@ -136,11 +138,42 @@ if($USR == null){
                     }
 //------------------PHP tercer parte: Render ------------------------------------------------------------------------------------------
 
+                    $totalExtra_1 =0;
+                    $subtotalFinal_1 =0;                    
+
                     $sql_1 = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE status = 'Cocina' AND mesa = 1 AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result_1 = $conn-> query($sql_1) or die ("error en query $sql_1".mysqli_error());
 
                     if($result_1-> num_rows > 0) {
                         while($row_1 = mysqli_fetch_assoc($result_1)){
+                            if($row_1["extras"]!=null) {
+                                $sqlExtras_1 = "SELECT sum(precio) total from inventarios where producto in ('" . $row_1["extras"] . "')";
+                                $resultExtra = $conn->query($sqlExtras_1) or die ("error en query $sqlExtras_1" . mysqli_error());
+                                if ($resultExtra->num_rows > 0) {
+                                    while ($rowExtra = mysqli_fetch_assoc($resultExtra)) {
+                                        $totalExtra_1 = $rowExtra["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalExtra_1 =0;
+                            }
+                                    if($row_1["guarniciones"]!=null){
+                                        $sqlGuarniciones_1="SELECT sum(valor) total from guarnicones where ingrediente in ('".$row_1["guarniciones"]."')";
+                                        $resultGuarniciones_1 = $conn-> query($sqlGuarniciones_1) or die ("error en query $sqlGuarniciones_1".mysqli_error());
+                                        if($resultGuarniciones_1->num_rows>0){
+                                            while($rowGuarnicion = mysqli_fetch_assoc($resultGuarniciones_1)) {
+                                                $totalGuanicion_1 = $rowGuarnicion["total"];
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        $totalGuanicion_1 = 0;
+                                    }
+                                    $precioTotal=$row_1["costo"] + $totalExtra_1 + $totalGuanicion_1;
+                                    $subtotal_1 = $precioTotal * $row_1["cantidad"];
+
+                                    $subtotalFinal_1 += $subtotal_1
                 
                     ?>
                                     <tbody>
@@ -150,6 +183,8 @@ if($USR == null){
                                             <td>$<?php echo $row_1['costo'] ?>MXN</td>
                                             <td><?php echo $row_1['cantidad'] ?></td>
                                             <td><?php echo $row_1['size'] ?></td>
+                                            <td><?php echo $row_1['guarniciones'] ?></td>
+                                            <td><?php echo $row_1['extras'] ?></td>
                                             <td><?php echo $row_1['registro'] ?></td>
                                             <td id='hidden'><?php echo $row_1['status'] ?></td>
                                             <td><a href='gestion_comandas.php?delete="<?php echo $row_1['id_comanda'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
@@ -164,15 +199,11 @@ if($USR == null){
                                 No hay informacion por el momento.
                                     </div>";
                             }
-                            foreach($result_1 as $value){
-                                $total_1 += $value["total"];
-                            };
-
                             
                 ?>
                   </table>
                     </div>
-                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total_1 ?></span>
+                        <span id="total" class="btn btn-light h4">Total: $<?php echo $subtotalFinal_1 ?></span>
                             <br>
                     <!--Termina area de editado Mesa 1-->
                                 <div class="cantidad">
@@ -222,6 +253,8 @@ if($USR == null){
                                             <th scope='col'>Precio</th>
                                             <th scope='col'>Cantidad</th>
                                             <th scope='col'>Tamaño</th>
+                                            <th scope='col'>Guarnición</th>
+                                            <th scope='col'>Extras</th>
                                             <th scope='col'>Orden Tomada</th>
                                             <th scope='col'>Eliminar</th>
                                         </tr>
@@ -266,12 +299,42 @@ if($USR == null){
                     }
 //------------------PHP tercer parte: Render ------------------------------------------------------------------------------------------
 
+                    $totalExtra_2 =0;
+                    $subtotalFinal_2 =0;   
+
                     $sql_2 = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE status = 'Cocina' AND mesa = 2 AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result_2 = $conn-> query($sql_2) or die ("error en query $sql_2".mysqli_error());
 
                     if($result_2-> num_rows > 0) {
                         while($row_2 = mysqli_fetch_assoc($result_2)){
+                            if($row_2["extras"]!=null) {
+                                $sqlExtras_2 = "SELECT sum(precio) total from inventarios where producto in ('" . $row_2["extras"] . "')";
+                                $resultExtra_2 = $conn->query($sqlExtras_2) or die ("error en query $sqlExtras_2" . mysqli_error());
+                                if ($resultExtra_2->num_rows > 0) {
+                                    while ($rowExtra_2 = mysqli_fetch_assoc($resultExtra_2)) {
+                                        $totalExtra_2 = $rowExtra_2["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalExtra_2 =0;
+                            }
+                            if($row_2["guarniciones"]!=null){
+                                $sqlGuarniciones_2="SELECT sum(valor) total from guarnicones where ingrediente in ('".$row_2["guarniciones"]."')";
+                                $resultGuarniciones_2 = $conn-> query($sqlGuarniciones_2) or die ("error en query $sqlGuarniciones_2".mysqli_error());
+                                if($resultGuarniciones_2->num_rows>0){
+                                    while($rowGuarnicion_2 = mysqli_fetch_assoc($resultGuarniciones_2)) {
+                                        $totalGuanicion_2 = $rowGuarnicion_2["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalGuanicion_2 = 0;
+                            }
+                            $precioTotal_3=$row_3["costo"] + $totalExtra_3 + $totalGuanicion_;
+                            $subtotal_2 = $precioTotal_2 * $row_2["cantidad"];
 
+                            $subtotalFinal_2 += $subtotal_2;
                     ?>
                                     <tbody>
                                             <td><?php echo $row_2['usuario'] ?></td>
@@ -280,6 +343,8 @@ if($USR == null){
                                             <td>$<?php echo $row_2['costo'] ?>MXN</td>
                                             <td><?php echo $row_2['cantidad'] ?></td>
                                             <td><?php echo $row_2['size'] ?></td>
+                                            <td><?php echo $row_2['guarniciones'] ?></td>
+                                            <td><?php echo $row_2['extras'] ?></td>
                                             <td><?php echo $row_2['registro'] ?></td>
                                             <td id='hidden'><?php echo $row_2['status'] ?></td>
                                             <td><a href='gestion_comandas.php?delete="<?php echo $row_2['id_comanda'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
@@ -294,15 +359,11 @@ if($USR == null){
                                 No hay informacion por el momento.
                                     </div>";
                             }
-                            foreach($result_2 as $value){
-                                $total_2 += $value["total"];
-                            };
-
-                            
+     
                     ?>
                     </table>
                     </div>
-                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total_2 ?></span>
+                        <span id="total" class="btn btn-light h4">Total: $<?php echo $subtotalFinal_2 ?></span>
                             <br>
                     <!--Termina area de editado Mesa 2-->
                                 <div class="cantidad">
@@ -352,6 +413,8 @@ if($USR == null){
                                             <th scope='col'>Precio</th>
                                             <th scope='col'>Cantidad</th>
                                             <th scope='col'>Tamaño</th>
+                                            <th scope='col'>Guarnición</th>
+                                            <th scope='col'>Extras</th>
                                             <th scope='col'>Orden Tomada</th>
                                             <th scope='col'>Eliminar</th>
                                         </tr>
@@ -397,11 +460,42 @@ if($USR == null){
                     }
 //------------------PHP tercer parte: Render ------------------------------------------------------------------------------------------
 
+                    $totalExtra_3 =0;
+                    $subtotalFinal_3 =0;                    
+
                     $sql_3 = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE status = 'Cocina' AND mesa = 3 AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result_3= $conn-> query($sql_3) or die ("error en query $sql_3".mysqli_error());
 
                     if($result_3-> num_rows > 0) {
                         while($row_3 = mysqli_fetch_assoc($result_3)){
+                            if($row_3["extras"]!=null) {
+                                $sqlExtras_3 = "SELECT sum(precio) total from inventarios where producto in ('" . $row_3["extras"] . "')";
+                                $resultExtra_3 = $conn->query($sqlExtras_3) or die ("error en query $sqlExtras_3" . mysqli_error());
+                                if ($resultExtra_3->num_rows > 0) {
+                                    while ($rowExtra_3 = mysqli_fetch_assoc($resultExtra_3)) {
+                                        $totalExtra_3 = $rowExtra_3["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalExtra_3 =0;
+                            }
+                            if($row_3["guarniciones"]!=null){
+                                $sqlGuarniciones_3="SELECT sum(valor) total from guarnicones where ingrediente in ('".$row_3["guarniciones"]."')";
+                                $resultGuarniciones_3 = $conn-> query($sqlGuarniciones_3) or die ("error en query $sqlGuarniciones_3".mysqli_error());
+                                if($resultGuarniciones_3->num_rows>0){
+                                    while($rowGuarnicion_3 = mysqli_fetch_assoc($resultGuarniciones_3)) {
+                                        $totalGuanicion_3 = $rowGuarnicion_3["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalGuanicion_3 = 0;
+                            }
+                            $precioTotal_3=$row_3["costo"] + $totalExtra_3 + $totalGuanicion_3;
+                            $subtotal_3 = $precioTotal_3 * $row_3["cantidad"];
+
+                            $subtotalFinal_3 += $subtotal_3;
                 
                     ?>
                                     <tbody>
@@ -411,6 +505,8 @@ if($USR == null){
                                             <td>$<?php echo $row_3['costo'] ?>MXN</td>
                                             <td><?php echo $row_3['cantidad'] ?></td>
                                             <td><?php echo $row_3['size'] ?></td>
+                                            <td><?php echo $row_3['guarniciones'] ?></td>
+                                            <td><?php echo $row_3['extras'] ?></td>
                                             <td><?php echo $row_3['registro'] ?></td>
                                             <td id='hidden'><?php echo $row_3['status'] ?></td>
                                             <td><a href='gestion_comandas.php?delete="<?php echo $row_3['id_comanda'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
@@ -425,15 +521,10 @@ if($USR == null){
                                 No hay informacion por el momento.
                                     </div>";
                             }
-                            foreach($result_3 as $value){
-                                $total_3 += $value["total"];
-                            };
-
-                            
                 ?>
                   </table>
                     </div>
-                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total_3 ?></span>
+                        <span id="total" class="btn btn-light h4">Total: $<?php echo $subtotalFinal_3 ?></span>
                             <br>
                     <!--Termina area de editado Mesa 3-->
                                 <div class="cantidad">
@@ -483,6 +574,8 @@ if($USR == null){
                                             <th scope='col'>Precio</th>
                                             <th scope='col'>Cantidad</th>
                                             <th scope='col'>Tamaño</th>
+                                            <th scope='col'>Guarnición</th>
+                                            <th scope='col'>Extras</th>
                                             <th scope='col'>Orden Tomada</th>
                                             <th scope='col'>Eliminar</th>
                                         </tr>
@@ -506,8 +599,8 @@ if($USR == null){
                         header('Location:gestion_comandas.php');
                     }
                 
- //------------------PHP segunda parte: Aceptar Comanda ------------------------------------------------------------------------------------------
-                  
+ //------------------PHP segunda parte: Aceptar Comanda ------------------------------------------------------------------------------------------                   
+ 
                     if(isset($_POST['aceptar_4'])){
                     
                         require_once('../z_connect.php');    
@@ -528,11 +621,42 @@ if($USR == null){
                     }
 //------------------PHP tercer parte: Render ------------------------------------------------------------------------------------------
 
+                    $totalExtra_4 =0;
+                    $subtotalFinal_4 =0;                     
+
                     $sql_4 = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE status = 'Cocina' AND mesa = 4 AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result_4= $conn-> query($sql_4) or die ("error en query $sql_4".mysqli_error());
 
                     if($result_4-> num_rows > 0) {
                         while($row_4 = mysqli_fetch_assoc($result_4)){
+                            if($row_4["extras"]!=null) {
+                                $sqlExtras_4 = "SELECT sum(precio) total from inventarios where producto in ('" . $row_4["extras"] . "')";
+                                $resultExtra_4 = $conn->query($sqlExtras_4) or die ("error en query $sqlExtras_4" . mysqli_error());
+                                if ($resultExtra_4->num_rows > 0) {
+                                    while ($rowExtra_4 = mysqli_fetch_assoc($resultExtra_4)) {
+                                        $totalExtra_4 = $rowExtra_4["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalExtra_4 =0;
+                            }
+                            if($row_4["guarniciones"]!=null){
+                                $sqlGuarniciones_4="SELECT sum(valor) total from guarnicones where ingrediente in ('".$row_4["guarniciones"]."')";
+                                $resultGuarniciones_4 = $conn-> query($sqlGuarniciones_4) or die ("error en query $sqlGuarniciones_4".mysqli_error());
+                                if($resultGuarniciones_4->num_rows>0){
+                                    while($rowGuarnicion_4 = mysqli_fetch_assoc($resultGuarniciones_4)) {
+                                        $totalGuanicion_4 = $rowGuarnicion_4["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalGuanicion_4 = 0;
+                            }
+                            $precioTotal_4=$row_4["costo"] + $totalExtra_4 + $totalGuanicion_4;
+                            $subtotal_4 = $precioTotal_4 * $row_4["cantidad"];
+
+                            $subtotalFinal_4 += $subtotal_4;
                 
                     ?>
                                     <tbody>
@@ -542,6 +666,8 @@ if($USR == null){
                                             <td>$<?php echo $row_4['costo'] ?>MXN</td>
                                             <td><?php echo $row_4['cantidad'] ?></td>
                                             <td><?php echo $row_4['size'] ?></td>
+                                            <td><?php echo $row_4['guarniciones'] ?></td>
+                                            <td><?php echo $row_4['extras'] ?></td>
                                             <td><?php echo $row_4['registro'] ?></td>
                                             <td id='hidden'><?php echo $row_4['status'] ?></td>
                                             <td><a href='gestion_comandas.php?delete="<?php echo $row_4['id_comanda'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
@@ -556,15 +682,11 @@ if($USR == null){
                                 No hay informacion por el momento.
                                     </div>";
                             }
-                            foreach($result_4 as $value){
-                                $total_4 += $value["total"];
-                            };
-
-                            
+                
                 ?>
                   </table>
                     </div>
-                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total_4 ?></span>
+                        <span id="total" class="btn btn-light h4">Total: $<?php echo $subtotalFinal_4 ?></span>
                             <br>
                     <!--Termina area de editado Mesa 4-->
                                 <div class="cantidad">
@@ -614,6 +736,8 @@ if($USR == null){
                                             <th scope='col'>Precio</th>
                                             <th scope='col'>Cantidad</th>
                                             <th scope='col'>Tamaño</th>
+                                            <th scope='col'>Guarnición</th>
+                                            <th scope='col'>Extras</th>
                                             <th scope='col'>Orden Tomada</th>
                                             <th scope='col'>Eliminar</th>
                                         </tr>
@@ -659,11 +783,42 @@ if($USR == null){
                     }
 //------------------PHP tercer parte: Render ------------------------------------------------------------------------------------------
 
-                    $sql_5 = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE status = 'Cocina' AND mesa = 4 AND DATE(registro) = CURDATE() ORDER BY registro DESC";
+                    $totalExtra_5 =0;
+                    $subtotalFinal_5 =0;                      
+
+                    $sql_5 = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE status = 'Cocina' AND mesa = 5 AND DATE(registro) = CURDATE() ORDER BY registro DESC";
                     $result_5= $conn-> query($sql_5) or die ("error en query $sql_5".mysqli_error());
 
                     if($result_5-> num_rows > 0) {
                         while($row_5 = mysqli_fetch_assoc($result_5)){
+                            if($row_5["extras"]!=null) {
+                                $sqlExtras_5 = "SELECT sum(precio) total from inventarios where producto in ('" . $row_5["extras"] . "')";
+                                $resultExtra_5 = $conn->query($sqlExtras_5) or die ("error en query $sqlExtras_5" . mysqli_error());
+                                if ($resultExtra_5->num_rows > 0) {
+                                    while ($rowExtra_5 = mysqli_fetch_assoc($resultExtra_5)) {
+                                        $totalExtra_5 = $rowExtra_5["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalExtra_5 =0;
+                            }
+                            if($row_5["guarniciones"]!=null){
+                                $sqlGuarniciones_5="SELECT sum(valor) total from guarnicones where ingrediente in ('".$row_5["guarniciones"]."')";
+                                $resultGuarniciones_5 = $conn-> query($sqlGuarniciones_5) or die ("error en query $sqlGuarniciones_5".mysqli_error());
+                                if($resultGuarniciones_5->num_rows>0){
+                                    while($rowGuarnicion_5 = mysqli_fetch_assoc($resultGuarniciones_5)) {
+                                        $totalGuanicion_5 = $rowGuarnicion_5["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalGuanicion_5 = 0;
+                            }
+                            $precioTotal_5=$row_5["costo"] + $totalExtra_5 + $totalGuanicion_5;
+                            $subtotal_5 = $precioTotal_5 * $row_5["cantidad"];
+
+                            $subtotalFinal_5 += $subtotal_5;
                 
                     ?>
                                     <tbody>
@@ -673,6 +828,8 @@ if($USR == null){
                                             <td>$<?php echo $row_5['costo'] ?>MXN</td>
                                             <td><?php echo $row_5['cantidad'] ?></td>
                                             <td><?php echo $row_5['size'] ?></td>
+                                            <td><?php echo $row_5['guarniciones'] ?></td>
+                                            <td><?php echo $row_5['extras'] ?></td>
                                             <td><?php echo $row_5['registro'] ?></td>
                                             <td id='hidden'><?php echo $row_5['status'] ?></td>
                                             <td><a href='gestion_comandas.php?delete="<?php echo $row_5['id_comanda'] ?>"'><i class='fas fa-trash-alt'></i></a></td>
@@ -687,15 +844,11 @@ if($USR == null){
                                 No hay informacion por el momento.
                                     </div>";
                             }
-                            foreach($result_5 as $value){
-                                $total_5 += $value["total"];
-                            };
-
-                            
+                  
                 ?>
                   </table>
                     </div>
-                        <span id="total" class="btn btn-light h4">Total: $<?php echo $total_5 ?></span>
+                        <span id="total" class="btn btn-light h4">Total: $<?php echo $subtotalFinal_5 ?></span>
                             <br>
                     <!--Termina area de editado Mesa 5-->
                                 <div class="cantidad">

@@ -1,3 +1,12 @@
+<?php
+session_start();
+$USR = $_SESSION['usuario'];
+
+if($USR == null){
+    header("location:index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +60,12 @@
         <br>
         <h2 class="title">Entradas</h2>
         <br>
-       
+        <form class="container">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id="search" placeholder="Buscar...">
+        </div>
+    </form>
+    <br>
 
         <?php
             require_once('z_connect.php');
@@ -62,7 +76,7 @@
         ?>
 
             <div class="card-deck">
-                <div class="card mb-3">
+                <div class="card mb-3 producto">
                     <img class="card-img-top" <?php echo "src='admin/img_menu/".$row['imagen']."'";?> alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['platillo']?></h5>
@@ -85,5 +99,22 @@
                 ?>
     </section>
 </body>
+<script type='text/javascript'>
+             let search_input = document.getElementById('search')
+            
+            search_input.addEventListener('keyup',function(e){
+                let search_item = e.target.value.toLowerCase();
+                let div_item = document.querySelectorAll("div .producto");
+                console.log(search_item);
+                
+                div_item.forEach(function(item){
+                    if(item.textContent.toLowerCase().indexOf(search_item)!=-1){
+                      item.closest("div").style.display = "block";
+                    }else{
+                      item.closest("div").style.display = "none";
+                    }
+                });
+            });
+    </script>
 </html>
 

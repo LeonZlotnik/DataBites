@@ -3,7 +3,7 @@
     $USR = $_SESSION['usuario'];
 
     if($USR == null){
-        header("location:preferencias.php");
+        header("location:index.php");
     }
 
 if(isset($_POST['ordenar'])){
@@ -96,33 +96,85 @@ if(isset($_POST['ordenar'])){
                             <th scope='col'>Subtotal</th>
                             <th scope='col'>Especificación</th>
                             <th scope='col'>Porción</th>
-                            <th scope='col'>Tiempo</th>
+                            <th scope='col'>Guarnicion</th>
+                            <th scope='col'>Extras</th>
                             <th scope='col'>Eliminar</th>
                         </tr>
                     </thead>";
+
+                    $totalExtra=0;
+                    $totalGuanicion=0;
 
                     if(isset($_GET['delete'])){
                         $id = $_GET['delete'];
                         $conn->query("UPDATE comandas SET status = 'Comanda_Cancelada' WHERE id_comanda = '$id'");
                         header('Location:comanda.php');
                     };
-
+                    
                     $sql = "SELECT DISTINCT*,(costo*cantidad) AS total FROM comandas WHERE usuario = '$USR' AND status = 'Comanda' AND DATE(registro) = CURDATE()";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
+                    
+                    /*$sql = "SELECT DISTINCT *, (costo*cantidad) as total, 
+                            (Select ingrediente from guarnicones where id_guarnicion in (guarniciones)) AS guarnicion, 
+                            (Select extras from inventarios where id_inventario in (extras)) as extras 
+                            From comandas where usuario = '$USR' AND status='Comanda' AND DATE(registro) = CURDATE()";
+                    $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());*/
 
                     if($result-> num_rows > 0) {
-                    
                         while($row = mysqli_fetch_assoc($result)){
+                            if($row["extras"]!=null)
+                            {
+                                $sqlExtras="SELECT sum(precio) total from inventarios where producto in ('".$row["extras"]."')";
+                                $resultExtra = $conn-> query($sqlExtras) or die ("error en query $sqlExtras".mysqli_error());
+                                if($resultExtra->num_rows>0){
+                                    /*$select_extras = "SELECT extras FROM inventarios Where id_inventario in (".$row["extras"].")";
+                                    $e_select = $conn-> query($select_extras);
+                                    $row_e ="";
+                                    while($e = mysqli_fetch_assoc($e_select)){
+                                        $row_e = $row_e." ".$e['extras'];
+                                    }*/
+                                    while($rowExtra = mysqli_fetch_assoc($resultExtra)) {
+                                        $totalExtra =$rowExtra["total"];
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                $totalExtra=0;
+                            }
+                            if($row["guarniciones"]!=null)
+                            {
+                                $sqlGuarniciones="SELECT sum(valor) total from guarnicones where ingrediente in ('".$row["guarniciones"]."')";
+                                $resultGuarniciones = $conn-> query($sqlGuarniciones) or die ("error en query $sqlGuarniciones".mysqli_error());
+                                if($resultGuarniciones->num_rows>0){
+                                    /*$select_guarniciones = "SELECT ingrediente FROM guarnicones Where id_guarnicion in (".$row["guarniciones"].")";
+                                    $r_select = $conn-> query( $select_guarniciones);
+                                    $row_g = "";
+                                    while($g = mysqli_fetch_assoc($r_select)){
+                                        $row_g = $row_g." ".$g['ingrediente'];
+                                    }*/
+                                    while($rowGuarnicion = mysqli_fetch_assoc($resultGuarniciones)) {
+                                        $totalGuanicion =$rowGuarnicion["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalGuanicion = 0;
+                            }
+                            $precioTotal=$row["costo"] + $totalExtra + $totalGuanicion;
+                            $subtotal=$precioTotal*$row["cantidad"];
+
                             echo "
                             <tbody>
                             <th scope='row'>".$row["usuario"]."</th>
                             <td>".$row["platillo"]."</td>
-                            <td>$".$row["costo"]."</td>
+                            <td>$".$precioTotal."</td>
                             <td>".$row["cantidad"]."</td>
-                            <td>$".$row["total"]."</td>
+                            <td>$".$subtotal."</td>
                             <td>".$row["specs"]."</td>
                             <td>".$row["size"]."</td>
-                            <td>".$row["registro"]."</td>
+                            <td>".$row["guarniciones"]."</td>
+                            <td>".$row["extras"]."</td>
                             <td id='hidden'>".$row["status"]."</td>
                             <td><a href='comanda.php?delete=".$row["id_comanda"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }
@@ -137,9 +189,9 @@ if(isset($_POST['ordenar'])){
                           </div>";
                 }
 
-                foreach($result as $value){
-                    $total += $value["total"];
-                };
+                //foreach($result as $value){
+                    $total = $subtotal;
+                //};
     
     ?>
     </section>

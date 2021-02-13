@@ -63,11 +63,13 @@ if($USR == null){
                             <th scope='col'>Ingreso Final</th>
                             <th scope='col'>Especificaciones</th>
                             <th scope='col'>Tamaño</th>
+                            <th scope='col'>Guarniciones</th>
+                            <th scope='col'>Extras</th>
                             <th scope='col'>Registro</th>
                         </tr>
                     </thead>";
 
-                    $sql = "SELECT *, (costo*cantidad) AS subtotal, ((costo*cantidad)*0.16) AS iva, ((costo*cantidad)*0.02) AS fee, ((costo*cantidad)/1.18) AS total FROM comandas WHERE status = 'Cuenta'";
+                    $sql = "SELECT *, (costo*cantidad) AS subtotal, ((costo*cantidad)*0.16) AS iva, ((costo*cantidad)*0.025) AS fee, ((costo*cantidad)/1.18) AS total FROM comandas WHERE status = 'Pagado'";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
                     if($result-> num_rows > 0) {
@@ -86,6 +88,8 @@ if($USR == null){
                             <td>$".$row["total"]."</td>
                             <td>".$row["specs"]."</td>
                             <td>".$row["size"]."</td>
+                            <td>".$row["guarniciones"]."</td>
+                            <td>".$row["extras"]."</td>
                             <td>".$row["registro"]."</td>";
                 }
                     echo "

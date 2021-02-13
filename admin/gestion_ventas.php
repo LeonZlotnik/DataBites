@@ -27,7 +27,7 @@ if($USR == null){
     <?php require_once('admin_navbar.php')?>
     <br>
     <br>
-        <h3 class="title">Gestión Ventas</h3>
+        <h3 class="title">Gestión Cuentas</h3>
     <br>
     <form class="container">
         <div class="form-group mx-sm-3 mb-2">
@@ -58,6 +58,8 @@ if($USR == null){
                             <th scope='col'>Especificaciones</th>
                             <th scope='col'>Tamaño</th>
                             <th scope='col'>Registro</th>
+                            <th scope='col'>Guarniciones</th>
+                            <th scope='col'>Extras</th>
                             <th scope='col'>Eliminar</th>
                         </tr>
                     </thead>";
@@ -82,6 +84,8 @@ if($USR == null){
                             <td>".$row["cantidad"]."</td>
                             <td>".$row["specs"]."</td>
                             <td>".$row["size"]."</td>
+                            <td>".$row["guarniciones"]."</td>
+                            <td>".$row["extras"]."</td>
                             <td>".$row["registro"]."</td>
                             <td><a href='gestion_ventas.php?delete_1=".$row["id_comanda"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }

@@ -2,8 +2,14 @@
 session_start();
 $USR = $_SESSION['usuario'];
 $MSA = $_SESSION['m'];
-?>
 
+    if($USR == null){
+        header("location:index.php");
+    }
+    if($MSA == null){
+      header("location:index.php");
+  }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,23 +63,13 @@ require 'z_connect.php';
 
 if (isset($_GET['ID'])) {
 
-  $ID = mysqli_real_escape_string($conn, $_GET['ID']);
-  $N = mysqli_real_escape_string($conn, $_GET['platillo']);
+    $ID = mysqli_real_escape_string($conn, $_GET['ID']);
+    $N = mysqli_real_escape_string($conn, $_GET['platillo']);
 
   $sql = "SELECT * FROM platillos WHERE id_platillo = $ID";
   $result = mysqli_query($conn, $sql);
   $row = mysqli_fetch_array($result);
-
-  /*if(isset($_POST['sum'])){
-      $n = $_POST['likes'];
-      $likes = mysql_query("UPDATE platillos SET likes = $n+1 WHERE id_platillo = $ID");
-      $result_likes($conn, $likes) or die(("error en query $likes".mysqli_error()));
-      if($result_likes){
-          echo "Sucecc";
-      }else{
-          echo "Error";
-      }
-  }*/
+  $likes=$row["likes"];
 }
 
 if (isset($_POST['add_to_cart'])) {
@@ -87,9 +83,12 @@ if (isset($_POST['add_to_cart'])) {
   $status = $_POST["status"];
   $size = $_POST["size"];
   $table = $_POST["mesa"];
+  $extras = implode(", ", $_POST['extras']);
+  $guarniciones = implode(", ", $_POST['guarniciones']);
 
+  //$sql = "INSERT INTO comandas (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
+  $sql = "INSERT INTO comandas (usuario, platillo, costo, cantidad, specs, status, size, mesa, extras, guarniciones) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table', '$extras', '$guarniciones')";
 
-  $sql = "INSERT INTO comandas (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
 
   $res = mysqli_query($conn, $sql); //or die ("error en query $sql".mysqli_error());
 
@@ -105,10 +104,28 @@ if (isset($_POST['add_to_cart'])) {
 
   mysqli_free_result($res);
   mysqli_close($conn);
-
-
 }
 
+if (isset($_POST['set_like'])) {
+    if($likes != null){
+        $likes +=1;
+    }
+    else{
+        $likes = 1;
+    }
+    $sql = "update platillos set likes=$likes where id_platillo=$ID";
+    $res = mysqli_query($conn, $sql);
+    if ($res) {
+        $success = "<div class='alert alert-success' role='alert'>
+          Se califico correctamente el platillo
+          </div>";
+    } else {
+        $error = "<div class='alert alert-danger' role='alert'>
+   Verifique su información
+    </div>";
+    }
+    header("Refresh:0");
+}
 ?>
 <div class="container">
     <br>
@@ -120,7 +137,7 @@ if (isset($_POST['add_to_cart'])) {
             <div class="card-body">
                 <h5 class="card-title"><?php echo $row['platillo']; ?></h5>
                 <form action="" method="POST">
-                    <button type="submit" name="sum" value="Like" class="btn btn-info"><i
+                    <button type="submit" name="set_like" value="Like" class="btn btn-info"><i
                                 class="fas fa-thumbs-up"></i></button>
                 </form>
 
@@ -237,7 +254,7 @@ if (isset($_POST['add_to_cart'])) {
                                                 } catch (Exception $e) {
                                                   ?>
                                                     <div class="form-check form-check-inline">
-                                                        $e
+                                                       $e
                                                     </div>
                                                   <?php
                                                 }
@@ -247,13 +264,10 @@ if (isset($_POST['add_to_cart'])) {
                                                   while ($guarnicion = $res->fetch_assoc()) {
                                                     ?>
                                                       <div class="form-check form-check-inline">
-                                                          <label class="form-check-label" style="margin-right: 10px"
-                                                                 id="<?php echo $guarnicion["ingrediente"]; ?>"
-                                                                 for="guarnicion<?php echo ++$i; ?>">
+                                                          <label class="form-check-label" style="margin-right: 10px" id="<?php echo $guarnicion["ingrediente"]; ?>" for="guarnicion<?php echo ++$i; ?>">
                                                             <?php echo "$" . $guarnicion["valor"] . " " . $guarnicion["ingrediente"]; ?></label>
-                                                          <input class="form-check-input" type="checkbox"
-                                                                 id="guarnicion<?php echo $i; ?>" name="guarniciones[]"
-                                                                 value="<?php echo $guarnicion["id_guarnicion"]; ?>">
+                                                          <input class="form-check-input" type="checkbox" id="guarnicion<?php echo $i; ?>" name="guarniciones[]" 
+                                                          value="<?php echo $guarnicion["ingrediente"]; ?>">
                                                       </div>
                                                     <?php
                                                   }
@@ -275,19 +289,16 @@ if (isset($_POST['add_to_cart'])) {
                                               </div>
                                               <div class="col-12">
                                                 <?php
-                                                $mysql = ("SELECT * FROM inventarios WHERE extras = 1 and id_inventario in (" . $row['extras'] . ")");
+                                                $mysql = ("SELECT * FROM inventarios WHERE extras = 1 and sku in (" . $row['extras'] . ")");
                                                 $res = mysqli_query($conn, $mysql) or die ("error en query $mysql" . mysqli_error());
                                                 if ($res->num_rows > 0) {
                                                   $j = 0;
                                                   while ($extra = $res->fetch_assoc()) {
                                                     ?>
                                                       <div class="form-check form-check-inline">
-                                                          <label class="form-check-label" style="margin-right: 10px"
-                                                                 id="<?php echo $extra["producto"]; ?>"
-                                                                 for="extra<?php echo ++$j; ?>">
+                                                          <label class="form-check-label" style="margin-right: 10px" id="<?php echo $extra["producto"]; ?>" for="extra<?php echo ++$j; ?>">
                                                             <?php echo "$" . $extra["precio"] . " " . $extra["producto"]; ?></label>
-                                                          <input type="checkbox" id="extra<?php echo $j; ?>" style=""
-                                                                 name="extras[]" value="<?php echo $extra["sku"]; ?>">
+                                                          <input type="checkbox" id="extra<?php echo $j; ?>" style="" name="extras[]" value="<?php echo $extra["producto"]; ?>">
                                                       </div>
                                                     <?php
                                                   }
@@ -299,7 +310,6 @@ if (isset($_POST['add_to_cart'])) {
                                       }
 
                                       ?>
-
                                     </div>
                                     <button type="submit" name="add_to_cart" class="btn btn-outline-info">Agregar
                                     </button>

@@ -1,6 +1,11 @@
 <?php
     session_start();
-
+    $USR = $_SESSION['usuario'];
+    
+    if($USR == null){
+        header("location:index.php");
+    }
+   
     if(isset($_POST['crear'])){
         require_once('z_connect.php');
 

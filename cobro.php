@@ -1,5 +1,15 @@
 <?php
-    session_start();
+session_start();
+$USR = $_SESSION['usuario'];
+
+if($USR == null){
+    header("location:index.php");
+}
+    
+    if(isset($_GET['Total'])){
+        (int)$id = $_GET['Total'];
+        $Total = (int)$id;
+      }
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +71,7 @@
                 <div class="card-body">
                     <img src="img/Cash_logo.png" width="50%" alt="">
                 </div>
-                <a href="#" class="btn btn-success btn-lg btn-block">Pagar</a>
+                <a href="efectivo.php?Total=<?php echo $Total ?>" class="btn btn-success btn-lg btn-block">Pagar</a>
             </div>
             <div class="card-footer text-muted">
                 El mesero le asisitirá.
@@ -73,7 +83,7 @@
                 <div class="card-body">
                     <img src="img/terminal.png" width="50%" alt="">
                 </div>
-                <a href="#" class="btn btn-success btn-lg btn-block">Pagar</a>
+                <a href="terminal.php?Total=<?php echo $Total ?>" class="btn btn-success btn-lg btn-block">Pagar</a>
             </div>
             <div class="card-footer text-muted">
                 El mesero le asisitirá.
@@ -85,7 +95,7 @@
                 <div class="card-body">
                     <img src="img/CreditCard.png" width="50%" alt="">
                 </div>
-                <a href="#" class="btn btn-success btn-lg btn-block">Pagar</a>
+                <a href="Paypage/pagos.php?Total=<?php echo $Total ?>" class="btn btn-success btn-lg btn-block">Pagar</a>
             </div>
             <div class="card-footer text-muted">
                 Ingrese su número aquí.

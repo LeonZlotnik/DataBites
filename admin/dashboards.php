@@ -8,55 +8,9 @@ if($USR == null){
 
 require_once('../z_connect.php');
 
-//Grafica Uno
+//Ingresos Al Día
 
-$sql_one = "SELECT Date(registro) as fecha, count(usuario)as total From comandas Where status = 'Cuenta' Group by 1 Order by 1" ;
-$result = mysqli_query($conn, $sql_one) or die ("error en query $sql_one".mysqli_error());
-$valoresY = array();
-$valoresX= array();
-
-while($ver= mysqli_fetch_row($result)){
-  $valoresY[] = $ver[1];
-  $valoresX[]= $ver[0];
-  
-}
-
-$datosY = json_encode($valoresY);
-$datosX = json_encode($valoresX);
-
-//Grafica Dos
-$sql_two = "SELECT mesa, Sum(Costo*cantidad )as total FROM comandas Where status = 'Cuenta' Group by 1 Order by 1" ;
-$result_two = mysqli_query($conn, $sql_two) or die ("error en query $sql_two".mysqli_error());
-$barValorY = array();
-$barValorX = array();
-
-while($row= mysqli_fetch_row($result_two)){
-  $barValorY[] = $row[1];
-  $barValorX[]= $row[0];
-  
-}
-
-$datos_dosY = json_encode($barValorY);
-$datos_dosX = json_encode($barValorX);
-
-//Grafica Tres
-$sql_three = "SELECT categoria, sum(cantidad) FROM platillos INNER JOIN comandas ON platillos.platillo = platillos.platillo group by 1";
-$result_three = mysqli_query($conn, $sql_three) or die ("error en query $sql_two".mysqli_error());
-$catValorY = array();
-$catValorX = array();
-
-while($row= mysqli_fetch_row($result_three)){
-  $catValorY[] = $row[1];
-  $catValorX[]= $row[0];
-  
-}
-
-$datos_tresY = json_encode($catValorY);
-$datos_tresX = json_encode($catValorX);
-
-//Grafica cuatro y cinco
-
-$sql_four = "SELECT Date(registro) as fecha, Sum(Costo*cantidad)as total From comandas Where status = 'Cuenta' Group by 1 Order by 1" ;
+$sql_four = "SELECT Date(registro) as fecha, Sum(Costo*cantidad)as total From comandas Where status = 'Pagado' Group by 1 Order by 1" ;
 $result = mysqli_query($conn, $sql_four) or die ("error en query $sql_four".mysqli_error());
 $DobleY = array();
 $DobleX= array();
@@ -81,10 +35,56 @@ while($data= mysqli_fetch_row($result)){
   
 }
 
+//Ingresos por Mesa
+$sql_two = "SELECT mesa, Sum(Costo*cantidad )as total FROM comandas Where status = 'Pagado' Group by 1 Order by 1" ;
+$result_two = mysqli_query($conn, $sql_two) or die ("error en query $sql_two".mysqli_error());
+$barValorY = array();
+$barValorX = array();
+
+while($row= mysqli_fetch_row($result_two)){
+  $barValorY[] = $row[1];
+  $barValorX[]= $row[0];
+  
+}
+
+$datos_dosY = json_encode($barValorY);
+$datos_dosX = json_encode($barValorX);
+
+//Ordenes por categoría
+$sql_three = "SELECT categoria, (cantidad*comandas.costo) As total FROM platillos, comandas WHERE platillos.platillo = comandas.platillo";
+$result_three = mysqli_query($conn, $sql_three) or die ("error en query $sql_two".mysqli_error());
+$catValorY = array();
+$catValorX = array();
+
+while($row= mysqli_fetch_row($result_three)){
+  $catValorY[] = $row[1];
+  $catValorX[]= $row[0];
+  
+}
+
+$datos_tresY = json_encode($catValorY);
+$datos_tresX = json_encode($catValorX);
+
+//Usuarios Al Dia
+
 $datos_cuatroYs = json_encode($DobleYs);
 $datos_cuatroXs = json_encode($DobleXs);
 
-//Grafica Seis
+$sql_one = "SELECT Date(registro) as fecha, count(usuario)as total From comandas Where status = 'Pagado' Group by 1" ;
+$result = mysqli_query($conn, $sql_one) or die ("error en query $sql_one".mysqli_error());
+$valoresY = array();
+$valoresX= array();
+
+while($ver= mysqli_fetch_row($result)){
+  $valoresY[] = $ver[1];
+  $valoresX[]= $ver[0];
+  
+}
+
+$datosY = json_encode($valoresY);
+$datosX = json_encode($valoresX);
+
+//Grafica Pie
 
 $sql_six_A = "SELECT count(usuario) FROM usuarios";
 $result_six_A = mysqli_query($conn, $sql_six_A) or die ("error en query $result_six_A".mysqli_error());
@@ -98,8 +98,8 @@ $intB = (int)$result_six_B;
 $datos_seisA = json_encode(46);
 $datos_seisB = json_encode($intB);
 
-//Grafica Siete
-$sql_seven = "SELECT mesa, count(usuario)as total FROM comandas Where status = 'Cuenta' Group by 1 Order by 1";
+//Usuarios Por Mesa
+$sql_seven = "SELECT mesa, count(usuario) as total FROM comandas Where status = 'Pagado' Group by 1";
 $result = mysqli_query($conn, $sql_seven) or die ("error en query $sql_seven".mysqli_error());
 $valuesY = array();
 $valuesX= array();
