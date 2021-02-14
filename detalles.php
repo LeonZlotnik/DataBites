@@ -107,24 +107,33 @@ if (isset($_POST['add_to_cart'])) {
 }
 
 if (isset($_POST['set_like'])) {
-    if($likes != null){
-        $likes +=1;
-    }
-    else{
-        $likes = 1;
-    }
-    $sql = "update platillos set likes=$likes where id_platillo=$ID";
-    $res = mysqli_query($conn, $sql);
-    if ($res) {
-        $success = "<div class='alert alert-success' role='alert'>
+    $sqlCountLike="select count(*)total from like_platillo where user='$USR' and id_platillo=".$ID;
+    $resCountLike=mysqli_query($conn,$sqlCountLike);
+    $row = mysqli_fetch_array($resCountLike);
+    $totalLike= $row["total"];
+
+    if($totalLike==0) {
+        if ($likes != null) {
+            $likes += 1;
+        } else {
+            $likes = 1;
+        }
+        $sqlLike = "insert into like_platillo (user, id_platillo, likes, fecha_registro) values ('$USR',$ID, 1, CURDATE())";
+        $resLike = mysqli_query($conn, $sqlLike);
+
+        $sql = "update platillos set likes=$likes where id_platillo=$ID";
+        $res = mysqli_query($conn, $sql);
+        if ($res) {
+            $success = "<div class='alert alert-success' role='alert'>
           Se califico correctamente el platillo
           </div>";
-    } else {
-        $error = "<div class='alert alert-danger' role='alert'>
+        } else {
+            $error = "<div class='alert alert-danger' role='alert'>
    Verifique su información
     </div>";
+        }
+        //header("Refresh:0");
     }
-    header("Refresh:0");
 }
 ?>
 <div class="container">
@@ -137,7 +146,10 @@ if (isset($_POST['set_like'])) {
             <div class="card-body">
                 <h5 class="card-title"><?php echo $row['platillo']; ?></h5>
                 <form action="" method="POST">
-                    <button type="submit" name="set_like" value="Like" class="btn btn-info"><i
+                    <button type="submit" name="set_like" value="Like" class="btn btn-info"<?php
+                    if($totalLike>0)
+                        echo 'disabled'
+                    ?>><i
                                 class="fas fa-thumbs-up"></i></button>
                 </form>
 
