@@ -132,7 +132,7 @@ if (isset($_POST['set_like'])) {
    Verifique su información
     </div>";
         }
-        //header("Refresh:0");
+        header("Refresh:0");
     }
 }
 ?>

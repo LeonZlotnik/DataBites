@@ -13,6 +13,26 @@ if(isset($_GET['Total'])){
     $Total = (int)$id;
   }
 
+if(isset($_POST['validar_token'])){
+    $token = $_POST['token'];
+    $email = $_POST['email'];
+
+    $sql="select count(*) total from usuarios where usuario='$USR' and codigo='$token'";
+    $res=mysqli_query($conn,$sql);
+    $row = mysqli_fetch_array($res);
+    $countExist= $row["total"];
+    if ($countExist>0) {
+        $paid = "UPDATE comandas SET status= 'Pagado' WHERE usuario = '$USR' AND DATE(registro) = CURDATE() AND status = 'Cuenta'";
+        $res = mysqli_query($conn, $paid) or die ("error en query $paid".mysqli_error());
+        $success = "<div class='alert alert-success' role='alert'>
+              El Pago se ha realizado correctamente
+              </div>";
+    } else {
+        $error = "<div class='alert alert-danger' role='alert'>
+                Código Inválido, favor de verificarlo.
+        </div>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,15 +61,19 @@ require_once("nav_bar.php");
     <div class="card-body col-12">
         <p class="card-text"><b><?php echo $USR ?> tu total a pagar es de: <?php echo $Total ?></b></p>
         <p class="card-text">La propina se deja aparte.</p>
+        <div class="container">
+            <?php echo $success ?>
+            <?php echo $error ?>
+        </div>
     </div>
 </div>
-<form action="./charge.php" method="post" id="payment-form">
+<form  method="post" id="payment-form">
   <div class="form-row">
       <input type="text" name="token" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Ingrese Token" required>
-      <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Email Address" required>
+      <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty"  placeholder="Email Address" required>
   </div>
  
-  <button class="btn btn-primary btn-lg btn-block">Generar Pago</button>
+  <button class="btn btn-primary btn-lg btn-block" name="validar_token">Generar Pago</button>
 </form>
 </section>
 <br>
@@ -58,7 +82,7 @@ require_once("nav_bar.php");
 <div class="card row">
   <div class="card-body col-12">
     <p class="card-text">
-    Introduzca el mail a donde quiera recibir el comprobante de su cunta, esta información no será utilizada para fines comerciales. 
+    Introduzca el mail a donde quiera recibir el comprobante de su cuenta, esta información no será utilizada para fines comerciales.
     </p>
   </div>
 </div>
