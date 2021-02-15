@@ -8,7 +8,7 @@ if(isset($_POST['crear'])){
 
     require_once('z_connect.php');
 
-    $sql = "INSERT INTO usuarios (usuario, mesa, registro, codigo) VALUES ('vzpintor', '2',now(), LPAD(FLOOR(10+ RAND() * 10000),6,'0'))";
+    $sql = "INSERT INTO usuarios (usuario, mesa, registro, codigo) VALUES ('$usuario','$table',now(), LPAD(FLOOR(10+ RAND() * 10000),6,'0'))";
     $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
 
     if($result){
