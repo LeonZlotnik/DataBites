@@ -218,7 +218,7 @@ if (isset($_POST['aceptar_invitacion'])) {
                         </tr>
                     </thead>";
 
-    $sql = "SELECT DISTINCT (usuario) FROM comandas where mesa = (select distinct(mesa) from comandas where usuario = '$USR' AND DATE(registro) = CURDATE()) and usuario not in ('$USR') and DATE(registro) = CURDATE()" ;
+    $sql = "SELECT DISTINCT (usuario) FROM comandas where mesa = (select distinct(mesa) from comandas where usuario = '$USR' AND DATE(registro) = CURDATE()) and usuario not in ('$USR') and DATE(registro) = CURDATE() AND status = 'Cuenta'" ;
     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
     if($result-> num_rows > 0) {
