@@ -3,12 +3,12 @@ require '../z_connect.php';
 //Creación de Producto
 if(isset($_POST['create'])){
 
-$ingrediente = $_POST['ingrediente'];
+$condimento = $_POST['condimento'];
 $valor = $_POST['valor'];
 
 
 
-$sql = "INSERT INTO guarnicones ( ingrediente, valor) VALUES ('$ingrediente','$valor');";
+$sql = "INSERT INTO extras ( condimento, valor) VALUES ('$condimento','$valor');";
 $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
 
 
@@ -21,7 +21,7 @@ if($result){
 mysqli_free_result($result);
 mysqli_close($conn);
 
-header('Location:guarniciones.php');
+header('Location:extras.php');
 
 }
 //Edición de Producto
@@ -33,22 +33,22 @@ if(isset($_GET['edit'])){
 
     $id = $_GET['edit'];
     $update = true;
-    $query = "SELECT * FROM guarnicones WHERE id_guarnicion = '$id'";
+    $query = "SELECT * FROM extras WHERE id_condimento = '$id'";
     $result = mysqli_query($conn, $query) or die ("error en query $query".mysqli_error());
    if(count($result)==1){
 
     $row = $result->fetch_array();
-    $ingrediente = $_POST['ingrediente'];
+    $condimento = $_POST['condimento'];
     $valor = $_POST['valor'];
     //};
 
 
     if(isset($_POST['update']) and $_SERVER['REQUEST_METHOD'] == "POST"){
       
-      $new_ingrediente = $_POST['ingrediente'];
+      $new_condimento = $_POST['condimento'];
       $new_valor = $_POST['valor'];
     
-      $mysql = ("UPDATE guarnicones SET ingrediente= '$new_ingrediente', valor= '$new_valor' WHERE platillo='$id'");
+      $mysql = ("UPDATE extras SET condimento= '$new_condimento', valor= '$new_valor' WHERE platillo='$id'");
 
       $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
 
@@ -75,21 +75,21 @@ if(isset($_GET['edit'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Crear guarnición</title>
+    <title>Crear extra</title>
     <link rel="shorcut icon" type="img/png" href="img/favicon.png">
     <link rel="stylesheet" type="text/css" href="admin_controll.css">
 </head>
 <body>
 <?php require_once('admin_navbar.php')?>
 <br>
-<h2 class="text-center">Nueva guarnición</h2>
+<h2 class="text-center">Nuevo extra</h2>
 <br>
 <section class="container">
 <form method="POST" enctype="multipart/form-data">
-  <input type="hidden" name="id_guarnicion" value="<?php echo $id;?>">
+  <input type="hidden" name="id_condimento" value="<?php echo $id;?>">
   <div class="form-row">
-    <label for="inputAddress2">Nombre de guarnición:</label>
-    <input type="text" class="form-control" id="inputAddress2" name="ingrediente" value="<?php echo $ingrediente ?? "";?>" placeholder="Introduce nombre" require>
+    <label for="inputAddress2">Nombre del extra:</label>
+    <input type="text" class="form-control" id="inputAddress2" name="condimento" value="<?php echo $condimento ?? "";?>" placeholder="Introduce nombre" require>
   </div>
   <br>
 

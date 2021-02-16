@@ -16,7 +16,7 @@ if (isset($_POST['create'])){
   $guarniciones = implode(", ", $_POST['guarniciones']);
   $extras = implode(", ", $_POST['extras']);
 
-  
+
 
   $sql = "INSERT INTO platillos (platillo, categoria, estado, precio, costo, imagen, descripcion, detalle, guarniciones, extras) VALUES ('$dish','$category','$status','$price', '$cost','$image','$desc','$ext','$guarniciones','$extras');";
   $result = mysqli_query($conn, $sql) or die ("error en query $sql" . mysqli_error());
@@ -132,9 +132,9 @@ if (isset($_GET['edit'])) {
 
     .title {
             text-align: center;
-            color:#D7627C; 
+            color:#D7627C;
             text-shadow: 1.5px 1px 2px #000;
-        } 
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -200,7 +200,7 @@ if (isset($_GET['edit'])) {
             <br>
             <label for="inputZip">Imagen Cargada:</label>
             <div class='card' style='width: 18rem;'>
-                <img class='card-img-top' <?php echo "src='img_menu/" . $row['imagen'] . "'"; ?> 
+                <img class='card-img-top' <?php echo "src='img_menu/" . $row['imagen'] . "'"; ?>
                     alt='Imagen de Producto'>
             </div>
             <br>
@@ -230,7 +230,7 @@ if (isset($_GET['edit'])) {
                   </div>
               <br>
                 </div>
-                
+
                 <?php
 
             $mysql = ("SELECT * FROM guarnicones");
@@ -299,12 +299,12 @@ if (isset($_GET['edit'])) {
     <br>
     <script type='text/javascript'>
             let search_input = document.getElementById('search')
-            
+
             search_input.addEventListener('keyup',function(e){
                 let search_item = e.target.value.toLowerCase();
                 let div_item = document.querySelectorAll("div .producto");
                 console.log(search_item);
-                
+
                 div_item.forEach(function(item){
                     if(item.textContent.toLowerCase().indexOf(search_item)!=-1){
                       item.closest("div").style.display = "block";

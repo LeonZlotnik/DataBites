@@ -4,8 +4,7 @@
         $pw = $_POST['password'];
         $type = $_POST['acceso'];
 
-        $conn = mysqli_connect("localhost","root","root","H_tostada") or die("error en conexion ".mysqli_connect_error());
-        mysqli_set_charset($conn, "utf8");
+        require '../z_connect.php';
 
         $sql = "INSERT INTO administradores (usuario, password, acceso) VALUES ('$user', '$pw','$type');";
         $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());

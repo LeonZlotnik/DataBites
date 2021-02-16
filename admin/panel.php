@@ -120,7 +120,6 @@
 <br>
 
 <?php
- session_start();
  if(isset($_SESSION['admin'])){
    echo "<a href='logout.php?salir' class='btn btn-warning btn-lg btn-block'>Salir</a>";
  }

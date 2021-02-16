@@ -10,8 +10,7 @@ $image = $_FILES['imagen']['name'];
 $number = $_POST['numero'];
 $status = $_POST['status'];
   
-$conn = mysqli_connect("localhost","root","root","H_tostada") or die("error en conexion ".mysqli_connect_error());
-        mysqli_set_charset($conn, "utf8");
+require '../z_connect.php';
 
 
   $sql = "INSERT INTO anuncios (anuncio, link, imagen, numero, status) VALUES ('$name','$url','$image','$number','$status');";

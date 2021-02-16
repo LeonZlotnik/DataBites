@@ -51,11 +51,11 @@ if(isset($_GET['edit'])){
     $price = $row['precio'];
     $cost = $row['costo'];
     //};
-    
+
 
 
     if(isset($_POST['update']) and $_SERVER['REQUEST_METHOD'] == "POST"){
-      
+
       $new_sku = $_POST['sku'];
       $new_product = $_POST['producto'];
       $new_brand = $_POST['marca'];
@@ -63,7 +63,7 @@ if(isset($_GET['edit'])){
       $new_measure = $_POST['medida'];
       $new_price = $_POST['precio'];
       $new_cost = $_POST['costo'];
-    
+
       $mysql = ("UPDATE inventarios SET sku= '$new_sku', producto= '$new_product', marca= '$new_brand', unidad_c= '$new_unit', medida= '$new_measure', precio= '$new_price', costo= '$new_cost' WHERE sku='$id'");
 
       $res = mysqli_query($conn, $mysql) or die ("error en query $mysql".mysqli_error());
@@ -73,7 +73,7 @@ if(isset($_GET['edit'])){
       }else{
         echo "<script type='text/javascript'>alert('Se ha generado un error');</script>";
       };
-      
+
       mysqli_free_result($mysql);
       mysqli_close($conn);
 
@@ -97,9 +97,9 @@ if(isset($_GET['edit'])){
 <style>
 .title {
             text-align: center;
-            color:#D7627C; 
+            color:#D7627C;
             text-shadow: 1.5px 1px 2px #000;
-        } 
+        }
 </style>
 <body>
 <?php require_once('admin_navbar.php')?>

@@ -1,7 +1,7 @@
 <?php  
 
 require_once('z_connect.php');
-
+$msg="";
   if(isset($_POST['login'])){
       $username = $_POST["usuario"];
       $password = $_POST["password"];
@@ -9,7 +9,7 @@ require_once('z_connect.php');
       $query = "SELECT * FROM administradores WHERE usuario='$username' AND password='$password'";
 
       $result = mysqli_query($conn, $query);
-
+      
       if(mysqli_num_rows($result)>0){
           while($row = mysqli_fetch_assoc($result)){
               if($row["usuario"]){
