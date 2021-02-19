@@ -25,8 +25,6 @@ if (isset($_POST['create'])){
   $guarniciones = implode(", ", $_POST['guarniciones']);
   $extras = implode(", ", $_POST['extras']);
 
-  
-
   $sql = "INSERT INTO platillos (platillo, categoria, estado, precio, costo, imagen, descripcion, detalle, guarniciones, extras) VALUES ('$dish','$category','$status','$price', '$cost','$image','$desc','$ext','$guarniciones','$extras');";
   $result = mysqli_query($conn, $sql) or die ("error en query $sql" . mysqli_error());
 
@@ -72,6 +70,8 @@ if (isset($_GET['edit'])) {
     $image = $row ['imagen']['name'];
     $desc = $row ['descripcion'];
     $ext = $row ['detalle'];
+    $guarniciones = implode(", ", $row['guarniciones']);
+    $extras = implode(", ", $$row['extras']);
     //};
 
     if (isset($_POST['update']) and $_SERVER['REQUEST_METHOD'] == "POST") {
@@ -86,8 +86,10 @@ if (isset($_GET['edit'])) {
       $new_image = empty($_FILES['imagen']['name']) ? $row['imagen'] : $_FILES['imagen']['name'];
       $new_desc = $_POST['descripcion'];
       $new_ext = $_POST['detalle'];
+      $new_guarniciones = implode(", ", $_POST['guarniciones']);
+      $new_extras = implode(", ", $_POST['extras']);
 
-      $mysql = ("UPDATE platillos SET platillo= '$new_dish', categoria= '$new_category', estado= '$new_status', precio= '$new_price', costo= '$new_cost', imagen= '$new_image', descripcion= '$new_desc', detalle= '$new_ext' WHERE id_platillo='$id'");
+      $mysql = ("UPDATE platillos SET platillo= '$new_dish', categoria= '$new_category', estado= '$new_status', precio= '$new_price', costo= '$new_cost', imagen= '$new_image', descripcion= '$new_desc', detalle= '$new_ext', guarniciones= '$new_guarniciones', extras= '$new_extras' WHERE id_platillo='$id'");
 
       $res = mysqli_query($conn, $mysql) or die ("error en query $mysql" . mysqli_error());
 

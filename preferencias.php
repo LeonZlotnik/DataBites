@@ -1,7 +1,7 @@
 <?php
     session_start();
     $USR = $_SESSION['usuario'];
-    
+    $MSA = $_SESSION['m'];
     if($USR == null){
         header("location:index.php");
     }
@@ -13,7 +13,7 @@
         $pw = $_POST['pw'];
         $birth = $_POST['cumple'];
 
-        $sql = "INSERT INTO clientes (cliente, pw, cumple) VALUES ('$mail', '$pw', '$birth')";
+        $sql = "INSERT INTO clientes (cliente, pw, cumple, codigo) VALUES ('$mail', '$pw', '$birth', LPAD(FLOOR(10+ RAND() * 10000),6,'0'))";
         $result = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
 
         if($result){
@@ -76,12 +76,12 @@
         <br>
         <div class="alert alert-primary" role="alert">
         <?php 
-            echo "Usuario: ".$_SESSION['usuario'];
+            echo "Usuario: ".$USR;
         ?>
         </div>
         <div class="alert alert-info" role="alert">
         <?php 
-            echo "Mesa: ".$_SESSION['m'];
+            echo "Mesa: ".$MSA;
         ?>
         </div>
         <div class="container">
@@ -124,27 +124,14 @@
                             <div class="card-header" id="headingTwo">
                             <h5 class="mb-0">
                                 <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Idioma
+                                Facturar
                                 </button>
                             </h5>
                             </div>
                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                             <div class="card-body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            Español
-                                        </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                        <label class="form-check-label" for="exampleRadios2">
-                                            Ingles
-                                        </label>
-                                        <br>
-                                        <br>
-                                        <button type="button" class="btn btn-primary btn-lg btn-block">Cambiar</button>
-                                </div>
+                                       <p class="h3">Proximamente</p>
+                                        <!--<button type="button" class="btn btn-primary btn-lg btn-block">Cambiar</button>-->
                                 <br>
                             </div>
                             </div>

@@ -5,17 +5,24 @@ require_once('z_connect.php');
   if(isset($_POST['login'])){
       $username = $_POST["usuario"];
       $password = $_POST["password"];
+      $type = $_POST['acceso'];   
 
-      $query = "SELECT * FROM administradores WHERE usuario='$username' AND password='$password'";
+      $query = "SELECT * FROM administradores WHERE usuario='$username' AND password='$password' AND acceso = '$type'";
 
       $result = mysqli_query($conn, $query);
 
       if(mysqli_num_rows($result)>0){
           while($row = mysqli_fetch_assoc($result)){
               if($row["usuario"]){
-                  session_start();
-                  $_SESSION['admin'] = $row["usuario"];
-                  header('Location:admin/panel.php?Bienvenido='.$_SESSION['admin']);
+                  if($row["acceso"] == "gerente"){
+                    session_start();
+                    $_SESSION['admin'] = $row["usuario"];
+                    header("location:admin/panel.php?Bienvenido=".$_SESSION['admin']);
+                   }else{
+                    session_start();
+                    $_SESSION['admin'] = $row["usuario"];
+                    header("location:admin/panel_2.php?Bienvenido=".$_SESSION['admin']);
+                   }
               }
           }
       }else{
@@ -59,8 +66,8 @@ require_once('z_connect.php');
   <div class="form-group">
     <select class="custom-select" name="acceso" id="inputGroupSelect01">
             <option selected>--</option>
-            <option value="Gerencia">Gerencia</option>
-            <option value="Piso">Piso</option>
+            <option value="gerente">Gerencia</option>
+            <option value="piso">Piso</option>
         </select>
   </div>
   <div class="form-group">

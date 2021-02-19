@@ -55,7 +55,7 @@ if($USR == null){
         <div class='table-responsive'>
         <table class='table table-hover'>
                     <thead>
-                        <tr>
+                        <tr class='table-info'>
                             <th scope='col'>SKU</th>
                             <th scope='col'>Producto</th>
                             <th scope='col'>Marca</th>

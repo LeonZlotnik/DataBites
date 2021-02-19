@@ -43,7 +43,7 @@ if($USR == null){
         <div class='table-responsive'>
         <table class='table table-hover'>
                     <thead>
-                        <tr>
+                        <tr class='table-info'>
                             <th scope='col'>#</th>
                             <th scope='col'>Usuario</th>
                             <th scope='col'>Contraseña</th>

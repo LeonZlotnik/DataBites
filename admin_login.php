@@ -1,11 +1,11 @@
 
-<?php
+<?php /*
 session_start();
 require_once('z_connect.php');
 
 $username = $_POST['usuario'];
 $pw = $_POST['password'];
-$type = $_POST['acceso'];
+$type = $_POST['acceso'];   
 
 if(isset($_POST['login'])){
     if(empty($username) || empty($pw)){
@@ -19,7 +19,11 @@ if(isset($_POST['login'])){
 
         if($result){
            $_SESSION['admin'] = $_POST['usuario'];
-            header("location:admin/panel.php?Bienvenido=".$_SESSION['admin']);
+           if($_SESSION['admin']['acceso'] == "piso"){
+            header("location:admin/panel_2.php?Bienvenido=".$_SESSION['admin']);
+           }else{
+            header("location:admin/panel_2.php?Bienvenido=".$_SESSION['admin']);
+           }
         }else{
             header("location:admin.php?Invalid=Introduzca_usuario_correcto");
             $error = "<div class='alert alert-danger' role='alert'>
@@ -29,6 +33,6 @@ if(isset($_POST['login'])){
     }
 }else{
     echo "<script>console.log('Fatal!')</script>";
-}
+}*/
 ?>
 

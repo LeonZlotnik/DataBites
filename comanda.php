@@ -95,7 +95,6 @@ if(isset($_POST['ordenar'])){
                             <th scope='col'>Cantidad</th>
                             <th scope='col'>Subtotal</th>
                             <th scope='col'>Especificación</th>
-                            <th scope='col'>Porción</th>
                             <th scope='col'>Guarnicion</th>
                             <th scope='col'>Extras</th>
                             <th scope='col'>Eliminar</th>
@@ -172,7 +171,6 @@ if(isset($_POST['ordenar'])){
                             <td>".$row["cantidad"]."</td>
                             <td>$".$subtotal."</td>
                             <td>".$row["specs"]."</td>
-                            <td>".$row["size"]."</td>
                             <td>".$row["guarniciones"]."</td>
                             <td>".$row["extras"]."</td>
                             <td id='hidden'>".$row["status"]."</td>

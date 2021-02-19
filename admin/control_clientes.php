@@ -49,11 +49,12 @@ if($USR == null){
         <div class='table-responsive'>
         <table class='table table-hover'>
                     <thead>
-                        <tr>
+                        <tr class='table-info'>
                             <th scope='col'>#</th>
                             <th scope='col'>Mail</th>
                             <th scope='col'>Contraseña</th>
                             <th scope='col'>Cumpleaños</th>
+                            <th scope='col'>Token</th>
                             <th scope='col'>Registro</th>
                             <th scope='col'>Eliminar</th>
                         </tr>
@@ -71,6 +72,7 @@ if($USR == null){
                             <td class='mail'>".$row["cliente"]."</td>
                             <td>XXXXXX</td>
                             <td>".$row["cumple"]."</td>
+                            <td>".$row["codigo"]."</td>
                             <td>".$row["registro"]."</td>
                             <td><a href='control_clientes.php?delete=".$row["id_cliente"]."'><i class='fas fa-trash-alt'></i></a></td>";
                 }

@@ -27,7 +27,7 @@ if($USR == null){
     <?php require_once('admin_navbar.php')?>
     <br>
     <br>
-        <h3 class="title">Gestión Ventas</h3>
+        <h3 class="title">Cuentas Pagadas</h3>
     <br>
     <form class="container">
         <div class="form-group mx-sm-3 mb-2">
@@ -51,7 +51,7 @@ if($USR == null){
         <div class='table-responsive'>
         <table class='table table-hover'>
                     <thead>
-                        <tr>
+                        <tr class='table-info'>
                             <th scope='col'>Usuario</th>
                             <th scope='col'>No. Mesa</th>
                             <th scope='col'>Plato</th>
@@ -62,7 +62,6 @@ if($USR == null){
                             <th scope='col'>Fee</th>
                             <th scope='col'>Ingreso Final</th>
                             <th scope='col'>Especificaciones</th>
-                            <th scope='col'>Tamaño</th>
                             <th scope='col'>Guarniciones</th>
                             <th scope='col'>Extras</th>
                             <th scope='col'>Registro</th>
@@ -75,19 +74,49 @@ if($USR == null){
                     if($result-> num_rows > 0) {
                     
                         while($row = mysqli_fetch_assoc($result)){
+                            if($row["extras"]!=null) {
+                                $sqlExtras = "SELECT sum(precio) total from inventarios where producto in ('" . $row["extras"] . "')";
+                                $resultExtra = $conn->query($sqlExtras) or die ("error en query $sqlExtras" . mysqli_error());
+                                if ($resultExtra->num_rows > 0) {
+                                    while ($rowExtra = mysqli_fetch_assoc($resultExtra)) {
+                                        $totalExtra = $rowExtra["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalExtra =0;
+                            }
+                            if($row["guarniciones"]!=null){
+                                $sqlGuarniciones="SELECT sum(valor) total from guarnicones where ingrediente in ('".$row["guarniciones"]."')";
+                                $resultGuarniciones = $conn-> query($sqlGuarniciones) or die ("error en query $sqlGuarniciones".mysqli_error());
+                                if($resultGuarniciones->num_rows>0){
+                                    while($rowGuarnicion = mysqli_fetch_assoc($resultGuarniciones)) {
+                                        $totalGuanicion = $rowGuarnicion["total"];
+                                    }
+                                }
+                            }
+                            else{
+                                $totalGuanicion = 0;
+                            }
+                            $precioTotal = $row["costo"] + $totalExtra + $totalGuanicion;
+                            $final = $precioTotal*$row["cantidad"];
+
+                            $iva = number_format($row["iva"], 2, '.', '');
+                            $fee = number_format($row["fee"], 2, '.', '');
+                            $total = number_format($row["total"], 2, '.', '');
+
                             echo "
                             <tbody>
                             <th scope='row' class='user'>".$row["usuario"]."</th>
                             <td>#".$row["mesa"]."</td>
                             <td>".$row["platillo"]."</td>
-                            <td>$".$row["costo"]."</td>
+                            <td>$".$precioTotal."</td>
                             <td>".$row["cantidad"]."</td>
-                            <td>$".$row["subtotal"]."</td>
-                            <td>$".$row["iva"]."</td>
-                            <td>$".$row["fee"]."</td>
-                            <td>$".$row["total"]."</td>
+                            <td>$".$final."</td>
+                            <td>$".$iva."</td>
+                            <td>$".$fee."</td>
+                            <td>$".$total."</td>
                             <td>".$row["specs"]."</td>
-                            <td>".$row["size"]."</td>
                             <td>".$row["guarniciones"]."</td>
                             <td>".$row["extras"]."</td>
                             <td>".$row["registro"]."</td>";

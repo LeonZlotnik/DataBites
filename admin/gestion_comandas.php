@@ -59,6 +59,8 @@ if($USR == null){
         <br>
         <div class="col text-center">
             <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
+            <a class="btn btn-info btn-lg" href="gestion_comandas.php"><i class="fas fa-redo-alt"></i></a>
+            <a class="btn btn-info btn-lg" href="token.php">Token</a>
         </div>
         <br>
         
@@ -150,8 +152,8 @@ if($USR == null){
                                 $sqlExtras_1 = "SELECT sum(precio) total from inventarios where producto in ('" . $row_1["extras"] . "')";
                                 $resultExtra = $conn->query($sqlExtras_1) or die ("error en query $sqlExtras_1" . mysqli_error());
                                 if ($resultExtra->num_rows > 0) {
-                                    while ($rowExtra = mysqli_fetch_assoc($resultExtra)) {
-                                        $totalExtra_1 = $rowExtra["total"];
+                                    while ($rowExtra_1 = mysqli_fetch_assoc($resultExtra)) {
+                                        $totalExtra_1 = $rowExtra_1["total"];
                                     }
                                 }
                             }
@@ -162,25 +164,25 @@ if($USR == null){
                                         $sqlGuarniciones_1="SELECT sum(valor) total from guarnicones where ingrediente in ('".$row_1["guarniciones"]."')";
                                         $resultGuarniciones_1 = $conn-> query($sqlGuarniciones_1) or die ("error en query $sqlGuarniciones_1".mysqli_error());
                                         if($resultGuarniciones_1->num_rows>0){
-                                            while($rowGuarnicion = mysqli_fetch_assoc($resultGuarniciones_1)) {
-                                                $totalGuanicion_1 = $rowGuarnicion["total"];
+                                            while($rowGuarnicion_1 = mysqli_fetch_assoc($resultGuarniciones_1)) {
+                                                $totalGuanicion_1 = $rowGuarnicion_1["total"];
                                             }
                                         }
                                     }
                                     else{
                                         $totalGuanicion_1 = 0;
                                     }
-                                    $precioTotal=$row_1["costo"] + $totalExtra_1 + $totalGuanicion_1;
-                                    $subtotal_1 = $precioTotal * $row_1["cantidad"];
+                                    $precioTotal_1=$row_1["costo"] + $totalExtra_1 + $totalGuanicion_1;
+                                    $subtotal_1 = $precioTotal_1 * $row_1["cantidad"];
 
-                                    $subtotalFinal_1 += $subtotal_1
+                                    $subtotalFinal_1 += $subtotal_1;
                 
                     ?>
                                     <tbody>
                                             <td><?php echo $row_1['usuario'] ?></td>
                                             <td class='producto'><?php echo $row_1['platillo'] ?></td>
                                             <td><?php echo $row_1['specs'] ?></td>
-                                            <td>$<?php echo $row_1['costo'] ?>MXN</td>
+                                            <td>$<?php echo $precioTotal_1 ?>MXN</td>
                                             <td><?php echo $row_1['cantidad'] ?></td>
                                             <td><?php echo $row_1['size'] ?></td>
                                             <td><?php echo $row_1['guarniciones'] ?></td>
@@ -331,7 +333,7 @@ if($USR == null){
                             else{
                                 $totalGuanicion_2 = 0;
                             }
-                            $precioTotal_3=$row_3["costo"] + $totalExtra_3 + $totalGuanicion_;
+                            $precioTotal_2=$row_2["costo"] + $totalExtra_2 + $totalGuanicion_2;
                             $subtotal_2 = $precioTotal_2 * $row_2["cantidad"];
 
                             $subtotalFinal_2 += $subtotal_2;
@@ -340,7 +342,7 @@ if($USR == null){
                                             <td><?php echo $row_2['usuario'] ?></td>
                                             <td class='producto'><?php echo $row_2['platillo'] ?></td>
                                             <td><?php echo $row_2['specs'] ?></td>
-                                            <td>$<?php echo $row_2['costo'] ?>MXN</td>
+                                            <td>$<?php echo $precioTotal_2 ?>MXN</td>
                                             <td><?php echo $row_2['cantidad'] ?></td>
                                             <td><?php echo $row_2['size'] ?></td>
                                             <td><?php echo $row_2['guarniciones'] ?></td>
@@ -502,7 +504,7 @@ if($USR == null){
                                             <td><?php echo $row_3['usuario'] ?></td>
                                             <td class='producto'><?php echo $row_3['platillo'] ?></td>
                                             <td><?php echo $row_3['specs'] ?></td>
-                                            <td>$<?php echo $row_3['costo'] ?>MXN</td>
+                                            <td>$<?php echo $precioTotal_3 ?>MXN</td>
                                             <td><?php echo $row_3['cantidad'] ?></td>
                                             <td><?php echo $row_3['size'] ?></td>
                                             <td><?php echo $row_3['guarniciones'] ?></td>
@@ -663,7 +665,7 @@ if($USR == null){
                                             <td><?php echo $row_4['usuario'] ?></td>
                                             <td class='producto'><?php echo $row_4['platillo'] ?></td>
                                             <td><?php echo $row_4['specs'] ?></td>
-                                            <td>$<?php echo $row_4['costo'] ?>MXN</td>
+                                            <td>$<?php echo $precioTotal_4 ?>MXN</td>
                                             <td><?php echo $row_4['cantidad'] ?></td>
                                             <td><?php echo $row_4['size'] ?></td>
                                             <td><?php echo $row_4['guarniciones'] ?></td>
@@ -825,7 +827,7 @@ if($USR == null){
                                             <td><?php echo $row_5['usuario'] ?></td>
                                             <td class='producto'><?php echo $row_5['platillo'] ?></td>
                                             <td><?php echo $row_5['specs'] ?></td>
-                                            <td>$<?php echo $row_5['costo'] ?>MXN</td>
+                                            <td>$<?php echo $precioTotal_5 ?>MXN</td>
                                             <td><?php echo $row_5['cantidad'] ?></td>
                                             <td><?php echo $row_5['size'] ?></td>
                                             <td><?php echo $row_5['guarniciones'] ?></td>

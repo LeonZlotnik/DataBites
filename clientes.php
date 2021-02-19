@@ -2,29 +2,17 @@
 
 require_once('z_connect.php');
 
-$table = $_GET['m'];
+  $table = $_GET['m'];
 
   if(isset($_POST['login'])){
       $client = $_POST["cliente"];
       $password = $_POST["pw"];
+      $table = $_GET['m'];
 
       $query = "SELECT * FROM clientes WHERE cliente='$client' AND pw='$password'";
-
       $result = mysqli_query($conn, $query);
 
-      if(mysqli_num_rows($result)>0){
-          while($row = mysqli_fetch_assoc($result)){
-              if($row["cliente"]){
-                  session_start();
-                  $_SESSION['usuario'] = $row["cliente"];
-                  header('Location:intro.php?Bienvenido='.$_SESSION['usuario']);
-              }
-          }
-      }else{
-          $msg = "<div class='alert alert-danger' role='alert'>Acceso negado, verifique la informacion</div>";
-      }
-
-      $edit = "UPDATE clientes SET mesa = '$table ' WHERE cliente = '$client'";
+      $edit = "UPDATE clientes SET mesa = $table, codigo = LPAD(FLOOR(10+ RAND() * 10000),6,'0') WHERE cliente = '$client'";
       $res = mysqli_query($conn, $edit) or die ("error en query $edit".mysqli_error());
 
       if($res){
@@ -33,6 +21,19 @@ $table = $_GET['m'];
     }else{
         echo "Error";
     };
+
+      if(mysqli_num_rows($result)>0){
+          while($row = mysqli_fetch_assoc($result)){
+              if($row["cliente"]){
+                  session_start();
+                  $_SESSION['usuario'] = $row["cliente"];
+                  $_SESSION['m'] = $table;
+                  header('Location:intro.php?Bienvenido='.$_SESSION['usuario']);
+              }
+          }
+      }else{
+          $msg = "<div class='alert alert-danger' role='alert'>Acceso negado, verifique la informacion</div>";
+      }
 
   }
 ?>
@@ -48,10 +49,6 @@ $table = $_GET['m'];
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
-      #gif{
-        height: 200px;
-        width: 300;
-      }
       .title {
             text-align: center;
             color:#D7627C; 

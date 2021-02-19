@@ -73,7 +73,7 @@ if (isset($_POST['aceptar_invitacion'])) {
         }
         #total{
             position:fixed; bottom:35px; left:20px;
-            /*color: 16327F;*/
+            color: 16327F;
         }
         #hidden{
             display: none;
@@ -106,7 +106,6 @@ if (isset($_POST['aceptar_invitacion'])) {
                             <th scope='col'>Precio</th>
                             <th scope='col'>Cantidad</th>
                             <th scope='col'>Total</th>
-                            <th scope='col'>Porción</th>
                             <th scope='col'>Guarnición</th>
                             <th scope='col'>Extras</th>
                             <th id='hidden' scope='col'>Tiempo</th>
@@ -117,8 +116,7 @@ if (isset($_POST['aceptar_invitacion'])) {
                     $subtotalFinal =0;
                     $totalGuanicion=0;
 
-                    //$sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE usuario = '$USR' OR invita='$USR' AND estatus_invitacion='ACEPTADA' AND status = 'Cuenta' AND DATE(registro) = CURDATE()";
-                    //$sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE usuario = '$USR' AND status = 'Cuenta' AND DATE(registro) = CURDATE()";
+                    
                     $sql = "SELECT *,(costo*cantidad) AS total 
                             from comandas
                             WHERE usuario = '$USR' AND status = 'Cuenta' AND DATE(registro) = CURDATE()
@@ -167,7 +165,6 @@ if (isset($_POST['aceptar_invitacion'])) {
                             <td>$".$precioTotal."</td>
                             <td>".$row["cantidad"]."</td>
                             <td>$".$subtotal."</td>
-                            <td>".$row["size"]."</td>
                             <td>".$row["guarniciones"]."</td>
                             <td>".$row["extras"]."</td>
                             <td id='hidden'>".$row["registro"]."</td>
@@ -198,7 +195,7 @@ if (isset($_POST['aceptar_invitacion'])) {
     <br>
     </section>
 
-<section class="container">
+    <section class="container">
     <?php
     require_once('z_connect.php');
 
@@ -218,7 +215,7 @@ if (isset($_POST['aceptar_invitacion'])) {
                         </tr>
                     </thead>";
 
-    $sql = "SELECT DISTINCT (usuario) FROM comandas where mesa = (select distinct(mesa) from comandas where usuario = '$USR' AND DATE(registro) = CURDATE()) and usuario not in ('$USR') and DATE(registro) = CURDATE()" ;
+    $sql = "SELECT DISTINCT (usuario) FROM comandas where mesa = (select distinct(mesa) from comandas where usuario = '$USR' AND DATE(registro) = CURDATE()) and usuario not in ('$USR') and DATE(registro) = CURDATE() AND status = 'Cuenta'" ;
     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
 
     if($result-> num_rows > 0) {
