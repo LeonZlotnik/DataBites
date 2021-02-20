@@ -23,7 +23,7 @@ if(isset($_POST['validar_token'])){
     $row = mysqli_fetch_array($res);
     $countExist= $row["total"];
     if ($countExist>0) {
-        $paid = "UPDATE comandas SET status= 'Pagado' WHERE usuario = '$USR' AND DATE(registro) = CURDATE() AND status = 'Cuenta'";
+        $paid = "UPDATE comandas SET status= 'Pagado' WHERE usuario = '$USR' AND DATE(registro) = CURDATE() AND status = 'Cuenta' or invita = '$USR'";
         $res = mysqli_query($conn, $paid) or die ("error en query $paid".mysqli_error());
         $success = "<div class='alert alert-success' role='alert'>
               El Pago se ha realizado correctamente

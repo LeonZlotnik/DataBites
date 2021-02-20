@@ -11,7 +11,7 @@ if (isset($_POST['invitar'])) {
     require_once('z_connect.php');
     $users = implode(", ", $_POST['usuarios']);
 
-    $sqlMesa= "update comandas c set c.invita='$USR', c.estatus_invitacion='PENDIENTE' where c.status='cuenta' and DATE(c.registro) = CURDATE() and c.mesa = (SELECT * FROM(SELECT distinct(cm.mesa) FROM comandas cm  where cm.usuario='$USR')mesa) and c.usuario in ('$users')";
+    $sqlMesa= "update comandas c set c.invita='$USR', c.estatus_invitacion='PENDIENTE' where c.status='Cuenta' and DATE(c.registro) = CURDATE() and c.mesa = (SELECT * FROM(SELECT distinct(cm.mesa) FROM comandas cm  where cm.usuario='$USR' and cm.status = 'Cuenta')mesa) and c.usuario in ('$users')";
     $res = mysqli_query($conn, $sqlMesa) or die ("error en query $sqlMesa".mysqli_error());
 
     if($res){
@@ -124,7 +124,7 @@ if (isset($_POST['aceptar_invitacion'])) {
                             WHERE usuario = '$USR' AND status = 'Cuenta' AND DATE(registro) = CURDATE()
                             union   
                             SELECT id_comanda, usuario, platillo, costo, cantidad, specs, status, size, mesa, invita, registro, estatus_invitacion, extras, guarniciones, (costo*cantidad) AS total 
-                            FROM comandas WHERE  status = 'Cuenta' AND DATE(registro) = CURDATE() and invita='$USR'";
+                            FROM comandas WHERE  status = 'Cuenta' AND DATE(registro) = CURDATE() and invita='$USR' and estatus_invitacion='ACEPTADA'";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
                     if($result-> num_rows > 0) {
                         while($row = mysqli_fetch_assoc($result)){
@@ -243,7 +243,7 @@ if (isset($_POST['aceptar_invitacion'])) {
                 </div>
                 <div class='col-6'>";
 
-        $sqlInvita = "SELECT DISTINCT (invita) FROM comandas where mesa = (select distinct(mesa) from comandas where usuario = '$USR' AND DATE(registro) = CURDATE()) and usuario in ('$USR') and estatus_invitacion = 'ACEPTADA'" ;
+        $sqlInvita = "SELECT DISTINCT (invita) FROM comandas where mesa = (select distinct(mesa) from comandas where usuario = '$USR' AND DATE(registro) = CURDATE()) and usuario in ('$USR') and estatus_invitacion = 'PENDIENTE'" ;
         $resInvita= $conn-> query($sqlInvita) or die ("error en query $sqlInvita".mysqli_error());
 
         $numInvitacion=0;
