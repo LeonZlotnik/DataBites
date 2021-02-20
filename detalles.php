@@ -70,6 +70,11 @@ if (isset($_GET['ID'])) {
   $result = mysqli_query($conn, $sql);
   $row = mysqli_fetch_array($result);
   $likes=$row["likes"];
+
+    $sqlCountLike="select count(*)total from like_platillo where user='$USR' and id_platillo=".$ID;
+    $resCountLike=mysqli_query($conn,$sqlCountLike);
+    $rowLike = mysqli_fetch_array($resCountLike);
+    $totalLike= $rowLike["total"];
 }
 
 if (isset($_POST['add_to_cart'])) {
@@ -88,8 +93,6 @@ if (isset($_POST['add_to_cart'])) {
 
   //$sql = "INSERT INTO comandas (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
   $sql = "INSERT INTO comandas (usuario, platillo, costo, cantidad, specs, status, size, mesa, extras, guarniciones) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table', '$extras', '$guarniciones')";
-
-
   $res = mysqli_query($conn, $sql); //or die ("error en query $sql".mysqli_error());
 
   if ($res) {
@@ -109,8 +112,8 @@ if (isset($_POST['add_to_cart'])) {
 if (isset($_POST['set_like'])) {
     $sqlCountLike="select count(*)total from like_platillo where user='$USR' and id_platillo=".$ID;
     $resCountLike=mysqli_query($conn,$sqlCountLike);
-    $row = mysqli_fetch_array($resCountLike);
-    $totalLike= $row["total"];
+    $rowLike = mysqli_fetch_array($resCountLike);
+    $totalLike= $rowLike["total"];
 
     if($totalLike==0) {
         if ($likes != null) {
