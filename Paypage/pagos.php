@@ -7,7 +7,7 @@ if($USR == null){
     header("location:preferencias.php");
 }
 require_once('../z_connect.php');
-
+$conn->set_charset("utf8");
 /*if(isset($_POST['propina'])){
   $tip = $_POST['inlineRadioOptions'];
 
@@ -107,10 +107,10 @@ require_once("nav_bar_pay.php");
 <div class="card row">
   <div class="card-body col-12">
     <p class="card-text">
-    Introduzca el mail a donde quiera recibir el comprobante de su cunta, esta información no será utilizada para fines comerciales. 
+    Introduzca el mail para recibír el comprobante de su cunta, esta información no será utilizada para fines comerciales. 
     </p>
     <p class="card-text">
-    Si el numero de tarjeta no se introduce bien o marca alg煤n error, favor de verificar la informaci贸n. Los errores de pago se pueden generar si no se introduce adecuadamente la informaci贸n. 
+    Si el número de tarjeta no se introduce bien o marca error, favor de verificar la información. Los errores de pago se pueden generar si no se introduce adecuadamente la información. 
     </p>
   </div>
 </div>
@@ -127,5 +127,5 @@ require_once("nav_bar_pay.php");
 <br>
 <br>
 <br>
-<?php //require_once('../footer.html')?>
+<?php require_once('../footer.html')?>
 </html>

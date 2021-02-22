@@ -17,10 +17,12 @@ require_once('z_connect.php');
                   if($row["acceso"] == "gerente"){
                     session_start();
                     $_SESSION['admin'] = $row["usuario"];
+                    $_SESSION['type'] = $type;
                     header("location:admin/panel.php?Bienvenido=".$_SESSION['admin']);
                    }else{
                     session_start();
                     $_SESSION['admin'] = $row["usuario"];
+                    $_SESSION['type'] = $type;
                     header("location:admin/panel_2.php?Bienvenido=".$_SESSION['admin']);
                    }
               }

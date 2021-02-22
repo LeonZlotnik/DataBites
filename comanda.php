@@ -205,5 +205,7 @@ if(isset($_POST['ordenar'])){
     <?php
         mysqli_close($conn);
     ?>
+    <br>
+    <?php //require_once('footer.html')?>
 </body>
 </html>

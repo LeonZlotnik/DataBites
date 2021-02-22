@@ -104,5 +104,7 @@ if($USR == null){
         </div>
 <br>
     </div>
+    <br>
+    <?php require_once('footer.html')?>
 </body>
 </html>

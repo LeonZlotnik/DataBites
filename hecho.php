@@ -27,10 +27,10 @@ require_once("nav_bar.php");
 <section class="container">
 <div class="card text-center">
   <div class="card-header">
-    ¡Pago Exitoso!
+    ¡Cuenta Completada!
   </div>
   <div class="card-body">
-    <h5 class="card-title">Gracias por su visita <?php echo $USR ?></h5>
+    <h5 class="card-title">Gracias <?php echo $USR ?>, esperamos verlo pronto</h5>
     <p class="card-text">El total de su cuenta fue de ($<?php echo $Total ?> mxn)</p>
     
     <?php
@@ -41,28 +41,11 @@ require_once("nav_bar.php");
     ?>
   </div>
   <div class="card-footer text-muted">
-    Información enviada a <?php echo $email ?>
+    Solicite al mesero su ticket porfavor. 
   </div>
 </div>
 </section>
+<br>
+<?php require_once('footer.html')?>
 </body>
 </html>
-
-<?php 
-
-//SMTP
-
-$to = $email;
-
-$subject = 'Hijas de la Tostada - Comprobante de pago por $'.$Total;
-
-$message = 'Gracias por visitarnos '.$USR.'';
-            'Cualquier duda favor de comunicarse por este medio. Estámos para ayudarle';
-
-$headers = "Enviado Por:comprobantes@mail.com"."\r\n";
-$headers .= "Responder: comprobantes@mail.com"."\r\n";
-$headers .= "Content-type:text/html;charset=UTF-8"."\r\n";
-
-mail($to, $subject, $message, $headers);
-
-?>

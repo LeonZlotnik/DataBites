@@ -75,7 +75,7 @@ require_once("nav_bar_pay.php");
 <br>
 <br>
 <br>
-<?php //require_once('../footer.html')?>
+<?php require_once('../footer.html')?>
 </html>
 
 <?php 

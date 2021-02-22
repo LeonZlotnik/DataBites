@@ -18,6 +18,215 @@ if($MSA == null){
     <link rel="shorcut icon" type="img/png" href="img/favicon.png">
     <title>Menu principal</title>
     <style>
+        .responsivo{
+            display: block;
+        }
+
+        .mobile-screen{
+            display: none;
+        }
+
+        @media screen and (max-width: 750px){
+            .slider-h{
+            height: 25vh;
+        }
+
+        .title {
+            text-align: center;
+            color:#D7627C; 
+            text-shadow: 1.5px 1px 2px #000;
+        }
+
+        .contain{
+            width:80%;
+            min-height: 1300px;
+            background-color: #000;
+            margin: 30px auto 0;
+            display: felx;
+
+        }
+
+        .contain .box{
+            position: relative; top:15px;
+            width: 80%;
+            height: 100px;
+            background-color: yellow;
+            margin: 0 10% 0 10%;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+
+        .contain .box .imgBox{
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contain .box .imgBox img{
+            width: 100%;
+            transition: transform 2s;
+        }
+
+        .contain .box:hover .imgBox img{
+            transform: scale(1.2);
+        }
+
+        .contain .box .details{
+            position: absolute; top: 10px; left:10px; bottom: 10px; right:10px;
+            background-color: rgba(0,0,0,.8);
+            height: 28vh;
+        }
+
+        .contain .box .details .content{
+            position: absolute; top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            color: #fff;
+        }
+
+        .contain .box .details .content h2{
+            margin: 0;
+            padding: 0;
+            color: #4ae7ff;
+            font-size: 35px;
+        }
+
+        .contain .box .details .content p{
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .comanda{
+            position:fixed; bottom:40px; right:20px;
+            transform: translateX(-50%);
+            background: linear-gradient(to top, #4ae7ff, #CFEEF9 );
+            width: 50px;
+            height: 50px;
+            line-height: 55px;
+            font-size: 22px;
+            text-align: center;
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 5;
+        }
+    
+        .comanda a{
+            color: white;
+            position: relative; top: 1px;
+        }
+
+        .mobile-screen{
+            display: block;
+        }
+
+        .responsivo{
+            display: none;
+        }
+        }
+
+        @media screen and (max-width: 530px){
+        .slider-h{
+            height: 25vh;
+        }
+
+        .title {
+            text-align: center;
+            color:#D7627C; 
+            text-shadow: 1.5px 1px 2px #000;
+        }
+
+        .contain{
+            width:80%;
+            min-height: 1050px;
+            background-color: #000;
+            margin: 30px auto 0;
+            display: felx;
+
+        }
+
+        .contain .box{
+            position: relative; top:15px;
+            width: 80%;
+            height: 100px;
+            background-color: yellow;
+            margin: 0 10% 0 10%;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+
+        .contain .box .imgBox{
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contain .box .imgBox img{
+            max-width: 100%;
+            transition: transform 2s;
+        }
+
+        .contain .box:hover .imgBox img{
+            transform: scale(1.2);
+        }
+
+        .contain .box .details{
+            position: absolute; top: 10px; left:10px; bottom: 10px; right:10px;
+            background-color: rgba(0,0,0,.8);
+            height: 20vh;
+        }
+
+        .contain .box .details .content{
+            position: absolute; top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            color: #fff;
+        }
+
+        .contain .box .details .content h2{
+            margin: 0;
+            padding: 0;
+            color: #4ae7ff;
+            font-size: 28px;
+        }
+
+        .contain .box .details .content p{
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .comanda{
+            position:fixed; bottom:40px; right:20px;
+            transform: translateX(-50%);
+            background: linear-gradient(to top, #4ae7ff, #CFEEF9 );
+            width: 50px;
+            height: 50px;
+            line-height: 55px;
+            font-size: 22px;
+            text-align: center;
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 5;
+        }
+    
+        .comanda a{
+            color: white;
+            position: relative; top: 1px;
+        }
+
+        .mobile-screen{
+            display: block;
+        }
+
+        .responsivo{
+            display: none;
+        }
+        }
+
+    @media screen and (max-width: 400px){
         .slider-h{
             height: 25vh;
         }
@@ -64,11 +273,11 @@ if($MSA == null){
         .contain .box .details{
             position: absolute; top: 10px; left:10px; bottom: 10px; right:10px;
             background-color: rgba(0,0,0,.8);
-            height: 21vh;
+            height: 20vh;
         }
 
         .contain .box .details .content{
-            position: absolute; top: 50%
+            position: absolute; top: 50%;
             transform: translateY(-50%);
             text-align: center;
             color: #fff;
@@ -78,12 +287,14 @@ if($MSA == null){
             margin: 0;
             padding: 0;
             color: #4ae7ff;
+            font-size: 28px;
         }
 
         .contain .box .details .content p{
             margin: 0;
             padding: 0;
             color: #fff;
+            font-size: 16px;
         }
 
         .comanda{
@@ -110,27 +321,35 @@ if($MSA == null){
             display: block;
         }
 
-        @media only screen and (min-width: 500px){
-            .slider-h{
-            height: 40vh;
+        .responsivo{
+            display: none;
+        }
+        }
+        
+        @media screen and (max-width: 300px){
+        .slider-h{
+            height: 25vh;
         }
 
-        .mobile-screen{
-            display: none;
+        .title {
+            text-align: center;
+            color:#D7627C; 
+            text-shadow: 1.5px 1px 2px #000;
         }
 
         .contain{
             width:80%;
-            min-height: 500px;
+            min-height: 760px;
             background-color: #000;
             margin: 30px auto 0;
             display: felx;
+
         }
 
         .contain .box{
             position: relative; top:15px;
             width: 80%;
-            height: 200px;
+            height: 100px;
             background-color: yellow;
             margin: 0 10% 0 10%;
             box-sizing: border-box;
@@ -143,7 +362,7 @@ if($MSA == null){
         }
 
         .contain .box .imgBox img{
-            width: 100%;
+            max-width: 100%;
             transition: transform 2s;
         }
 
@@ -154,11 +373,11 @@ if($MSA == null){
         .contain .box .details{
             position: absolute; top: 10px; left:10px; bottom: 10px; right:10px;
             background-color: rgba(0,0,0,.8);
-            height: 21vh;
+            height: 20vh;
         }
 
         .contain .box .details .content{
-            position: absolute; top: 50%
+            position: absolute; top: 50%;
             transform: translateY(-50%);
             text-align: center;
             color: #fff;
@@ -168,14 +387,47 @@ if($MSA == null){
             margin: 0;
             padding: 0;
             color: #4ae7ff;
+            font-size: 20px;
         }
 
         .contain .box .details .content p{
             margin: 0;
             padding: 0;
             color: #fff;
+            font-size: 12px;
+        }
+
+        .comanda{
+            position:fixed; bottom:40px; right:20px;
+            transform: translateX(-50%);
+            background: linear-gradient(to top, #4ae7ff, #CFEEF9 );
+            width: 50px;
+            height: 50px;
+            line-height: 55px;
+            font-size: 22px;
+            text-align: center;
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 5;
+        }
+    
+        .comanda a{
+            color: white;
+            position: relative; top: 1px;
+        }
+
+        .mobile-screen{
+            display: block;
+        }
+
+        .responsivo{
+            display: none;
         }
         }
+       
+
+        
     </style>
 </head>
 <body>
@@ -188,6 +440,9 @@ if($MSA == null){
 
 
         <h2 class="title mobile-screen">Menu Principal</h2>
+        <div class="alert alert-danger container responsivo" role="alert">
+            Diseño responsivo sólo para movil. 
+        </div>
     <br>
 
     <?php
@@ -304,5 +559,7 @@ if($MSA == null){
             </a>
         </div>
     </div>
+    <br>
+    <?php require_once('footer.html')?>
 </body>
 </html>

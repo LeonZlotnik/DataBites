@@ -27,6 +27,26 @@
           mysqli_free_result($result);
           mysqli_close($conn);
     };
+
+    if(isset($_POST['comentar'])){
+        require_once('z_connect.php');
+
+        $comment = $_POST['comentario'];
+
+        $query = "INSERT INTO comentarios (comentario) VALUES ('$comment')";
+        $return = mysqli_query($conn, $query ) or die ("error en query $query ".mysqli_error());
+
+        if($return){
+            $ok = "<br><div class='alert alert-success' role='alert'>
+            Gracias por compartinos su opinión. Nos seguiremos esforzando para mejorar el servicio.
+            </div><br>";
+          }else{
+            echo "<script type='text/javascript'>alert('El comentario presentó un error');</script>";
+          };
+          
+          mysqli_free_result($return);
+          mysqli_close($conn);
+    };
 ?>
 
 <!DOCTYPE html>
@@ -86,6 +106,7 @@
         </div>
         <div class="container">
                         <?php echo $success ?>
+                        <?php echo $ok ?>
         </div>
         <div id="accordion">
                         <div class="card">
@@ -149,16 +170,21 @@
                                 Por favor deje sus comentarios si cree que hay algo en lo que podríamos mejorar. 
                                 <br>
                                 <br>
+                            <form action="" method="POST">
                                 <div class="input-group">
-                                    <textarea class="form-control" aria-label="With textarea"></textarea>
-                            </div>
+                                    <textarea name="comentario" class="form-control" aria-label="With textarea"></textarea>
+                                </div>
                                 <br>
-                                <button type="button" class="btn btn-primary btn-lg btn-block">Enviar</button>
+                                <button type="submit" name="comentar" class="btn btn-primary btn-lg btn-block">Enviar</button>
+                            </form>
                             </div>
+                            
                         </div>
                         </div>
                         </div>
                     
     </div>
+    <br>
+    <?php require_once('footer.html')?>
 </body>
 </html>

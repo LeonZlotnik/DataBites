@@ -1,9 +1,13 @@
 <?php
 session_start();
 $USR = $_SESSION['admin'];
-
+$T = $_SESSION['type'];
 if($USR == null){
     header("location:../admin.php");
+}
+
+if($T == 'piso'){
+  header("location:panel_2.php");
 }
 ?>
 <!DOCTYPE html>

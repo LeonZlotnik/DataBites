@@ -98,6 +98,8 @@ if($USR == null){
             }
                 ?>
     </section>
+    <br>
+    <?php require_once('footer.html')?>
 </body>
 <script type='text/javascript'>
              let search_input = document.getElementById('search')

@@ -46,6 +46,7 @@ if($USR == null){
         .position{
             position: relative; left: 10%;
         }
+       
     </style>
 </head>
 <body>
@@ -97,6 +98,7 @@ if($USR == null){
             }
                 ?>
     </section>
+    <?php require_once('footer.html')?>
 </body>
 <script type='text/javascript'>
              let search_input = document.getElementById('search')

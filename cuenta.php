@@ -11,7 +11,7 @@ if (isset($_POST['invitar'])) {
     require_once('z_connect.php');
     $users = implode(", ", $_POST['usuarios']);
 
-    $sqlMesa= "update comandas c set c.invita='$USR', c.estatus_invitacion='PENDIENTE' where c.status='cuenta' and DATE(c.registro) = CURDATE() and c.mesa = (SELECT * FROM(SELECT distinct(cm.mesa) FROM comandas cm  where cm.usuario='$USR')mesa) and c.usuario in ('$users')";
+    $sqlMesa= "update comandas c set c.invita='$USR', c.estatus_invitacion='PENDIENTE' where c.status='Cuenta' and DATE(c.registro) = CURDATE() and c.mesa = (SELECT * FROM(SELECT distinct(cm.mesa) FROM comandas cm  where cm.usuario='$USR' and cm.status = 'Cuenta')mesa) and c.usuario in ('$users')";
     $res = mysqli_query($conn, $sqlMesa) or die ("error en query $sqlMesa".mysqli_error());
 
     if($res){
@@ -73,10 +73,13 @@ if (isset($_POST['aceptar_invitacion'])) {
         }
         #total{
             position:fixed; bottom:35px; left:20px;
-            color: 16327F;
+            /*color: 16327F;*/
         }
         #hidden{
             display: none;
+        }
+        #position{
+            position: absolute; bottom:1px;
         }
     </style>
 </head>
@@ -106,6 +109,7 @@ if (isset($_POST['aceptar_invitacion'])) {
                             <th scope='col'>Precio</th>
                             <th scope='col'>Cantidad</th>
                             <th scope='col'>Total</th>
+                            <th scope='col'>Porción</th>
                             <th scope='col'>Guarnición</th>
                             <th scope='col'>Extras</th>
                             <th id='hidden' scope='col'>Tiempo</th>
@@ -116,13 +120,14 @@ if (isset($_POST['aceptar_invitacion'])) {
                     $subtotalFinal =0;
                     $totalGuanicion=0;
 
-                    
+                    //$sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE usuario = '$USR' OR invita='$USR' AND estatus_invitacion='ACEPTADA' AND status = 'Cuenta' AND DATE(registro) = CURDATE()";
+                    //$sql = "SELECT DISTINCT *,(costo*cantidad) AS total FROM comandas WHERE usuario = '$USR' AND status = 'Cuenta' AND DATE(registro) = CURDATE()";
                     $sql = "SELECT *,(costo*cantidad) AS total 
                             from comandas
                             WHERE usuario = '$USR' AND status = 'Cuenta' AND DATE(registro) = CURDATE()
                             union   
                             SELECT id_comanda, usuario, platillo, costo, cantidad, specs, status, size, mesa, invita, registro, estatus_invitacion, extras, guarniciones, (costo*cantidad) AS total 
-                            FROM comandas WHERE  status = 'Cuenta' AND DATE(registro) = CURDATE() and invita='$USR'";
+                            FROM comandas WHERE  status = 'Cuenta' AND DATE(registro) = CURDATE() and invita='$USR' and estatus_invitacion='ACEPTADA'";
                     $result = $conn-> query($sql) or die ("error en query $sql".mysqli_error());
                     if($result-> num_rows > 0) {
                         while($row = mysqli_fetch_assoc($result)){
@@ -165,6 +170,7 @@ if (isset($_POST['aceptar_invitacion'])) {
                             <td>$".$precioTotal."</td>
                             <td>".$row["cantidad"]."</td>
                             <td>$".$subtotal."</td>
+                            <td>".$row["size"]."</td>
                             <td>".$row["guarniciones"]."</td>
                             <td>".$row["extras"]."</td>
                             <td id='hidden'>".$row["registro"]."</td>
@@ -195,7 +201,7 @@ if (isset($_POST['aceptar_invitacion'])) {
     <br>
     </section>
 
-    <section class="container">
+<section class="container">
     <?php
     require_once('z_connect.php');
 
@@ -240,7 +246,7 @@ if (isset($_POST['aceptar_invitacion'])) {
                 </div>
                 <div class='col-6'>";
 
-        $sqlInvita = "SELECT DISTINCT (invita) FROM comandas where mesa = (select distinct(mesa) from comandas where usuario = '$USR' AND DATE(registro) = CURDATE()) and usuario in ('$USR') and estatus_invitacion = 'ACEPTADA'" ;
+        $sqlInvita = "SELECT DISTINCT (invita) FROM comandas where mesa = (select distinct(mesa) from comandas where usuario = '$USR' AND DATE(registro) = CURDATE()) and usuario in ('$USR') and estatus_invitacion = 'PENDIENTE'" ;
         $resInvita= $conn-> query($sqlInvita) or die ("error en query $sqlInvita".mysqli_error());
 
         $numInvitacion=0;
@@ -296,5 +302,10 @@ if (isset($_POST['aceptar_invitacion'])) {
     <?php
         mysqli_close($conn);
     ?>
+    <br>
+    
+        <?php //require_once('footer.html')?>
+
+    
 </body>
 </html>

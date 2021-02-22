@@ -86,5 +86,6 @@ require_once('z_connect.php');
  
 </section>
 <br>
+<?php require_once('footer.html')?>
 </body>
 </html>

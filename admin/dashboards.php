@@ -87,7 +87,7 @@ $datosX = json_encode($valoresX);
 //Grafica Pie
 
 $sql_six_A = "SELECT count(usuario) FROM usuarios";
-$result_six_A = mysqli_query($conn, $sql_six_A) or die ("error en query $result_six_A".mysqli_error());
+$result_six_A = mysqli_query($conn, $sql_six_A) or die ("error en query $sql_six_A".mysqli_error());
 
 $sql_six_B = "SELECT count(cliente) FROM clientes";
 $result_six_B = mysqli_query($conn, $sql_six_B) or die ("error en query $sql_six_B".mysqli_error());
@@ -95,7 +95,7 @@ $result_six_B = mysqli_query($conn, $sql_six_B) or die ("error en query $sql_six
 $intA = (int)$result_six_A;
 $intB = (int)$result_six_B;
 
-$datos_seisA = json_encode(46);
+$datos_seisA = json_encode($intA);
 $datos_seisB = json_encode($intB);
 
 //Usuarios Por Mesa
@@ -147,6 +147,7 @@ $datos_sieteX = json_encode($valuesX);
             
         <div class="col text-center">
             <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
+            <a class="btn btn-info btn-lg" href="comments.php">Comentarios</a>
         </div>
         <br>
     </section>
@@ -222,7 +223,7 @@ $datos_sieteX = json_encode($valuesX);
 <script src="graficas.js" type="text/javascript"></script>
 <script type="text/javascript">
 
-//Grafica Uno
+//Usuarios Al Dia
 datosX = crearGrafica('<?php echo $datosX ?>');
 datosY = crearGrafica('<?php echo $datosY ?>');
 //fechas = datosX.map(String);
@@ -263,7 +264,7 @@ var layout = {
 
 Plotly.newPlot('graficaLineal', data, layout);
 
-//Grafica Dos
+//Ingresos por Mesa
 
 datos_dosX = crearGraficaBar('<?php echo $datos_dosX ?>');
 datos_dosY = crearGraficaBar('<?php echo $datos_dosY ?>');
@@ -305,7 +306,7 @@ var layout_dos = {
 Plotly.newPlot('graficaBarras', data_dos, layout_dos );
 	
 
-//Grafica Tres
+//Ordenes por categoría
 
 datos_tresX = crearGraficaBar('<?php echo $datos_tresX ?>');
 datos_tresY = crearGraficaBar('<?php echo $datos_tresY ?>');
@@ -346,7 +347,7 @@ var layout_tres = {
 
 Plotly.newPlot('graficaCategorias', data_tres, layout_tres);
 
-//Grafica Cuatro & Cinco
+//Ingresos Al Día
 
 datos_cuatroX = crearGrafica('<?php echo $datos_cuatroX ?>');
 datos_cuatroY = crearGrafica('<?php echo $datos_cuatroY ?>');
@@ -403,7 +404,7 @@ var layout = {
 
 Plotly.newPlot('graficaDoble', data_doble, layout);
 
-//Grafica Seis
+//Grafica Pie
 
 datos_seisA  = crearGraficaPie('<?php echo $datos_seisA ?>');
 datos_seisB  = crearGraficaPie('<?php echo $datos_seisB ?>');
@@ -421,7 +422,7 @@ var layout_seis = {
 
 Plotly.newPlot('graficaPie', data_seis, layout_seis);
 
-//Grafica Siete
+//Usuarios Por Mesa
 
 datos_sieteX = crearGraficaBar('<?php echo $datos_sieteX ?>');
 datos_sieteY  = crearGraficaBar('<?php echo $datos_sieteY ?>');
@@ -461,5 +462,5 @@ var layout_siete = {
 };
 
 Plotly.newPlot('graficaBarMesa', data_siete, layout_siete );
-	
+
 </script>

@@ -17,12 +17,12 @@ if(isset($_POST['validar_token'])){
     $token = $_POST['token'];
     $email = $_POST['email'];
 
-    $sql="SELECT count(*) total from usuarios where usuario='$USR' and codigo='$token'";
+    $sql="select count(*) total from usuarios where usuario='$USR' and codigo='$token'";
     $res=mysqli_query($conn,$sql);
     $row = mysqli_fetch_array($res);
     $countExist= $row["total"];
     if ($countExist>0) {
-        $paid = "UPDATE comandas SET status= 'Pagado' WHERE usuario = '$USR' AND DATE(registro) = CURDATE() AND status = 'Cuenta'";
+        $paid = "UPDATE comandas SET status= 'Pagado' WHERE usuario = '$USR' AND DATE(registro) = CURDATE() AND status = 'Cuenta' or invita = '$USR'";
         $res = mysqli_query($conn, $paid) or die ("error en query $paid".mysqli_error());
         header('Location:hecho.php?total='.$Total);
     } else {
@@ -57,18 +57,19 @@ require_once("nav_bar.php");
 <h4 class="my-4 text-center title">Pago en Efectivo</h4>
 <div class="card row">
     <div class="card-body col-12">
-        <p class="card-text"><b><?php echo $USR ?> tu total a pagar es de: $<?php echo $Total ?></b></p>
-        <p class="card-text">La propina se deja aparte.</p>
+        <p class="card-text"><b><?php echo $USR ?>, su total a pagar es de: $<?php echo $Total ?></b></p>
+        <p class="card-text">Porfavor, deje la propina por aparte. Le agradecemos mucho su visita.</p>
         <div class="container">
             <?php echo $success ?>
             <?php echo $error ?>
         </div>
     </div>
 </div>
+<br>
 <form  method="post" id="payment-form">
   <div class="form-row">
       <input type="text" name="token" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Ingrese Token" required>
-      <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty"  placeholder="Email Address" required>
+      <!--<input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty"  placeholder="Email Address" required>-->
   </div>
  
   <button class="btn btn-primary btn-lg btn-block" name="validar_token">Generar Pago</button>
@@ -79,9 +80,10 @@ require_once("nav_bar.php");
 <section class="container">
 <div class="card row">
   <div class="card-body col-12">
-    <p class="card-text">
-    Introduzca el mail a donde quiera recibir el comprobante de su cuenta, esta información no será utilizada para fines comerciales.
+  <p class="card-text">
+    <b>Importante:</b> El mesero deberá de proporcionarle su Token. Es indispensable que lo introduzca en el apartado superiór para concluir el servicio. 
     </p>
+    <p class="card-text">Si tiene cualquier duda, el mesero le asisitirá</p>
   </div>
 </div>
 </section>
@@ -94,5 +96,5 @@ require_once("nav_bar.php");
 <br>
 <br>
 <br>
-<?php //require_once('../footer.html')?>
+<?php require_once('footer.html')?>
 </html>

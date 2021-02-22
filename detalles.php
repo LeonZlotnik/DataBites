@@ -70,9 +70,16 @@ if (isset($_GET['ID'])) {
   $result = mysqli_query($conn, $sql);
   $row = mysqli_fetch_array($result);
   $likes=$row["likes"];
+
+    $sqlCountLike="select count(*)total from like_platillo where user='$USR' and id_platillo=".$ID;
+    $resCountLike=mysqli_query($conn,$sqlCountLike);
+    $rowLike = mysqli_fetch_array($resCountLike);
+    $totalLike= $rowLike["total"];
 }
 
 if (isset($_POST['add_to_cart'])) {
+
+
   $username = $_POST["usuario"];
   $product = $_POST["platillo"];
   $price = $_POST["costo"];
@@ -83,10 +90,8 @@ if (isset($_POST['add_to_cart'])) {
   $extras = implode(", ", $_POST['extras']);
   $guarniciones = implode(", ", $_POST['guarniciones']);
 
-  //$sql = "INSERT INTO comandas (usuario, platillo, costo, cantidad, specs, status, size, mesa) VALUES ('$username','$product','$price','$amount','$specs','$status','$size','$table')";
   $sql = "INSERT INTO comandas (usuario, platillo, costo, cantidad, specs, status, mesa, extras, guarniciones) VALUES ('$username','$product','$price','$amount','$specs','$status','$table', '$extras', '$guarniciones')";
-
-  $res = mysqli_query($conn, $sql) or die ("error en query $sql".mysqli_error());
+  $res = mysqli_query($conn, $sql); //or die ("error en query $sql".mysqli_error());
 
   if ($res) {
     $success = "<div class='alert alert-success' role='alert'>
@@ -105,8 +110,8 @@ if (isset($_POST['add_to_cart'])) {
 if (isset($_POST['set_like'])) {
     $sqlCountLike="select count(*)total from like_platillo where user='$USR' and id_platillo=".$ID;
     $resCountLike=mysqli_query($conn,$sqlCountLike);
-    $row = mysqli_fetch_array($resCountLike);
-    $totalLike= $row["total"];
+    $rowLike = mysqli_fetch_array($resCountLike);
+    $totalLike= $rowLike["total"];
 
     if($totalLike==0) {
         if ($likes != null) {
@@ -189,8 +194,8 @@ if (isset($_POST['set_like'])) {
                              data-parent="#accordion">
                             <div class="card-body">
                                 <form action="" method="POST">
-                                    <div class="form-group">
-                                        <!--<div class="col-12">
+                                    <!--<div class="form-group">
+                                        <div class="col-12">
                                             <p class="h5">Porciones:</p>
                                         </div>
                                         <div class="col-12">
@@ -199,8 +204,8 @@ if (isset($_POST['set_like'])) {
                                                 <option value="grande">Grande</option>
                                                 <option value="mediano">Mediano</option>
                                             </select>
-                                        </div>-->
-                                    </div>
+                                        </div>
+                                    </div>-->
                                     <div class="form-group">
                                         <div class="col-12">
                                             <p class="h5">Especificaciones:</p>
@@ -335,7 +340,8 @@ if (isset($_POST['set_like'])) {
               <?php echo $error ?>
             </div>
         </div>
-
+<br>
+<?php require_once('footer.html')?>
 </body>
 
 </html>

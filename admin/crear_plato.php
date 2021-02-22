@@ -271,7 +271,9 @@ if (isset($_GET['edit'])) {
                     <h4 class="titulo">
                         Extras
                     </h4>
-
+                    <div class="form-group mx-sm-1 mb-2">
+                      <input type="text" class="form-control" id="buscar" placeholder="Buscar...">
+                  </div>
                 </div>
                 <?php
 
@@ -284,7 +286,7 @@ if (isset($_GET['edit'])) {
               while ($extra = $res->fetch_assoc()) {
           ?>
                 <div class="checkbox col-3">
-                  <div id="extra">
+                  <div id="extra" class="ingrediente">
                     <label id="<?php echo $extra["producto"];?>" for="extra<?php echo++$j;?>">
                         <?php echo  "$".$extra["precio"] . " " . $extra["producto"]; ?></label>
                     <input type="checkbox" id="extra<?php echo$j;?>" style="" name="extras[]"
@@ -324,6 +326,23 @@ if (isset($_GET['edit'])) {
                     }
                 });
             });
+
+            let search_input = document.getElementById('buscar')
+            
+            search_input.addEventListener('keyup',function(e){
+                let search = e.target.value.toLowerCase();
+                let div = document.querySelectorAll("div .ingrediente");
+                console.log(search);
+                
+                div.forEach(function(it){
+                    if(it.textContent.toLowerCase().indexOf(search)!=-1){
+                      it.closest("div").style.display = "block";
+                    }else{
+                      it.closest("div").style.display = "none";
+                    }
+                });
+            });
+
 
 /*const precio = document.getElementById('precio')
 const costo = document.getElementById('costo')
