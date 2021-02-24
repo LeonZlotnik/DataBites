@@ -327,9 +327,9 @@ if (isset($_GET['edit'])) {
                 });
             });
 
-            let search_input = document.getElementById('buscar')
+            let search = document.getElementById('buscar')
             
-            search_input.addEventListener('keyup',function(e){
+            search.addEventListener('keyup',function(e){
                 let search = e.target.value.toLowerCase();
                 let div = document.querySelectorAll("div .ingrediente");
                 console.log(search);

@@ -24,23 +24,34 @@
    .flex{
        display: flex;
    }
+   
+   #p2{
+        display:none;   
+   }
 
-   @media screen and (max-width: 300px) {
-    .footer-bottom p{
-       font-family: arial;
+   @media screen and (max-width: 400px) {
+ 
+   .footer-bottom img{
+        display:none;   
+   }
+   #p2{
+        display:block;  
+        font-family: arial;
        font-size: 16px;
        text-align:center;
-       margin-top: 5%;
-       margin-left: 5%;
-       margin-right: 2%;
        color: white;
-   }     
+   }
+   
+   #p1{
+        display:none;  
+   }
    }
    
 </style>
 
 <div class="footer-bottom flex">
-   <p>Sistema desarrollado por</p>
+   <p id="p1">Sistema desarrollado por</p>
+   <p id="p2">Sistema desarrollado por | DataBites</p>
    <img src="img/logo_DB.svg" alt="" width="13%">
 </div>
 </html> 

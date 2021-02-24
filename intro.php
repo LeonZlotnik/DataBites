@@ -2,12 +2,14 @@
 session_start();
 $USR = $_SESSION['usuario'];
 $MSA = $_SESSION['m'];
+
 if($USR == null){
     header("location:index.php");
 }
 if($MSA == null){
     header("location:index.php");
 }
+
 ?>
 
 <!DOCTYPE html>

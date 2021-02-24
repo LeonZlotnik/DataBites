@@ -12,7 +12,8 @@
     <script src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" data-auto-replace-svg="nest"></script>
 </head>
 <nav class="navbar navbar-expand-lg navbar-light nav-back-color fixed">
-  <a class="navbar-brand" href="intro.php">Navbar</a>
+  <a href="intro.php">
+      <img src="img/Logo_small_T.png" alt="logo" width="40%"/></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

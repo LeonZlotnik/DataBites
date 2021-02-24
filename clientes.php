@@ -54,9 +54,27 @@ require_once('z_connect.php');
             color:#D7627C; 
             text-shadow: 1.5px 1px 2px #000;
         }
+
+        @media screen and (max-width: 750px){
         #login{
-            position: absolute; bottom: 30px;
+            margin-top: 35%;
         }
+            }
+        @media screen and (max-width: 450px){
+        #login{
+            margin-top: 50%;
+        }
+            }
+            @media screen and (max-width: 380px){
+        #login{
+            margin-top: 72%;
+        }
+            }
+            @media screen and (max-width: 370px){
+        #login{
+            margin-top: 35%;
+        }
+            }
     </style>
 </head>
 <body>
@@ -81,7 +99,7 @@ require_once('z_connect.php');
 <div class="container" id="login">
 <a href="index.php?m=<?php echo $table?>" class="btn btn-info btn-lg btn-block">
     Atras
-    </a> 
+</a> 
 </div>
  
 </section>

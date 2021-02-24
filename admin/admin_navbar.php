@@ -45,7 +45,7 @@
       </li>                        
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <a href="" class="btn btn-outline-light my-2 my-sm-0" type="submit">Opciones</a>
+      <!--<a href="../intro.php" class="btn btn-outline-light my-2 my-sm-0" type="submit">Inspeccionar</a>-->
     </form>
   </div>
 </nav>

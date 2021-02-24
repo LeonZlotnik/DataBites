@@ -86,14 +86,16 @@ $datosX = json_encode($valoresX);
 
 //Grafica Pie
 
-$sql_six_A = "SELECT count(usuario) FROM usuarios";
+$sql_six_A = "SELECT count(usuario) as total FROM usuarios";
 $result_six_A = mysqli_query($conn, $sql_six_A) or die ("error en query $sql_six_A".mysqli_error());
+$result_six_A_object = $result_six_A->fetch_object();
 
-$sql_six_B = "SELECT count(cliente) FROM clientes";
+$sql_six_B = "SELECT count(cliente) as total FROM clientes";
 $result_six_B = mysqli_query($conn, $sql_six_B) or die ("error en query $sql_six_B".mysqli_error());
+$result_six_B_object = $result_six_B->fetch_object();
 
-$intA = (int)$result_six_A;
-$intB = (int)$result_six_B;
+$intA = (int)$result_six_A_object->total;
+$intB = (int)$result_six_B_object->total;
 
 $datos_seisA = json_encode($intA);
 $datos_seisB = json_encode($intB);
@@ -144,7 +146,7 @@ $datos_sieteX = json_encode($valuesX);
         <br>
         <h3 class="title">Dashboard</h3>
         <br>
-            
+          
         <div class="col text-center">
             <a class="btn btn-info btn-lg" href="panel.php">Atras</a>
             <a class="btn btn-info btn-lg" href="comments.php">Comentarios</a>
@@ -154,6 +156,7 @@ $datos_sieteX = json_encode($valuesX);
     <!--Primera sección-->
     <section class="container">
         <div class="row">
+        
           <div class="col-sm-12">
             <div class="panel panel-primary">
 
@@ -216,6 +219,7 @@ $datos_sieteX = json_encode($valuesX);
             </div>
           </div>
         </div>
+         
      </section>
 </body>
 </html>
@@ -416,6 +420,10 @@ var data_seis = [{
 }];
 
 var layout_seis = {
+  title: 'Distribución Usuarios-Clientes ',
+  font:{
+    family: 'Raleway, sans-serif'
+  },
   height: 400,
   width: 500
 };

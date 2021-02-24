@@ -15,9 +15,15 @@ if(isset($_GET['Total'])){
 
 if(isset($_POST['validar_token'])){
     $token = $_POST['token'];
-    $email = $_POST['email'];
 
     $sql="select count(*) total from usuarios where usuario='$USR' and codigo='$token'";
+    /*$sql = "SELECT f.* from (
+        select count(*) total, clientes.id_cliente id, clientes.cliente usuario, clientes.mesa, clientes.codigo from clientes
+        union
+        select count(*) total, usuarios.id_usuario id, usuarios.usuario, usuarios.mesa, usuarios.codigo from usuarios
+        ) f 
+        where usuario='$USR' and codigo=$token";*/
+
     $res=mysqli_query($conn,$sql);
     $row = mysqli_fetch_array($res);
     $countExist= $row["total"];
@@ -27,7 +33,7 @@ if(isset($_POST['validar_token'])){
         header('Location:hecho.php?total='.$Total);
     } else {
         $error = "<div class='alert alert-danger' role='alert'>
-                Código Inválido, favor de verificarlo.
+                Código Inválido, favor de verificarlo. ".$token."".$USR."
         </div>";
     }
 }
